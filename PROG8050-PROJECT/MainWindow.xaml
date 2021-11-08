@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PROG8050_PROJECT"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="Electronic Ecommerce System" Height="450" Width="800">
+	<Grid>
+		<Frame x:Name="frame" Content="Frame" NavigationUIVisibility="Visible" Source="./View/Login.xaml"/>
+	</Grid>
 </Window>

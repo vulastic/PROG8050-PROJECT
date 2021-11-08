@@ -5,6 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>PROG8050_PROJECT</RootNamespace>
     <UseWPF>true</UseWPF>
+    <StartupObject>PROG8050_PROJECT.App</StartupObject>
   </PropertyGroup>
 
 </Project>
