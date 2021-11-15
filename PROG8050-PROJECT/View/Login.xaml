@@ -4,18 +4,69 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PROG8050_PROJECT.View"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d"  
       Title="Login">
-
 	<Grid>
-		<TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0,47,0,0" Text="Login View" TextWrapping="Wrap" VerticalAlignment="Top"/>
-		<Label x:Name="label_ID" Content="ID" HorizontalAlignment="Left" Margin="74,148,0,0" VerticalAlignment="Top"/>
-		<Label x:Name="label_PW" Content="PW" HorizontalAlignment="Left" Margin="74,243,0,0" VerticalAlignment="Top"/>
-		<TextBox x:Name="textBox_ID" HorizontalAlignment="Left" Margin="142,152,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-		<TextBox x:Name="textBox_PW" HorizontalAlignment="Left" Margin="142,251,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-		<Button x:Name="button_Create" Content="Create Account" HorizontalAlignment="Left" Margin="191,327,0,0" VerticalAlignment="Top" Height="75" Width="131" IsCancel="True" Click="button_Create_Click"/>
-		<Button x:Name="button_Login" Content="Login" HorizontalAlignment="Left" Margin="593,323,0,0" VerticalAlignment="Top" Height="79" Width="118" Click="button_Login_Click"/>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="400"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
 
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="500"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<Border Grid.Column="1" Grid.Row="1" CornerRadius="8" Background="{DynamicResource TertiaryBackgroundColor}">
+			<Grid Grid.Column="1" Grid.Row="1">
+				<Grid.RowDefinitions>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition/>
+					<RowDefinition Height="0.5*"/>
+					<RowDefinition/>
+					<RowDefinition/>
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+						   FontSize="36" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextColor}"
+						   Text="Sign in"/>
+				<TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
+						   FontSize="16" FontWeight="Normal" Foreground="{DynamicResource PrimaryTextColor}"
+						   Text="Sign in and start buying electronic equipment!"/>
+				<TextBox x:Name="textBox_ID" Grid.Row="3" Margin="50,15" Background="{DynamicResource FourthBackgroundColor}" Foreground="{DynamicResource PrimaryTextColor}"
+						 Style="{StaticResource WaterMarkedTextBox}" Tag="Username" FontSize="16">
+				</TextBox>
+				<TextBox x:Name="textBox_PW" Grid.Row="4" Margin="50,15" Background="{DynamicResource FourthBackgroundColor}" Foreground="{DynamicResource PrimaryTextColor}"
+						 Style="{StaticResource WaterMarkedTextBox}" Tag="Password" FontSize="16">
+				</TextBox>
+
+				<Grid Grid.Row="5" Margin="50,5" VerticalAlignment="Center">
+					<Button x:Name="btnNewUser" Content="Create new account" HorizontalAlignment="Left" Style="{StaticResource TextButton}" Click="btnNewUser_Click"/>
+					<Button x:Name="btnForgot" Content="Forgot password?" HorizontalAlignment="Right" Style="{StaticResource TextButton}" Click="btnForgot_Click"/>
+				</Grid>
+
+				<Button x:Name="btnLogin" Grid.Row="6" Content="Login" Margin="50,15" FontSize="16" Click="btnLogin_Click" Background="Cyan">
+					<Button.Style>
+						<Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+							<Style.Triggers>
+								<Trigger Property="IsMouseOver" Value="True">
+									<Setter Property="Background" Value="Yellow"/>
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Button.Style>
+					<Button.Resources>
+						<Style TargetType="{x:Type Border}">
+							<Setter Property="CornerRadius" Value="8"/>
+						</Style>
+					</Button.Resources>
+				</Button>
+			</Grid>
+		</Border>
 	</Grid>
 </Page>

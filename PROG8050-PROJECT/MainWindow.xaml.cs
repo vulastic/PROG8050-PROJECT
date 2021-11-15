@@ -25,11 +25,13 @@ namespace PROG8050_PROJECT
 			InitializeComponent();
 		}
 
+		// Close Window
 		private void btnClose_Click(object sender, RoutedEventArgs e)
 		{
 			Close();
 		}
 
+		// Maximize | Restore Window
 		private void btnRestore_Click(object sender, RoutedEventArgs e)
 		{
 			if (WindowState == WindowState.Normal)
@@ -42,9 +44,32 @@ namespace PROG8050_PROJECT
 			}
 		}
 
+		// Minimize Window
 		private void btnMinimize_Click(object sender, RoutedEventArgs e)
 		{
 			WindowState = WindowState.Minimized;
+		}
+
+		// Maximize Window | Drag Window Position
+		private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			if (e.ClickCount == 1)
+			{
+				this.DragMove();
+				e.Handled = true;
+			}
+			else if (e.ClickCount == 2)
+			{
+				if (WindowState == WindowState.Normal)
+				{
+					WindowState = WindowState.Maximized;
+				}
+				else
+				{
+					WindowState = WindowState.Normal;
+				}
+			}
+			
 		}
 	}
 }

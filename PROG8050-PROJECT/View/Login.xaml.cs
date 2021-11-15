@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,19 +33,31 @@ namespace PROG8050_PROJECT.View
 			NavigationService.Navigate(create);
 		}
 
-		private void button_Login_Click(object sender, RoutedEventArgs e)
+
+		private void btnLogin_Click(object sender, RoutedEventArgs e)
 		{
-			string id = textBox_ID.Text;
-			if (id.ToLower() == "admin")
-			{
-				Admin admin = new Admin();
-				NavigationService.Navigate(admin);
-			}
-			else
-			{
-				User user = new User();
-				NavigationService.Navigate(user);
-			}
+			//string id = textBox_ID.Text;
+			//if (id.ToLower() == "admin")
+			//{
+			//	Admin admin = new Admin();
+			//	NavigationService.Navigate(admin);
+			//}
+			//else
+			//{
+			//	User user = new User();
+			//	NavigationService.Navigate(user);
+			//}
+			Debug.WriteLine($"Click: {sender}");
+		}
+
+		private void btnNewUser_Click(object sender, RoutedEventArgs e)
+		{
+			Debug.WriteLine($"Click: {sender}");
+		}
+
+		private void btnForgot_Click(object sender, RoutedEventArgs e)
+		{
+			Debug.WriteLine($"Click: {sender}");
 		}
 	}
 }

@@ -10,8 +10,13 @@
 
 	<!-- Typograhy Colors -->
 	<SolidColorBrush x:Key="PrimaryTextColor" Color="#020F16"/>
-
+	<SolidColorBrush x:Key="SecundaryTextColor" Color="#434344"/>
+	<SolidColorBrush x:Key="TertiaryTextColor" Color="#BFBFC4"/>
+	<SolidColorBrush x:Key="FourthTextColor" Color="#BFBFC4"/>
+	
 	<!-- Icons Colors -->
+	<SolidColorBrush x:Key="PrimaryIconColor" Color="#B0B7C3"/>
+	<SolidColorBrush x:Key="SecundaryIconColor" Color="#8A94A6"/>
 	<SolidColorBrush x:Key="ActionIconColor" Color="#F72626"/>
 
 
@@ -23,15 +28,12 @@
 
 
 	<!-- Primary Colors -->
-	<SolidColorBrush x:Key="PrimaryGrayColor" Color="#BFBFC4"/>
+	<!--<SolidColorBrush x:Key="PrimaryGrayColor" Color="#BFBFC4"/>-->
 
-	<!-- Secundary Colors -->
-	<SolidColorBrush x:Key="SecundaryBlueColor" Color="#CEE8FB"/>
-	<SolidColorBrush x:Key="SecundaryGrayColor" Color="#EEEEEE"/>
 
 	<!-- Typograhy Colors -->
-	<SolidColorBrush x:Key="TextPrimaryColor" Color="#020F16"/>
-	<SolidColorBrush x:Key="TextSecundaryColor" Color="#434344"/>
+	<!--<SolidColorBrush x:Key="TextPrimaryColor" Color="#020F16"/>-->
+	<!--<SolidColorBrush x:Key="TextSecundaryColor" Color="#434344"/>-->
 
 	
 	
