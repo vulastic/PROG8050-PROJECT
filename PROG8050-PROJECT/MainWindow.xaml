@@ -34,7 +34,6 @@
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="*"/>
-						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 
 					<!-- Menu Toggle Button -->
@@ -63,7 +62,7 @@
 						<RadioButton x:Name="btn2" Content="Menu1" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource dashboard}"/>
 						<RadioButton x:Name="btn3" Content="Menu2" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource products}"/>
 						<RadioButton x:Name="btn4" Content="Menu3" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource billing}"/>
-						<RadioButton x:Name="btnAccount" IsChecked="True" Content="Account" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource users}"/>
+						<RadioButton x:Name="btnAccount" IsChecked="True" Content="Account" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource users}" Click="btnAccount_Click"/>
 						<RadioButton x:Name="btn6" Content="Menu5" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource settings}"/>
 					</StackPanel>
 				</Grid>

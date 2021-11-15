@@ -36,23 +36,25 @@ namespace PROG8050_PROJECT.View
 
 		private void btnLogin_Click(object sender, RoutedEventArgs e)
 		{
-			//string id = textBox_ID.Text;
-			//if (id.ToLower() == "admin")
-			//{
-			//	Admin admin = new Admin();
-			//	NavigationService.Navigate(admin);
-			//}
-			//else
-			//{
-			//	User user = new User();
-			//	NavigationService.Navigate(user);
-			//}
-			Debug.WriteLine($"Click: {sender}");
+			string id = textBox_ID.Text;
+			if (id.ToLower() == "admin")
+			{
+				MainWindow mainWindow = (MainWindow)System.Windows.Application.Current.MainWindow;
+				mainWindow.ChangeViewNavigation("./View/Admin.xaml");
+			}
+			else
+			{
+				MainWindow mainWindow = (MainWindow)System.Windows.Application.Current.MainWindow;
+				mainWindow.ChangeViewNavigation("./View/User.xaml");
+			}
 		}
 
 		private void btnNewUser_Click(object sender, RoutedEventArgs e)
 		{
 			Debug.WriteLine($"Click: {sender}");
+
+			MainWindow mainWindow = (MainWindow)System.Windows.Application.Current.MainWindow;
+			mainWindow.ChangeViewNavigation("./View/CreateAccount.xaml");
 		}
 
 		private void btnForgot_Click(object sender, RoutedEventArgs e)

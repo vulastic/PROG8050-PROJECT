@@ -25,6 +25,11 @@ namespace PROG8050_PROJECT
 			InitializeComponent();
 		}
 
+		public void ChangeViewNavigation(string viewPath)
+		{
+			PagesNavigation.Navigate(new System.Uri(viewPath, UriKind.RelativeOrAbsolute));
+		}
+
 		// Close Window
 		private void btnClose_Click(object sender, RoutedEventArgs e)
 		{
@@ -69,7 +74,12 @@ namespace PROG8050_PROJECT
 					WindowState = WindowState.Normal;
 				}
 			}
-			
+		}
+
+		private void btnAccount_Click(object sender, RoutedEventArgs e)
+		{
+			PagesNavigation.Navigate(new System.Uri("./View/Login.xaml", UriKind.RelativeOrAbsolute));
+			btnAccount.IsChecked = true;
 		}
 	}
 }
