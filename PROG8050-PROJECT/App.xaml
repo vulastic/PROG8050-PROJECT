@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:PROG8050_PROJECT"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="Themes/LightTheme.xaml"/>
+				<ResourceDictionary Source="Styles/MainStyle.xaml"/>
+				<ResourceDictionary Source="Assets/Icons.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
     </Application.Resources>
 </Application>
