@@ -118,6 +118,7 @@
 
 	<!-- Watermarked Text Box -->
 	<Style x:Key="WaterMarkedTextBox" TargetType="{x:Type TextBox}">
+		<Setter Property="CaretBrush" Value="{DynamicResource TextPrimaryColor}"/>
 		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryColor}"/>
 		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="BorderBrush" Value="{DynamicResource TextPrimaryColor}"/>
