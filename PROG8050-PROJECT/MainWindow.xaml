@@ -9,7 +9,8 @@
 		WindowStartupLocation="CenterScreen" WindowStyle="None"
 		Background="Transparent" AllowsTransparency="True"
 		ResizeMode="NoResize" WindowState="Normal">
-	<Border Background="{DynamicResource PrimaryBackgroundColor}">
+	<Border Background="{DynamicResource BackgroundPrimaryColor}">
+		
 		<!-- Cornor Ratous Control -->
 		<Border.Style>
 			<Style TargetType="{x:Type Border}">
@@ -29,7 +30,7 @@
 			</Grid.ColumnDefinitions>
 			
 			<!-- Column Left -->
-			<Border CornerRadius="8,0,0,8" Background="{DynamicResource SecundaryBackgroundColor}">
+			<Border CornerRadius="8,0,0,8" Background="{DynamicResource BackgroundSecondaryColor}">
 				<Grid x:Name="gridMenu" Grid.Column="0" Width="60">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
@@ -37,7 +38,7 @@
 					</Grid.RowDefinitions>
 
 					<!-- Menu Toggle Button -->
-					<ToggleButton Grid.Row="0" x:Name="btnToggle" HorizontalAlignment="Left" BorderThickness="0" Background="Transparent" Style="{StaticResource ToggleButtonStyle}" Margin="15,15,0,0">
+					<ToggleButton Grid.Row="0" x:Name="btnToggle" Style="{StaticResource ToggleButtonStyle}" Width="24" Height="24" HorizontalAlignment="Left" Margin="18,18,0,0">
 						<ToggleButton.Triggers>
 							<EventTrigger RoutedEvent="ToggleButton.Unchecked">
 								<BeginStoryboard>
@@ -58,12 +59,13 @@
 
 					<!-- Menu Buttons -->
 					<StackPanel Grid.Row="1" Margin="0,30">
-						<RadioButton x:Name="btn1" Content="Home" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource home}"/>
-						<RadioButton x:Name="btn2" Content="Menu1" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource dashboard}"/>
-						<RadioButton x:Name="btn3" Content="Menu2" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource products}"/>
-						<RadioButton x:Name="btn4" Content="Menu3" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource billing}"/>
-						<RadioButton x:Name="btnAccount" IsChecked="True" Content="Account" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource users}" Click="btnAccount_Click"/>
-						<RadioButton x:Name="btn6" Content="Menu5" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource settings}"/>
+						<RadioButton x:Name="btnHome" Content="Home" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource home}" Click="btnHome_Click"/>
+						<RadioButton x:Name="btnProduct" Content="Product" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource product}" Click="btnProduct_Click"/>
+						<RadioButton x:Name="btnCategory" Content="Cateogry" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource category}" Click="btnCategory_Click"/>
+						<RadioButton x:Name="btnPromotion" Content="Promotion" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource promotion}" Click="btnPromotion_Click"/>
+						<RadioButton x:Name="btnCustomer" Content="Customer" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource customer}" Click="btnCustomer_Click"/>
+						<RadioButton x:Name="btnOrder" Content="Order" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource order}" Click="btnOrder_Click"/>
+						<RadioButton x:Name="btnUser" Content="User" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource user}" Click="btnUser_Click"/>
 					</StackPanel>
 				</Grid>
 			</Border>
@@ -97,8 +99,8 @@
 				</StackPanel>
 
 
-				<Border Grid.Row="1" CornerRadius="8"  Margin="10" Background="{DynamicResource SecundaryBackgroundColor}">
-					<Frame x:Name="PagesNavigation" NavigationUIVisibility="Hidden" Source="./View/Login.xaml">
+				<Border Grid.Row="1" CornerRadius="8"  Margin="10" Background="{DynamicResource BackgroundSecondaryColor}">
+					<Frame x:Name="PagesNavigation" NavigationUIVisibility="Hidden" Source="./Views/Login.xaml">
 						<!-- Page Content -->
 					</Frame>
 				</Border>

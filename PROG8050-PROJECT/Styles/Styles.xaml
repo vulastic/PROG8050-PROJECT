@@ -1,0 +1,190 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<!-- Menu Button -->
+	<Style x:Key="MenuButtonStyle" TargetType="{x:Type RadioButton}">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Foreground" Value="Transparent"/>
+		<Setter Property="FontWeight" Value="Normal"/>
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="FontWeight" Value="Regular"/>
+		<Setter Property="Height" Value="50"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type RadioButton}">
+					<Border x:Name="menuButton"  Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="45"/>
+								<ColumnDefinition/>
+							</Grid.ColumnDefinitions>
+
+							<!-- Selected  -->
+							<Border x:Name="btnSelected" Grid.ColumnSpan="2" CornerRadius="4" Width="210" HorizontalAlignment="Right"/>
+
+							<!-- Indicator -->
+							<Rectangle Name="Indicator" HorizontalAlignment="Left" Width="4" Height="40" VerticalAlignment="Center" RadiusX="2" RadiusY="2"/>
+
+							<!-- Icon -->
+							<Path x:Name="Icon" Data="{Binding Tag, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}" Height="24" Width="24" Stretch="None" Fill="{DynamicResource IconSecundaryColor}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 5 0"/>
+
+							<!-- Text -->
+							<TextBlock x:Name="txtName" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15 0 0 0"
+                                                Grid.Column="1" Text="{TemplateBinding Content}" Foreground="{DynamicResource TextSecondaryColor}"
+                                                FontWeight="{TemplateBinding FontWeight}"
+                                                FontSize="{TemplateBinding FontSize}"/>
+						</Grid>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BluePrimaryColor}"/>
+							<Setter TargetName="Icon" Property="Fill" Value="{DynamicResource BluePrimaryColor}"/>
+							
+							<!-- Indicator -->
+							<Setter TargetName="Indicator" Property="Fill" Value="{DynamicResource BluePrimaryColor}"/>
+                            <Setter TargetName="Indicator" Property="Height" Value="20"/>
+						</Trigger>
+						<Trigger Property="IsChecked" Value="True">
+							<Setter TargetName="Icon" Property="Fill" Value="{DynamicResource BluePrimaryColor}"/>
+							<Setter TargetName="Indicator" Property="Fill" Value="{DynamicResource BluePrimaryColor}"/>
+							<Setter TargetName="Indicator" Property="Height" Value="20"/>
+							<Setter TargetName="txtName" Property="Foreground" Value="{DynamicResource BluePrimaryColor}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- Toggle Button -->
+	<Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderBrush" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ToggleButton}">
+					<Border x:Name="border" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+						<Path x:Name="icon" Data="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" Fill="{DynamicResource IconSecundaryColor}" Height="24" Width="24" Stretch="Uniform"/>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Background" TargetName="border" Value="Transparent"/>
+							<Setter Property="BorderBrush" TargetName="border" Value="#FFFFFF"/>
+							<Setter Property="Fill" TargetName="icon" Value="{DynamicResource BluePrimaryColor}"/>
+						</Trigger>
+						<Trigger Property="IsChecked" Value="True">
+							<Setter Property="Background" TargetName="border" Value="Transparent"/>
+							<Setter Property="BorderBrush" TargetName="border" Value="#FFFFFF"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- Button | Minimize | Maximize | Close -->
+	<Style x:Key="IconButtonStyle" TargetType="{x:Type Button}">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Width" Value="25"/>
+		<Setter Property="Height" Value="25"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Border x:Name="bd" CornerRadius="5" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
+						<Path Name="ico" Data="{TemplateBinding Content}" Fill="{DynamicResource IconPrimaryColor}" Height="10" Width="10" Stretch="Uniform"/>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Background" Value="{DynamicResource BackgroundSecondaryColor}"/>
+						</Trigger>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsMouseOver" Value="True"/>
+								<Condition Property="Tag" Value="IsCloseButton"/>
+							</MultiTrigger.Conditions>
+							<Setter Property="Background" Value="{DynamicResource IconActionColor}"/>
+							<Setter TargetName="ico" Property="Fill" Value="{DynamicResource IconPrimaryColor}"/>
+						</MultiTrigger>
+						<Trigger Property="IsPressed" Value="True">
+							<Setter TargetName="ico" Property="Fill" Value="{DynamicResource IconPrimaryColor}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- Watermarked Text Box -->
+	<Style x:Key="WaterMarkedTextBox" TargetType="{x:Type TextBox}">
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryColor}"/>
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource TextPrimaryColor}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type TextBox}">
+					<Grid>
+						<Border CornerRadius="8" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
+						<ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center"/>
+						<Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center" Visibility="Collapsed" Foreground="{DynamicResource TextDisabledColor}"/>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="Text" Value=""/>
+							</MultiTrigger.Conditions>
+							<Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+						</MultiTrigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="{DynamicResource TextDisabledColor}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<!-- Button Display Only Text and Highlight -->
+	<Style x:Key="TextButton" TargetType="{x:Type Button}">
+		<Setter Property="Foreground" Value="{DynamicResource TextPrimaryColor}"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<TextBlock Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"/>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Foreground" Value="{DynamicResource BluePrimaryColor}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<!-- Border Animation Button -->
+	<Style x:Key="BorderButton" TargetType="{x:Type Button}">
+		<Setter Property="Foreground" Value="{DynamicResource TextContrastColor}"/>
+		<Setter Property="Background" Value="{DynamicResource BluePrimaryColor}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource BluePrimaryColor}"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Border x:Name="border" CornerRadius="8" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+						<TextBlock x:Name="text" HorizontalAlignment="Center" VerticalAlignment="Center" 
+								   Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}"/>
+					</Border>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter TargetName="text" Property="Foreground" Value="{DynamicResource BluePrimaryColor}"/>
+							<Setter TargetName="border" Property="Background" Value="Transparent"/>
+							<Setter TargetName="border" Property="BorderThickness" Value="1"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+</ResourceDictionary>

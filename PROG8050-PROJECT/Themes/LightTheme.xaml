@@ -2,39 +2,25 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 	<!-- Background Colors -->
-	<SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#f3f3f3"/>
-	<SolidColorBrush x:Key="SecundaryBackgroundColor" Color="#f9f9f9"/>
+	<SolidColorBrush x:Key="BackgroundPrimaryColor" Color="#ebebeb"/>
+	<SolidColorBrush x:Key="BackgroundSecondaryColor" Color="#f9f9f9"/>
 
 	<!-- Primary Colors -->
-	<SolidColorBrush x:Key="PrimaryBlueColor" Color="#5B7FFF"/>
+	<SolidColorBrush x:Key="BluePrimaryColor" Color="#6168FF"/>
+	<SolidColorBrush x:Key="BlueSecondaryColor" Color="#D1D4FC"/>
+	<SolidColorBrush x:Key="RedPrimaryColor" Color="#FF5574"/>
+	<SolidColorBrush x:Key="RedSecondaryColor" Color="#FFE7EB"/>
 
 	<!-- Typograhy Colors -->
-	<SolidColorBrush x:Key="PrimaryTextColor" Color="#020F16"/>
-	<SolidColorBrush x:Key="SecundaryTextColor" Color="#434344"/>
-	<SolidColorBrush x:Key="TertiaryTextColor" Color="#BFBFC4"/>
-	<SolidColorBrush x:Key="FourthTextColor" Color="#BFBFC4"/>
-	
+	<SolidColorBrush x:Key="TextPrimaryColor" Color="#222222"/>
+	<SolidColorBrush x:Key="TextSecondaryColor" Color="#5E6576"/>
+	<SolidColorBrush x:Key="TextHighlightedColor" Color="#000000"/>
+	<SolidColorBrush x:Key="TextDisabledColor" Color="#8D929E"/>
+	<SolidColorBrush x:Key="TextContrastColor" Color="#FFFFFF"/>
+
 	<!-- Icons Colors -->
-	<SolidColorBrush x:Key="PrimaryIconColor" Color="#B0B7C3"/>
-	<SolidColorBrush x:Key="SecundaryIconColor" Color="#8A94A6"/>
-	<SolidColorBrush x:Key="ActionIconColor" Color="#F72626"/>
+	<SolidColorBrush x:Key="IconPrimaryColor" Color="#222222"/>
+	<SolidColorBrush x:Key="IconSecundaryColor" Color="#5E6576"/>
+	<SolidColorBrush x:Key="IconActionColor" Color="#F72626"/>
 
-
-
-
-
-
-
-
-
-	<!-- Primary Colors -->
-	<!--<SolidColorBrush x:Key="PrimaryGrayColor" Color="#BFBFC4"/>-->
-
-
-	<!-- Typograhy Colors -->
-	<!--<SolidColorBrush x:Key="TextPrimaryColor" Color="#020F16"/>-->
-	<!--<SolidColorBrush x:Key="TextSecundaryColor" Color="#434344"/>-->
-
-	
-	
 </ResourceDictionary>

@@ -76,10 +76,39 @@ namespace PROG8050_PROJECT
 			}
 		}
 
-		private void btnAccount_Click(object sender, RoutedEventArgs e)
+		private void btnHome_Click(object sender, RoutedEventArgs e)
 		{
-			PagesNavigation.Navigate(new System.Uri("./View/Login.xaml", UriKind.RelativeOrAbsolute));
-			btnAccount.IsChecked = true;
+			PagesNavigation.Navigate(new System.Uri("./Views/Home.xaml", UriKind.RelativeOrAbsolute));
+		}
+
+		private void btnProduct_Click(object sender, RoutedEventArgs e)
+		{
+			PagesNavigation.Navigate(new System.Uri("./Views/Product.xaml", UriKind.RelativeOrAbsolute));
+		}
+
+		private void btnCategory_Click(object sender, RoutedEventArgs e)
+		{
+			PagesNavigation.Navigate(new System.Uri("./Views/Category.xaml", UriKind.RelativeOrAbsolute));
+		}
+
+		private void btnPromotion_Click(object sender, RoutedEventArgs e)
+		{
+			PagesNavigation.Navigate(new System.Uri("./Views/Promotion.xaml", UriKind.RelativeOrAbsolute));
+		}
+
+		private void btnCustomer_Click(object sender, RoutedEventArgs e)
+		{
+			PagesNavigation.Navigate(new System.Uri("./Views/Customer.xaml", UriKind.RelativeOrAbsolute));
+		}
+
+		private void btnOrder_Click(object sender, RoutedEventArgs e)
+		{
+			PagesNavigation.Navigate(new System.Uri("./Views/Order.xaml", UriKind.RelativeOrAbsolute));
+		}
+
+		private void btnUser_Click(object sender, RoutedEventArgs e)
+		{
+			PagesNavigation.Navigate(new System.Uri("./Views/User.xaml", UriKind.RelativeOrAbsolute));
 		}
 	}
 }
