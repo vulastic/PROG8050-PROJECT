@@ -3,20 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:PROG8050_PROJECT"
-        mc:Ignorable="d" Name="home"
+		xmlns:viewModel="clr-namespace:PROG8050_PROJECT.ViewModels" 
+		mc:Ignorable="d" x:Name="mainWindow"
         Title="Electronic E-Commerce System" Height="720" Width="1280"
 		WindowStartupLocation="CenterScreen" WindowStyle="None"
 		Background="Transparent" AllowsTransparency="True"
 		ResizeMode="NoResize" WindowState="Normal">
+	<Window.DataContext>
+		<viewModel:MainWindowModel/>
+	</Window.DataContext>
 	<Border Background="{DynamicResource BackgroundPrimaryColor}">
-		
 		<!-- Cornor Ratous Control -->
 		<Border.Style>
 			<Style TargetType="{x:Type Border}">
 				<Setter Property="CornerRadius" Value="8"/>
 				<Style.Triggers>
-					<DataTrigger Binding="{Binding ElementName=home, Path=WindowState}" Value="Maximized">
+					<DataTrigger Binding="{Binding ElementName=mainWindow, Path=WindowState}" Value="Maximized">
 						<Setter Property="CornerRadius" Value="0"/>
 					</DataTrigger>
 				</Style.Triggers>
@@ -38,19 +42,27 @@
 					</Grid.RowDefinitions>
 
 					<!-- Menu Toggle Button -->
-					<ToggleButton Grid.Row="0" x:Name="btnToggle" Style="{StaticResource ToggleButtonStyle}" Width="24" Height="24" HorizontalAlignment="Left" Margin="18,18,0,0">
+					<ToggleButton Grid.Row="0" x:Name="btnToggle" 
+								  Style="{StaticResource ToggleButtonStyle}" 
+								  Width="24" Height="24" 
+								  HorizontalAlignment="Left" 
+								  Margin="18,18,0,0">
 						<ToggleButton.Triggers>
 							<EventTrigger RoutedEvent="ToggleButton.Unchecked">
 								<BeginStoryboard>
 									<Storyboard x:Name="HideStakePanel">
-										<DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="200" To="60" Duration="0:0:0.2"/>
+										<DoubleAnimation Storyboard.TargetName="gridMenu" 
+														 Storyboard.TargetProperty="Width" 
+														 BeginTime="0:0:0" From="200" To="60" Duration="0:0:0.2"/>
 									</Storyboard>
 								</BeginStoryboard>
 							</EventTrigger>
 							<EventTrigger RoutedEvent="ToggleButton.Checked">
 								<BeginStoryboard>
 									<Storyboard x:Name="ShowStackPanel">
-										<DoubleAnimation Storyboard.TargetName="gridMenu" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="60" To="200" Duration="0:0:0.2"/>
+										<DoubleAnimation Storyboard.TargetName="gridMenu" 
+														 Storyboard.TargetProperty="Width" 
+														 BeginTime="0:0:0" From="60" To="200" Duration="0:0:0.2"/>
 									</Storyboard>
 								</BeginStoryboard>
 							</EventTrigger>
@@ -78,29 +90,46 @@
 				</Grid.RowDefinitions>
 				
 				<!-- Toolbar Control -->
-				<StackPanel Grid.Row="0" Grid.Column="1" Background="Transparent" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown"/>
+				<StackPanel Grid.Row="0" Grid.Column="1" Background="Transparent">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="MouseLeftButtonDown">
+							<i:InvokeCommandAction Command="{Binding MaximizeWindow}" PassEventArgsToCommand="True"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+				</StackPanel>
 
 				<!-- Window buttons (Minimize | Restore | Close)-->
 				<StackPanel Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0" Height="30" Orientation="Horizontal" FlowDirection="RightToLeft">
-					<Button x:Name="btnClose" Style="{StaticResource IconButtonStyle}" Content="{DynamicResource close}" Click="btnClose_Click" Tag="IsCloseButton"/>
-					<Button x:Name="btnRestore" Margin="5,0" Click="btnRestore_Click">
+					<Button x:Name="btnClose"
+							Style="{StaticResource IconButtonStyle}"
+							Content="{DynamicResource close}"
+							Tag="IsCloseButton"
+							Command="{Binding CloseWindow}"
+							CommandParameter="{Binding ElementName=mainWindow}"/>
+					<Button x:Name="btnRestore" Margin="5,0"
+							Command="{Binding RestoreWindow}"
+							CommandParameter="{Binding ElementName=mainWindow}">
 						<Button.Style>
 							<Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButtonStyle}">
 								<Setter Property="Content" Value="{DynamicResource maximize}"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=home, Path=WindowState}" Value="Maximized">
+                                    <DataTrigger Binding="{Binding ElementName=mainWindow, Path=WindowState}" Value="Maximized">
                                         <Setter Property="Content" Value="{DynamicResource restore}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
 					</Button>
-					<Button x:Name="btnMinimize" Style="{StaticResource IconButtonStyle}" Content="{DynamicResource minimize}" Click="btnMinimize_Click"/>
+					<Button x:Name="btnMinimize"
+							Style="{StaticResource IconButtonStyle}"
+							Content="{DynamicResource minimize}"
+							Command="{Binding MinimizeWindow}"
+							CommandParameter="{Binding ElementName=mainWindow}"/>
 				</StackPanel>
 
 
 				<Border Grid.Row="1" CornerRadius="8"  Margin="10" Background="{DynamicResource BackgroundSecondaryColor}">
-					<Frame x:Name="PagesNavigation" NavigationUIVisibility="Hidden" Source="./Views/Login.xaml">
+					<Frame x:Name="pagesNavigation" NavigationUIVisibility="Hidden" Source="./Views/Login.xaml">
 						<!-- Page Content -->
 					</Frame>
 				</Border>

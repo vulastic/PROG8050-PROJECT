@@ -9,6 +9,8 @@ The Group No. 4
 - Jintu Orakkottu Baby 8700329
 - Lenora Michael 8732280 
 
+The Project is based on [C# Project of Inventory Management System](https://www.youtube.com/watch?v=tF7zShUZG7E)
+
 ### Project Interface Outline
 ![outline](./Project-Outline.drawio.png)
 
