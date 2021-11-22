@@ -1,0 +1,60 @@
+﻿<Page x:Class="PROG8050_PROJECT.View.UpdateCustomer"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PROG8050_PROJECT.View"
+      mc:Ignorable="d"  
+      Title="Update Customer">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="500"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="1" Grid.Row="1" CornerRadius="8" BorderBrush="{DynamicResource TextPrimaryColor}" BorderThickness="1">
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
+						   FontSize="36" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
+						   Text="Update Customer"/>
+                <Label Content="User No: " FontWeight="Bold" HorizontalAlignment="Left" Margin="32,0,0,0" Grid.Row="2" FontSize="16" VerticalAlignment="Center" Height="32" Width="76"/>
+                <Label Content="Email: " FontWeight="Bold" HorizontalAlignment="Left" Margin="43,0,0,0" Grid.Row="3" FontSize="16" VerticalAlignment="Center" Height="32" Width="65"/>
+                <Label Content="Full Name: " FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="4" FontSize="16" VerticalAlignment="Center" Height="32" Width="98"/>
+                <Label Content="Gender: " FontWeight="Bold" HorizontalAlignment="Left" Margin="32,10,0,0" Grid.Row="5" FontSize="16" VerticalAlignment="Top" Height="32" Width="76"/>
+                <Label Content="Phone No: " FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="6" FontSize="16" VerticalAlignment="Center" Height="32" Width="98"/>
+                <TextBox x:Name="textBox_UserNo"  Grid.Row="2" Margin="113,11,40,16" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="1234" IsReadOnly="True"/>
+                <TextBox x:Name="textBox_Email"  Grid.Row="3" Margin="113,12,40,16" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Customer Email"/>
+                <TextBox x:Name="textBox_FullName" Grid.Row="4" Margin="113,12,40,15" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Customer Name"/>
+                <ComboBox Name="comboboxCategoryList" Grid.Row="5" Margin="113,10,40,15" FontSize="16" >
+                    <ComboBoxItem Content="Female" IsSelected="True"/>
+                    <ComboBoxItem Content="Male"/>
+                    <ComboBoxItem Content="Others"/>
+                </ComboBox>
+                <TextBox x:Name="textBox_PhoneNo" Grid.Row="6" Margin="113,12,40,16" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Customer Phone No"/>
+                <Grid Grid.Row="7">
+                    <Button x:Name="btnCancel" Content="Cancel" FontSize="16" Style="{StaticResource BorderButton}" Background="{DynamicResource RedPrimaryColor}" Click="btnCancel_Click" Width="100" Margin="20,14,0,10" HorizontalAlignment="Left"/>
+                    <Button x:Name="btnUpdate" Content="Update" FontSize="16" Style="{StaticResource BorderButton}" Click="btnUpdate_Click" Width="100" Margin="278,14,0,10" HorizontalAlignment="Left"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

@@ -8,8 +8,50 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Home">
 
-	<Grid>
-		<TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0,167,0,0" Text="Home" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="36"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
 
-	</Grid>
+        <TextBlock Margin="50,15" Text="Good Day!" FontWeight="DemiBold" FontStyle="Italic" FontSize="20" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+       
+        <!-- Business Statistics Block -->
+        <TextBlock Margin="50,15" Text="Business Statistics" Foreground="{DynamicResource TextPrimaryColor}" FontWeight="Bold" FontSize="25" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <TextBox x:Name="textBox_CustomerCount" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="Customer count" Grid.Row="2" Grid.Column="3" Margin="50,5"/>
+        <TextBox x:Name="textBox_ActiveCustomerCount" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="Active Customer count" Grid.Row="3" Grid.Column="3" Margin="50,5"/>
+        <TextBox x:Name="textBox_TotalOrderAmount" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="Total Orders Amount" Grid.Row="4" Grid.Column="3" Margin="50,5"/>
+        <TextBox x:Name="textBox_LastOrderDate" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="Last Order Date" Grid.Row="5" Grid.Column="3" Margin="50,5"/>
+
+        <!-- Daily Summary Block -->
+        <TextBlock Margin="50,15" Text="Daily Summary" Foreground="{DynamicResource TextPrimaryColor}" FontWeight="Bold" FontSize="25" Grid.Row="6" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <TextBox x:Name="textBox_NewCustomerCountD" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="New Customer count" Grid.Row="7" Grid.Column="1" Margin="50,5"/>
+        <TextBox x:Name="textBox_OrderCountD" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="Order count" Grid.Row="8" Grid.Column="1" Margin="50,5"/>
+        <TextBox x:Name="textBox_TotalProductsSoldD" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="Amount of Products Sold" Grid.Row="9" Grid.Column="1" Margin="50,5"/>
+        <TextBox x:Name="textBox_TotalPriceD" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="Total selling price" Grid.Row="10" Grid.Column="1" Margin="50,5"/>
+
+        <!-- Weekly Summary Block -->
+        <TextBlock Margin="50,15" Text="Weekly Summary" Foreground="{DynamicResource TextPrimaryColor}" FontWeight="Bold" FontSize="25" Grid.Row="6" Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <TextBox x:Name="textBox_NewCustomerCountW" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="New Customer count" Grid.Row="7" Grid.Column="3" Margin="50,5"/>
+        <TextBox x:Name="textBox_OrderCountW" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="Order count" Grid.Row="8" Grid.Column="3" Margin="50,5"/>
+        <TextBox x:Name="textBox_TotalProductsSoldW" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="Amount of Products Sold" Grid.Row="9" Grid.Column="3" Margin="50,5"/>
+        <TextBox x:Name="textBox_TotalPriceW" IsReadOnly="True" FontSize="12" Style="{StaticResource WaterMarkedTextBox}" Tag="Total selling price" Grid.Row="10" Grid.Column="3" Margin="50,5"/>
+    </Grid>
 </Page>
