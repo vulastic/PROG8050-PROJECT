@@ -4,8 +4,12 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PROG8050_PROJECT.View"
-      mc:Ignorable="d"  
-      Title="Login">
+	  xmlns:viewModel="clr-namespace:PROG8050_PROJECT.ViewModels" 
+      mc:Ignorable="d"
+	  Title="Login">
+	<Page.DataContext>
+		<viewModel:LoginViewModel/>
+	</Page.DataContext>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition/>
@@ -25,8 +29,7 @@
 					<RowDefinition/>
 					<RowDefinition/>
 					<RowDefinition/>
-					<RowDefinition/>
-					<RowDefinition/>
+					<RowDefinition Height="2.0*"/>
 					<RowDefinition Height="0.5*"/>
 					<RowDefinition/>
 					<RowDefinition/>
@@ -38,15 +41,22 @@
 				<TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
 						   FontSize="16" FontWeight="Normal" Foreground="{DynamicResource TextPrimaryColor}"
 						   Text="Sign in and start buying electronic equipment!"/>
-				<TextBox x:Name="textBox_ID" Grid.Row="3" Margin="50,15" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Username"/>
-				<TextBox x:Name="textBox_PW" Grid.Row="4" Margin="50,15" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Password"/>
+				<StackPanel Grid.Row="3" DataContext="{Binding LoginUser}">
+					<TextBox x:Name="textBox_ID" Margin="50,15" FontSize="16" Height="32"
+						 Style="{StaticResource WaterMarkedTextBox}" Tag="E-mail"
+						 Text="{Binding Email, Mode=TwoWay}"/>
+					<PasswordBox x:Name="textBox_PW" Margin="50,15" FontSize="16" Height="32"
+								 Style="{StaticResource WaterMarkedPasswordBox}" Tag="Password"/>
+				</StackPanel>
 
-				<Grid Grid.Row="5" Margin="50,5" VerticalAlignment="Center">
+				<Grid Grid.Row="4" Margin="50,5" VerticalAlignment="Center">
 					<Button x:Name="btnNewUser" Content="Create new account" HorizontalAlignment="Left" Style="{StaticResource TextButton}" Click="btnNewUser_Click"/>
 					<Button x:Name="btnForgot" Content="Forgot password?" HorizontalAlignment="Right" Style="{StaticResource TextButton}" Click="btnForgot_Click"/>
 				</Grid>
 
-				<Button x:Name="btnLogin" Grid.Row="6" Content="Login" Margin="50,15" FontSize="16" Style="{StaticResource BorderButton}" Click="btnLogin_Click"/>
+				<Button x:Name="btnLogin" Grid.Row="5" Content="Login" Margin="50,15" FontSize="16" Style="{StaticResource BorderButton}"
+						Command="{Binding Login}"
+						CommandParameter="{Binding ElementName=textBox_PW}"/>
 			</Grid>
 		</Border>
 	</Grid>
