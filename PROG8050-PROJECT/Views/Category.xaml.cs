@@ -24,5 +24,17 @@ namespace PROG8050_PROJECT.Views
 		{
 			InitializeComponent();
 		}
+
+		private void btnAddCatModal_Click(object sender, RoutedEventArgs e)
+		{
+			CategoryAddModal cataddmodal = new CategoryAddModal();
+			cataddmodal.ShowDialog();
+		}
+
+		private void btnUpdateCategoryModal_Click(object sender, RoutedEventArgs e)
+		{
+			CatUpdate update = new CatUpdate();
+			update.ShowDialog();
+		}
 	}
 }

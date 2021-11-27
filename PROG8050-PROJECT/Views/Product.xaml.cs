@@ -24,5 +24,17 @@ namespace PROG8050_PROJECT.Views
 		{
 			InitializeComponent();
 		}
+
+		private void btnAddProductModal_Click(object sender, RoutedEventArgs e)
+		{
+			AddPdctModal addPdctModal = new AddPdctModal();
+			addPdctModal.ShowDialog();
+		}
+
+		private void btnUpdateProductModal_Click(object sender, RoutedEventArgs e)
+		{
+			UpdateModal updatemodal = new UpdateModal();
+			updatemodal.ShowDialog();
+		}
 	}
 }
