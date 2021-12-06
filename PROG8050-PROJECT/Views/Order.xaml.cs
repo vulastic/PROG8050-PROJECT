@@ -1,6 +1,8 @@
 ﻿using PROG8050_PROJECT.View;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,11 +26,30 @@ namespace PROG8050_PROJECT.Views
 		public Order()
 		{
 			InitializeComponent();
+
+			//load customer details
+			SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+			SQLiteCommand createCommand = new SQLiteCommand("select Email, Name, Phone from user", dbManager.Connection);
+			createCommand.ExecuteNonQuery();
+			SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter(createCommand);
+			DataTable dataTable = new DataTable("user");
+			dataAdapter.Fill(dataTable);
+			CustomerDetails.ItemsSource = dataTable.DefaultView;
+			dataAdapter.Update(dataTable);
 		}
 
 		private void BtnSearch_Click(object sender, RoutedEventArgs e)
 		{
-			MessageBox.Show($"Customer: {textBox_CustomerSearchbar.Text} details loaded!");
+			//MessageBox.Show($"Customer: {textBox_CustomerSearchbar.Text} details loaded!");
+			//string search_txt = textBox_CustomerSearchbar.Text;
+			SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+			SQLiteCommand createCommand = new SQLiteCommand($"select Email, Name, Phone from user where email=\"{textBox_CustomerSearchbar.Text}\"", dbManager.Connection);
+			createCommand.ExecuteNonQuery();
+			SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter(createCommand);
+			DataTable dataTable = new DataTable("user");
+			dataAdapter.Fill(dataTable);
+			CustomerDetails.ItemsSource = dataTable.DefaultView;
+			dataAdapter.Update(dataTable);
 		}
 
 		private void BtnAddNew_Click(object sender, RoutedEventArgs e)
