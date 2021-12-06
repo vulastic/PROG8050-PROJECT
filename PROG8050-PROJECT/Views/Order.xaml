@@ -41,17 +41,13 @@
 
         <!-- Customer Details Table -->
         <DataGrid IsReadOnly="False" Grid.Row="3" Grid.Column="1" Name="tblCustomerDetails" MouseDoubleClick="Row_CustomerDetail_Click">
-            <DataGrid.Columns>
+            <!--<DataGrid.Columns>
                 <DataGridTextColumn Header=""/>
                 <DataGridTextColumn Header="Customer No"/>
                 <DataGridTextColumn Header="Name"/>
                 <DataGridTextColumn Header="Phone No"/>
                 <DataGridTextColumn Header="Email" Width="*"/>
-            </DataGrid.Columns>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
+            </DataGrid.Columns>>-->
         </DataGrid>
 
         <!-- Category list dropdown-->
@@ -90,11 +86,11 @@
 
         <Grid Grid.Row="3" Grid.Column="3">
             <!-- Show all orders Button-->
-            <Button x:Name="btnShowOrders" Content="Show All Orders" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnShowOrders_Click"  HorizontalAlignment="Left" Width="74" Margin="0,0,0,74"/>
+            <Button x:Name="btnShowOrders" Content="Show All Orders" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnShowOrders_Click"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Height="30"/>
             <!-- Delete Selected Button-->
-            <Button x:Name="btnDelete" Content="Delete Selected" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnDelete_Click" HorizontalAlignment="Right" Height="28" VerticalAlignment="Top" Width="74" Margin="0,0,82,0" />
+            <Button x:Name="btnDelete" Content="Delete Selected" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnDelete_Click" HorizontalAlignment="Right" Height="30" VerticalAlignment="Top" Width="74" Margin="0,0,82,0" />
             <!-- Select All Button-->
-            <Button x:Name="btnSelectAll" Content="Select All" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnSelectAll_Click" HorizontalAlignment="Right" Margin="0,0,0,74" Width="74" />
+            <Button x:Name="btnSelectAll" Content="Select All" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnSelectAll_Click" HorizontalAlignment="Right" Height="30" VerticalAlignment="Top" Width="74" />
         </Grid>
 
         <!-- Order creation Table -->
