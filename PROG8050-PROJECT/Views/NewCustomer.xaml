@@ -27,40 +27,36 @@
         <Border Grid.Column="1" Grid.Row="1" CornerRadius="8" BorderBrush="{DynamicResource TextPrimaryColor}" BorderThickness="1">
             <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="100"/>
                     <RowDefinition/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
 						   FontSize="36" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
-						   Text="New User"/>
-                <StackPanel Grid.Row="2" Grid.Column="0">
-                    <Label Content="Email: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
-                    <Label Content="Full Name: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
-                    <Label Content="Gender: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
-                    <Label Content="Phone No: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical" DataContext="{Binding Customer}">
-                    <TextBox x:Name="textBox_Email" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Email" Margin="15"  Text="{Binding Email, Mode=TwoWay}"/>
-                    <TextBox x:Name="textBox_FullName" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Full Name" Margin="15"  Text="{Binding Name, Mode=TwoWay}"/>
-                    <ComboBox x:Name="comboboxCategoryList" FontSize="16" Margin="15"  ItemsSource="{Binding Gender, Mode=OneWay}">
-                        <ComboBoxItem Content="Male"/>
-                        <ComboBoxItem Content="Female"/>
-                    </ComboBox>
+						   Text="New Customer"/>
+                <Label Content="Email: " FontWeight="Bold" HorizontalAlignment="Left" Margin="43,0,0,0" Grid.Row="2" FontSize="16" VerticalAlignment="Center" Height="32" Width="65"/>
+                <Label Content="Full Name: " FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="3" FontSize="16" VerticalAlignment="Center" Height="32" Width="98"/>
+                <Label Content="Gender: " FontWeight="Bold" HorizontalAlignment="Left" Margin="32,10,0,0" Grid.Row="4" FontSize="16" VerticalAlignment="Top" Height="32" Width="76"/>
+                <Label Content="Phone No: " FontWeight="Bold" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="5" FontSize="16" VerticalAlignment="Center" Height="32" Width="98"/>
 
-                    <TextBox x:Name="textBox_PhoneNo" Margin="15" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Phone No"  Text="{Binding PhoneNo, Mode=TwoWay}"/>
-                </StackPanel>
-                <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                <TextBox x:Name="textBox_Email"  Grid.Row="2" Margin="113,16,40,16" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Email"/>
+                <TextBox x:Name="textBox_FullName" Grid.Row="3" Margin="113,15,40,15" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Full Name"/>
+                <ComboBox Name="comboboxCategoryList" Grid.Row="4" Margin="113,15,40,15" FontSize="16" >
+                    <ComboBoxItem Content="Female" IsSelected="True"/>
+                    <ComboBoxItem Content="Male"/>
+                    <ComboBoxItem Content="Others"/>
+                </ComboBox>
+                <TextBox x:Name="textBox_PhoneNo" Grid.Row="5" Margin="113,15,40,16" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Phone No"/>
+                <Grid Grid.Row="6">
                     <Button x:Name="btnCancel" Content="Cancel" FontSize="16" Style="{StaticResource BorderButton}" Background="{DynamicResource RedPrimaryColor}" Click="btnCancel_Click" Width="100" Height="30" Margin="20,14,0,18" HorizontalAlignment="Left"/>
-                    <Button x:Name="btnAdd" Content="Add" FontSize="16" Style="{StaticResource BorderButton}" Command="{Binding AddCustomer}" CommandParameter="{Binding ElementName=textBox_PhoneNo}" Width="100" Height="30" Margin="278,14,0,18" HorizontalAlignment="Left"/>
+                    <Button x:Name="btnAdd" Content="Add" FontSize="16" Style="{StaticResource BorderButton}" Click="btnAdd_Click" Width="100" Height="30" Margin="278,14,0,18" HorizontalAlignment="Left"/>
                 </Grid>
-
             </Grid>
         </Border>
     </Grid>

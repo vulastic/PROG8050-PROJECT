@@ -32,7 +32,7 @@
 
         <Grid Grid.Row="1" Grid.Column="1">
             <!--Search Bar -->
-            <TextBox x:Name="textBox_CustomerSearchbar" FontSize="10" Style="{StaticResource WaterMarkedTextBox}" Tag="Customer email" HorizontalAlignment="Left" Margin="0,0,0,18" Width="201"/>
+            <TextBox x:Name="textBox_CustomerSearchbar" FontSize="10" Style="{StaticResource WaterMarkedTextBox}" Tag="Customer email/ Name/ ID" HorizontalAlignment="Left" Margin="0,0,0,18" Width="201"/>
             <!-- Search Button-->
             <Button x:Name="btnSearch" Content="Search" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnSearch_Click" Margin="203,0,117,18" Width="50"  HorizontalAlignment="Left"/>
             <!-- Add New Button-->
@@ -40,12 +40,18 @@
         </Grid>
 
         <!-- Customer Details Table -->
-        <DataGrid x:Name="CustomerDetails" AutoGenerateColumns="True" Grid.Row= "3" Grid.Column="1" ScrollViewer.CanContentScroll="True">
-            <!--<DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding }"/>
+        <DataGrid IsReadOnly="False" Grid.Row="3" Grid.Column="1" Name="tblCustomerDetails" MouseDoubleClick="Row_CustomerDetail_Click">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header=""/>
+                <DataGridTextColumn Header="Customer No"/>
+                <DataGridTextColumn Header="Name"/>
                 <DataGridTextColumn Header="Phone No"/>
                 <DataGridTextColumn Header="Email" Width="*"/>
-            </DataGrid.Columns>-->
+            </DataGrid.Columns>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
         </DataGrid>
 
         <!-- Category list dropdown-->
@@ -84,11 +90,11 @@
 
         <Grid Grid.Row="3" Grid.Column="3">
             <!-- Show all orders Button-->
-            <Button x:Name="btnShowOrders" Content="Show All Orders" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnShowOrders_Click" VerticalAlignment="top"  HorizontalAlignment="Left" Width="100" Height="30"/>
+            <Button x:Name="btnShowOrders" Content="Show All Orders" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnShowOrders_Click"  HorizontalAlignment="Left" Width="74" Margin="0,0,0,74"/>
             <!-- Delete Selected Button-->
-            <Button x:Name="btnDelete" Content="Delete Selected" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnDelete_Click" HorizontalAlignment="Right" Height="30" VerticalAlignment="Top" Width="74" Margin="0,0,82,0" />
+            <Button x:Name="btnDelete" Content="Delete Selected" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnDelete_Click" HorizontalAlignment="Right" Height="28" VerticalAlignment="Top" Width="74" Margin="0,0,82,0" />
             <!-- Select All Button-->
-            <Button x:Name="btnSelectAll" Content="Select All" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnSelectAll_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Width="70" Height="30"/>
+            <Button x:Name="btnSelectAll" Content="Select All" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnSelectAll_Click" HorizontalAlignment="Right" Margin="0,0,0,74" Width="74" />
         </Grid>
 
         <!-- Order creation Table -->
@@ -100,7 +106,7 @@
                 <DataGridTextColumn Header="Price" Width="auto"/>
                 <DataGridTextColumn Header="Quantity" Width="auto"/>
                 <DataGridTextColumn Header="Total Price" Width="auto"/>
-                <DataGridCheckBoxColumn Header="Select" Width="*"/>
+                <DataGridTextColumn Header="Select" Width="*"/>
             </DataGrid.Columns>
             <RowDefinition Height="1*" />
             <RowDefinition Height="1*" />
