@@ -7,69 +7,175 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Product">
-	<Border Grid.Row="1" CornerRadius="8"  Margin="10" Background="{DynamicResource BackgroundSecondaryColor}" d:IsLocked="True">
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="100" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-			<Grid.RowDefinitions>
-				<RowDefinition  Height =".2*"/>
-				<RowDefinition  Height=".2*"/>
-				<RowDefinition  Height=".9*"/>
-				<RowDefinition/>
-			</Grid.RowDefinitions>
-			<StackPanel  Grid.Column="2"  Grid.RowSpan="2"  VerticalAlignment="Top">
-				<Grid>
-					<TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" 
-						   FontSize="36" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
-						   Text="Product Details"/>
-					<TextBox x:Name="textBox_Search" HorizontalAlignment="Right"  Margin="0 10 90 20" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Product Name / ID"/>
-					<Button x:Name="btnSearch" Content="  Search  " Margin="0 10 10 20" HorizontalAlignment="Right"  FontSize="16" Style="{StaticResource BorderButton}"/>
-				</Grid>
-			</StackPanel>
-			<StackPanel Grid.Row="2" >
-				<Grid x:Name="Addprod">
-					<Button  x:Name="btnAddProductModal" Margin="10 60 0 170" HorizontalAlignment="Left" VerticalAlignment="Top"  
-				           FontSize="16" FontWeight="Normal" Style="{StaticResource BorderButton}"
-				          Content=" Add Product " Click="btnAddProductModal_Click"  />
+        <Grid.RowDefinitions>
+            <RowDefinition  Height =".2*"/>
+            <RowDefinition  Height=".2*"/>
+            <RowDefinition  Height=".9*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel  Grid.Column="2"  Grid.RowSpan="2"  VerticalAlignment="Top">
+            <Grid>
+                <TextBlock  HorizontalAlignment="Center" VerticalAlignment="Center" 
+			       	      FontSize="25" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
+			       	      Text="Product Details"/>
+                <TextBox x:Name="textBox_Search" HorizontalAlignment="Right"  Margin="0 10 90 20" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Product Name / ID"/>
+                <Button x:Name="btnSearch" Content="  Search  " Margin="0 10 10 20" HorizontalAlignment="Right"  FontSize="16" Style="{StaticResource BorderButton}"/>
+            </Grid>
+        </StackPanel>
 
-					<Button  x:Name="btnUpdateProductModal" Margin="10 0 0 60" HorizontalAlignment="Left" VerticalAlignment="Center" Content="    Update     " FontWeight="Normal"  FontSize="16" Style="{StaticResource BorderButton}" Click="btnUpdateProductModal_Click" />
-					<Button x:Name="btnDelete" Content="     Delete     " Margin="10 0 0 120" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="16" Style="{StaticResource BorderButton}" />
-				</Grid>
+        <StackPanel Grid.Row="2" >
+            <Grid x:Name="Addprod">
+                <Button  Margin="10 60 0 170" HorizontalAlignment="Left" VerticalAlignment="Top"  
+			                   FontSize="14" FontWeight="Normal" Style="{StaticResource BorderButton}"
+			                   Content=" Add Product " Click="Button_Add_ItemElement_Click"/>
 
-			</StackPanel>
-			<DataGrid x:Name="productdataGrid" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" Margin="10 0 0 0">
-				<DataGrid.Columns>
-					<DataGridTextColumn Header="Product Id" Binding="{Binding Id}"/>
-					<DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-					<DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
-					<DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
-					<DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-					<DataGridTextColumn Header="Image" Binding="{Binding Image}"/>
+                <Button  Margin="10 0 0 60" HorizontalAlignment="Left" VerticalAlignment="Center"
+                             Content="    Update     " FontWeight="Normal"  FontSize="14"
+                             Style="{StaticResource BorderButton}" Click="Button_Edit_ItemElement_Click"/>
+                <Button  Content="     Delete     " Margin="10 0 0 120"
+                             HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="14" 
+                             Style="{StaticResource BorderButton}"  />
+            </Grid>
+        </StackPanel>
 
-					<DataGridTemplateColumn Header="Update Product">
-						<DataGridTemplateColumn.CellTemplate>
-							<DataTemplate>
-								<Button Content="Edit" />
-							</DataTemplate>
-						</DataGridTemplateColumn.CellTemplate>
-					</DataGridTemplateColumn>
-
-					<DataGridTemplateColumn Header="Delete Product">
-						<DataGridTemplateColumn.CellTemplate>
-							<DataTemplate>
-								<Button Content="Delete" />
-							</DataTemplate>
-						</DataGridTemplateColumn.CellTemplate>
-					</DataGridTemplateColumn>
+        <DataGrid x:Name="productDataGrid" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" Height="350" 
+                              Width="600"
+                              AutoGenerateColumns="False" 
+                             
+                          SelectionChanged="productDataGrid_SelectionChanged" SelectedItem="{Binding Path=SelectedProduct, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="grid1" Header="Product Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn  x:Name="grid2" Header="Category" Binding="{Binding Category}"/>
+                <DataGridTextColumn  x:Name="grid3" Header="Name" Binding="{Binding ProductName}"/>
+                <DataGridTextColumn  x:Name="grid4" Header="Description" Binding="{Binding Description}"/>
+                <DataGridTextColumn  x:Name="grid5" Header="Price" Binding="{Binding Price}"/>
+                <DataGridTextColumn  x:Name="grid6" Header="Quantity" Binding="{Binding Quantity}"/>
+                <!--<DataGridTextColumn  x:Name="grid7" Header="Image" Binding="{Binding Image}"/>-->
+            </DataGrid.Columns>
+        </DataGrid>
 
 
-				</DataGrid.Columns>
-			</DataGrid>
+        <!-- End of the XAML as it needs to be on top of everything else! -->
 
-		</Grid>
-	</Border>
+        <Grid  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" x:Name="AddItemElementInputBox" Visibility="Collapsed">
+            <Grid Background="Black" Opacity="0"/>
+            <Border
+                            MinWidth="400"
+                            Background="{DynamicResource BackgroundPrimaryColor}" 
+                            BorderBrush="{DynamicResource TextPrimaryColor}" 
+                            BorderThickness="1" 
+                            CornerRadius="5,5,5,5" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Margin="5" FontSize="16" TextAlignment="Center" Text="Add Product" FontWeight="Bold"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <!--   <RowDefinition />-->
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="5" Text="Select Category" Grid.Row="0" Grid.Column="0"/>
 
+                        <ComboBox Grid.Column="1" Grid.Row="0"   FontSize="10" x:Name="InputCategoryIdBox" Margin="5" Width="200" >
+                            <ComboBoxItem Content="Laptops" />
+                            <ComboBoxItem Content="Smartphones"/>
+                            <ComboBoxItem Content="Tablets"/>
+                            <ComboBoxItem Content="Television"/>
+                            <ComboBoxItem Content="Kitchen Appliances"/>
+                        </ComboBox>
+                        <TextBlock Margin="5" Text=" Product Name" Grid.Row="1" Grid.Column="0"/>
+                        <TextBox x:Name="InputProductNameBox" Margin="5" Width="200" Grid.Row="1" Grid.Column="1"/>
+                        <TextBlock Margin="5" Text=" Product Description" Grid.Row="2" Grid.Column="0"/>
+                        <TextBox x:Name="InputProductDescriptionBox" Margin="5" Width="200" Grid.Row="2" Grid.Column="1"/>
+                        <TextBlock Margin="5" Text=" Quantity" Grid.Row="3" Grid.Column="0"/>
+                        <TextBox x:Name="InputProducQuantityBox" Margin="5" Width="200" Grid.Row="3" Grid.Column="1"/>
+                        <TextBlock Margin="5" Text=" Price" Grid.Row="4" Grid.Column="0"/>
+                        <TextBox x:Name="InputProductPriceBox" Margin="5" Width="200" Grid.Row="4" Grid.Column="1"/>
+                        <!--  <TextBlock Margin="5" Text=" Add Image" Grid.Row="5" Grid.Column="0"/>
+                        <TextBox x:Name="InputProductImageBox" Margin="5" Width="200" Grid.Row="5" Grid.Column="1"/>-->
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="ProductSubmitButton" Margin="5" FontSize="14" Content="  Submit  " FontWeight="Normal" Style="{StaticResource BorderButton}" Click="ProductSubmitButton_Click" Command="{Binding Product}" />
+                        <Button x:Name="ProductCancelButton" Margin="5" FontSize="14" Content="  Cancel  " FontWeight="Normal" Style="{StaticResource BorderButton}" Cursor="Arrow" Click="ProductCancelButton_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Edit/Update Form Started Here-->
+        <Grid  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" x:Name="EditItemElementInputBox" Visibility="Collapsed">
+            <Grid Background="Black" Opacity="0"/>
+            <Border
+                            MinWidth="400"
+                            Background="{DynamicResource BackgroundPrimaryColor}" 
+                            BorderBrush="{DynamicResource TextPrimaryColor}" 
+                            BorderThickness="1" 
+                            CornerRadius="5,5,5,5" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBlock Margin="5" Text="Update Product" FontSize="16" TextAlignment="Center" FontWeight="Bold"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Margin="5" Text=" Select Category" Grid.Row="0" Grid.Column="0"/>
+
+                        <ComboBox Grid.Column="1" Grid.Row="0" x:Name="InputEditCategoryIdBox" Margin="5" Width="200" >
+                            <ComboBoxItem Content="Laptops" />
+                            <ComboBoxItem Content="Smartphones"/>
+                            <ComboBoxItem Content="Tablets"/>
+                            <ComboBoxItem Content="Television"/>
+                            <ComboBoxItem Content="Kitchen Appliances"/>
+                        </ComboBox>
+
+                        <TextBlock Margin="5" Text=" Product Name" Grid.Row="1" Grid.Column="0"/>
+                        <TextBox x:Name="InputEditProductNameBox" Text="{Binding ProductName}" Margin="5" Width="200" Grid.Row="1" Grid.Column="1"/>
+                        <TextBlock Margin="5" Text="  Description" Grid.Row="2" Grid.Column="0"/>
+                        <TextBox x:Name="InputEditProductDescriptionBox" Text="{Binding Description}" Margin="5" Width="200" Grid.Row="2" Grid.Column="1"/>
+                        <TextBlock Margin="5" Text="  Price" Grid.Row="3" Grid.Column="0"/>
+                        <TextBox x:Name="InputEditProductPriceBox" Text="{Binding Price}" Margin="5" Width="200" Grid.Row="3" Grid.Column="1"/>
+                        <TextBlock Margin="5" Text="  Quantity" Grid.Row="4" Grid.Column="0"/>
+                        <TextBox x:Name="InputEditProductQuantityBox" Text="{Binding Quantity}" Margin="5" Width="200" Grid.Row="4" Grid.Column="1"/>
+                        <TextBlock Margin="5" Text=" Add Image" Grid.Row="5" Grid.Column="0"/>
+                        <TextBox x:Name="InputEditItemimageBox" Text="{Binding Image}" Margin="5" Width="200" Grid.Row="5" Grid.Column="1"/>
+                        <TextBlock Margin="5" Text=" Id" Grid.Row="6" Grid.Column="0"/>
+                        <TextBox x:Name="InputEditId" Text="{Binding Id}" Margin="5" Width="200" Grid.Row="6" Grid.Column="1"/>
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="EditItemUpdateButton" Margin="5" Content="  Submit  " FontSize="14" FontWeight="Normal" Style="{StaticResource BorderButton}" Cursor="Arrow" Click="EditItemUpdateButton_Click" />
+                        <Button x:Name="EditItemCancelButton" Margin="5" Content="  Cancel  " FontSize="14" FontWeight="Normal" Style="{StaticResource BorderButton}" Cursor="Arrow" Click="EditItemCancelButton_Click"  />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+    </Grid>
 </Page>
