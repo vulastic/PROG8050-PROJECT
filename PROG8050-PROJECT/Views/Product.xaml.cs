@@ -30,8 +30,8 @@ namespace PROG8050_PROJECT.Views
     public partial class Product : Page
     {
 
-        SQLiteDataAdapter mAdapter;
-        DataTable dtable;
+        SQLiteDataAdapter sAdapter;
+        DataTable datable;
 
         string editcategoryid, editcategoryname, editcategorydescription;
         string editcategoryProduct, editproductname, editproductdescription, editproductprice, editproductquantity, editproductdimage;
@@ -132,7 +132,7 @@ namespace PROG8050_PROJECT.Views
                   + "' where Id =" + Int32.Parse(this.InputEditId.Text.ToString());
                 cmd.ExecuteNonQuery();
                 FillDataGrid();
-                conn.Close();
+                
                 EditItemElementInputBox.Visibility = System.Windows.Visibility.Hidden;
 
             }
@@ -149,22 +149,19 @@ namespace PROG8050_PROJECT.Views
         }
         private void FillDataGrid()
         {
-            SQLiteDBManager dbManager = SQLiteDBManager.Instance;
-            var conn = dbManager.Connection;
+   
 
-            //List<Product> tempProduct = dbManager.ExecuteReader<Product> ("SELECT * FROM Product order by id");
-
-            using var cmd = new SQLiteCommand(conn);
+           SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+            var con = dbManager.Connection;
+            try { 
+            var cmd = new SQLiteCommand(con);
             cmd.CommandText = "SELECT * FROM Product order by id";
-            // var dataReader = cmd.ExecuteReader();
-            //dtable = new DataTable("Product");
-            //dtable.Load(dataReader);
             cmd.ExecuteNonQuery();
-            mAdapter = new SQLiteDataAdapter(cmd);
-            dtable = new DataTable("Product");
-            mAdapter.Fill(dtable);
-            productDataGrid.ItemsSource = dtable.DefaultView;
-            mAdapter.Update(dtable);
+            sAdapter = new SQLiteDataAdapter(cmd);
+            datable = new DataTable("Product");
+            sAdapter.Fill(datable);
+            productDataGrid.ItemsSource = datable.DefaultView;
+            sAdapter.Update(datable);
 
 
             this.productDataGrid.Columns[0].Header = "Id";
@@ -173,7 +170,11 @@ namespace PROG8050_PROJECT.Views
             this.productDataGrid.Columns[3].Header = "Description";
             this.productDataGrid.Columns[4].Header = "Price";
             this.productDataGrid.Columns[5].Header = "Quantity";
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Message : " + ex);
+            }
 
         }
 

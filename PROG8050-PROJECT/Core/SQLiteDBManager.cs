@@ -12,7 +12,7 @@ namespace PROG8050_PROJECT
 {
 	public sealed class SQLiteDBManager : Singleton<SQLiteDBManager>
 	{
-		private string dataSource = @"Data Source=database.sqlite";
+		private string dataSource = @"Data Source=./../../../database.sqlite";
 
 		#region Connection
 

@@ -39,16 +39,14 @@
                              Style="{StaticResource BorderButton}" Click="Button_Edit_CategoryElement_Click"/>
                 <Button  Content="     Delete     " Margin="10 0 0 120"
                              HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="14" 
-                             Style="{StaticResource BorderButton}"  />
+                             Style="{StaticResource BorderButton}" Click="Button_Delete_CategoryElement_Click" />
             </Grid>
-
         </StackPanel>
 
-        <DataGrid x:Name="categoryDataGrid" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" Height="350" 
-                              Width="600"
+        <DataGrid x:Name="categoryDataGrid" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Height="350"
                               AutoGenerateColumns="False" 
                               
-                          SelectionChanged="categoryDataGrid_SelectionChanged" SelectedItem="{Binding Path=SelectedProduct, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                          SelectionChanged="categoryDataGrid_SelectionChanged" SelectedItem="{Binding Path=SelectedProduct, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="45,11,45,11">
             <DataGrid.Columns >
                 <DataGridTextColumn Header="Category Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Category Name" Binding="{Binding CategoryName}"/>

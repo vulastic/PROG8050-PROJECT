@@ -128,25 +128,35 @@ namespace PROG8050_PROJECT.Views
         {
             SQLiteDBManager dbManager = SQLiteDBManager.Instance;
             var conn = dbManager.Connection;
-            using var cmd = new SQLiteCommand(conn);
-            cmd.CommandText = "select* from Category order by id";
-            cmd.ExecuteNonQuery();
-            mAdapter = new SQLiteDataAdapter(cmd);
-            dtable = new DataTable("Category");
-            mAdapter.Fill(dtable);
-            categoryDataGrid.ItemsSource = dtable.AsDataView();
-            mAdapter.Update(dtable);
 
-            this.categoryDataGrid.Columns[0].Header = "Id";
-            this.categoryDataGrid.Columns[1].Header = "Category";
-            //    
+            try
+            {
+
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+
+                cmd.CommandText = "select* from Category order by id";
+                cmd.ExecuteNonQuery();
+                mAdapter = new SQLiteDataAdapter(cmd);
+                dtable = new DataTable("Category");
+                mAdapter.Fill(dtable);
+                categoryDataGrid.ItemsSource = dtable.DefaultView;
+                mAdapter.Update(dtable);
+
+                this.categoryDataGrid.Columns[0].Header = "Id";
+                this.categoryDataGrid.Columns[1].Header = "Category";
+                //    
 
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Message : " + ex);
+            }
 
 
-
-
-
+        }
+        public void Button_Delete_CategoryElement_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 
