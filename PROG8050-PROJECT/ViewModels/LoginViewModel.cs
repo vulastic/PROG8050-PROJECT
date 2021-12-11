@@ -49,7 +49,7 @@ namespace PROG8050_PROJECT.ViewModels
 
 			Dictionary<string, object> param = new Dictionary<string, object>();
 			param.Add("@email", loginUser.Email);
-			List<LoginUser> tempUser = dbManager.ExecuteReader<LoginUser>("select Email, Password from user where email = @email", param);
+			List<LoginUser> tempUser = dbManager.ExecuteReader<LoginUser>("select Email, Password from Account where email = @email", param);
 
 			if (tempUser.Count == 0)
 			{
