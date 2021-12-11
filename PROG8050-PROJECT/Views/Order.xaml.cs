@@ -29,7 +29,7 @@ namespace PROG8050_PROJECT.Views
 
 			//load customer details
 			SQLiteDBManager dbManager = SQLiteDBManager.Instance;
-			SQLiteCommand createCommand = new SQLiteCommand("select Email, Name, Phone from user", dbManager.Connection);
+			SQLiteCommand createCommand = new SQLiteCommand("select Email, Name, Phone from Account", dbManager.Connection);
 			createCommand.ExecuteNonQuery();
 			SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter(createCommand);
 			DataTable dataTable = new DataTable("user");
