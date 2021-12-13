@@ -11,13 +11,13 @@ namespace PROG8050_PROJECT.Models
 	{
 
 		public int Id { get; set; }
-		public int CategoryName { get; set; }
+		public int Name { get; set; }
 
 
 
 		public override string ToString()
 		{
-			return $"{CategoryName}";
+			return $"{Name}";
 		}
 
 	}

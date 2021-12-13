@@ -82,43 +82,42 @@ namespace PROG8050_PROJECT.Views
         {
             SQLiteDBManager dbManager = SQLiteDBManager.Instance;
             var conn = dbManager.Connection;
+            try { 
             using var cmd = new SQLiteCommand(conn);
-
-            cmd.CommandText = "Insert into Category (CategoryName)VALUES('" + this.InputCategoryBox.Text.ToString() + "')";
+            cmd.CommandText = "Insert into Category (Name)VALUES('" + this.InputCategoryBox.Text.ToString() + "')";
             cmd.ExecuteNonQuery();
             FillDataGrid();
-
-            //  conn.Close();
             AddCategoryElementInputBox.Visibility = System.Windows.Visibility.Hidden;
             MessageBox.Show($"{InputCategoryBox.Text} Category is succesfully inserted", "Success",
              MessageBoxButton.OK);
-
-
-
+        }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Message : " + ex);
+            }
         }
 
         private void EditCategoryUpdateButton_Click(object sender, RoutedEventArgs e)
         {
             SQLiteDBManager dbManager = SQLiteDBManager.Instance;
             var conn = dbManager.Connection;
-
-            using (var cmd = new SQLiteCommand(conn))
+            try
             {
-                conn.Open();
-                cmd.CommandText = "update Category SET CategoryName = '" + this.InputEditCategoryBox.Text.ToString()
-                  + "' where Id =" + Int32.Parse(this.InputEditCategoryIdBox.Text.ToString());
+                var cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "update Category SET Name = '" + this.InputEditCategoryBox.Text.ToString()
+                    + "' where Id =" + Int32.Parse(this.InputEditCategoryIdBox.Text.ToString());
                 cmd.ExecuteNonQuery();
                 FillDataGrid();
-                conn.Close();
                 EditCategoryElementInputBox.Visibility = System.Windows.Visibility.Hidden;
-
+                MessageBox.Show($"{InputEditCategoryBox.Text} Product is succesfully Updated", "Success",
+              MessageBoxButton.OK);
             }
-            //  
-            MessageBox.Show($"{InputEditCategoryBox.Text} Product is succesfully Updated", "Success",
-          MessageBoxButton.OK);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Message : " + ex);
+            }
 
         }
-
         private void EditCategoryCancelButton_Click(object sender, RoutedEventArgs e)
         {
             EditCategoryElementInputBox.Visibility = System.Windows.Visibility.Hidden;
@@ -128,12 +127,9 @@ namespace PROG8050_PROJECT.Views
         {
             SQLiteDBManager dbManager = SQLiteDBManager.Instance;
             var conn = dbManager.Connection;
-
             try
             {
-
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-
                 cmd.CommandText = "select* from Category order by id";
                 cmd.ExecuteNonQuery();
                 mAdapter = new SQLiteDataAdapter(cmd);
@@ -142,21 +138,49 @@ namespace PROG8050_PROJECT.Views
                 categoryDataGrid.ItemsSource = dtable.DefaultView;
                 mAdapter.Update(dtable);
 
-                this.categoryDataGrid.Columns[0].Header = "Id";
-                this.categoryDataGrid.Columns[1].Header = "Category";
-                //    
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Message : " + ex);
+            }
+        }
 
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+            var conn = dbManager.Connection;
+            try
+            {
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "select Name from Category where Id =\"{textBox_Search.Text}\"";
+                cmd.ExecuteNonQuery();
+               mAdapter = new SQLiteDataAdapter(cmd);
+               dtable= new DataTable("Category");
+                mAdapter.Fill(dtable);
+                categoryDataGrid.ItemsSource = dtable.DefaultView;
+                mAdapter.Update(dtable);
+            }catch (Exception ex)
+            {
+                MessageBox.Show("Error Message : " + ex);
+            }
+        }
 
+        public void Button_Delete_CategoryElement_Click(object sender, RoutedEventArgs e)
+        {
+            SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+            var conn = dbManager.Connection;
+            try {
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = "delete from Category where Id = " + Int32.Parse(editcategoryid);
+                cmd.ExecuteNonQuery();
+                FillDataGrid();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error Message : " + ex);
             }
 
-
-        }
-        public void Button_Delete_CategoryElement_Click(object sender, RoutedEventArgs e)
-        {
         }
     }
 
