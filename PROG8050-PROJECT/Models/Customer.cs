@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace PROG8050_PROJECT.Models
 {
-    class Customer:Notifier
+    class Customer
     {
+		/*
 		private string email;
 		public string Email
 		{
@@ -51,5 +52,6 @@ namespace PROG8050_PROJECT.Models
 				OnPropertyChanged("PhoneNo");
 			}
 		}
+		*/
 	}
 }

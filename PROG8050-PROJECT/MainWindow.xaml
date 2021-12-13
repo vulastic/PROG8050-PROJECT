@@ -7,14 +7,23 @@
         xmlns:local="clr-namespace:PROG8050_PROJECT"
 		xmlns:viewModel="clr-namespace:PROG8050_PROJECT.ViewModels" 
 		mc:Ignorable="d" x:Name="mainWindow"
-        Title="Electronic E-Commerce System" Height="720" Width="1280"
 		WindowStartupLocation="CenterScreen" WindowStyle="None"
 		Background="Transparent" AllowsTransparency="True"
-		ResizeMode="NoResize" WindowState="Normal">
+        Height="720" Width="1280" ResizeMode="NoResize" WindowState="Normal"
+		Style="{StaticResource WindowFonts}">
+	
 	<Window.DataContext>
-		<viewModel:MainWindowModel/>
+		<viewModel:MainWindowViewModel/>
 	</Window.DataContext>
-	<Border Background="{DynamicResource BackgroundPrimaryColor}">
+
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Loaded">
+			<i:InvokeCommandAction Command="{Binding Loaded}" CommandParameter="{Binding ElementName=mainWindow}"/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+	
+	<Border Background="{DynamicResource BackgroundColor}">
+		
 		<!-- Cornor Ratous Control -->
 		<Border.Style>
 			<Style TargetType="{x:Type Border}">
@@ -34,7 +43,7 @@
 			</Grid.ColumnDefinitions>
 			
 			<!-- Column Left -->
-			<Border CornerRadius="8,0,0,8" Background="{DynamicResource BackgroundSecondaryColor}">
+			<Border CornerRadius="8,0,0,8" Background="{DynamicResource PrimaryColor}">
 				<Grid x:Name="gridMenu" Grid.Column="0" Width="60">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
@@ -71,13 +80,35 @@
 
 					<!-- Menu Buttons -->
 					<StackPanel Grid.Row="1" Margin="0,30">
-						<RadioButton x:Name="btnHome" Content="Home" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource home}" Click="btnHome_Click"/>
-						<RadioButton x:Name="btnProduct" Content="Product" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource product}" Click="btnProduct_Click"/>
-						<RadioButton x:Name="btnCategory" Content="Cateogry" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource category}" Click="btnCategory_Click"/>
-						<RadioButton x:Name="btnPromotion" Content="Promotion" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource promotion}" Click="btnPromotion_Click"/>
-						<RadioButton x:Name="btnCustomer" Content="Customer" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource customer}" Click="btnCustomer_Click"/>
-						<RadioButton x:Name="btnOrder" Content="Order" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource order}" Click="btnOrder_Click"/>
-						<RadioButton x:Name="btnUser" Content="User" Style="{DynamicResource MenuButtonStyle}" Tag="{DynamicResource user}" Click="btnUser_Click"/>
+						<RadioButton x:Name="btnHome" Content="Home" IsChecked="True"
+									 Style="{DynamicResource MenuButtonStyle}" 
+									 Tag="{DynamicResource home}"
+									 Command="{Binding NavigateHome}"/>
+						
+						<RadioButton x:Name="btnProduct" Content="Product" 
+									 Style="{DynamicResource MenuButtonStyle}" 
+									 Tag="{DynamicResource product}"
+									 Command="{Binding NavigateProduct}"/>
+						
+						<RadioButton x:Name="btnCategory" Content="Cateogry" 
+									 Style="{DynamicResource MenuButtonStyle}" 
+									 Tag="{DynamicResource category}"/>
+						
+						<RadioButton x:Name="btnPromotion" Content="Promotion" 
+									 Style="{DynamicResource MenuButtonStyle}" 
+									 Tag="{DynamicResource promotion}"/>
+						
+						<RadioButton x:Name="btnCustomer" Content="Customer"
+									 Style="{DynamicResource MenuButtonStyle}" 
+									 Tag="{DynamicResource customer}"/>
+						
+						<RadioButton x:Name="btnOrder" Content="Order"
+									 Style="{DynamicResource MenuButtonStyle}"
+									 Tag="{DynamicResource order}"/>
+						
+						<RadioButton x:Name="btnUser" Content="User"
+									 Style="{DynamicResource MenuButtonStyle}"
+									 Tag="{DynamicResource user}"/>
 					</StackPanel>
 				</Grid>
 			</Border>
@@ -93,21 +124,22 @@
 				<StackPanel Grid.Row="0" Grid.Column="1" Background="Transparent">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="MouseLeftButtonDown">
-							<i:InvokeCommandAction Command="{Binding MaximizeWindow}" PassEventArgsToCommand="True"/>
+							<i:InvokeCommandAction Command="{Binding Maximize}" PassEventArgsToCommand="True"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 				</StackPanel>
 
 				<!-- Window buttons (Minimize | Restore | Close)-->
-				<StackPanel Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,10,0" Height="30" Orientation="Horizontal" FlowDirection="RightToLeft">
-					<Button x:Name="btnClose"
+				<StackPanel Grid.Row="0" Grid.Column="4" 
+							HorizontalAlignment="Right" VerticalAlignment="Top" 
+							Margin="0,5,10,0" Height="30" Orientation="Horizontal" FlowDirection="RightToLeft">
+					<Button x:Name="btnClose" Tag="IsCloseButton"
 							Style="{StaticResource IconButtonStyle}"
 							Content="{DynamicResource close}"
-							Tag="IsCloseButton"
-							Command="{Binding CloseWindow}"
+							Command="{Binding Close}"
 							CommandParameter="{Binding ElementName=mainWindow}"/>
 					<Button x:Name="btnRestore" Margin="5,0"
-							Command="{Binding RestoreWindow}"
+							Command="{Binding Restore}"
 							CommandParameter="{Binding ElementName=mainWindow}">
 						<Button.Style>
 							<Style TargetType="{x:Type Button}" BasedOn="{StaticResource IconButtonStyle}">
@@ -123,13 +155,13 @@
 					<Button x:Name="btnMinimize"
 							Style="{StaticResource IconButtonStyle}"
 							Content="{DynamicResource minimize}"
-							Command="{Binding MinimizeWindow}"
+							Command="{Binding Minimize}"
 							CommandParameter="{Binding ElementName=mainWindow}"/>
 				</StackPanel>
 
 
-				<Border Grid.Row="1" CornerRadius="8"  Margin="10" Background="{DynamicResource BackgroundSecondaryColor}">
-					<Frame x:Name="pagesNavigation" NavigationUIVisibility="Hidden" Source="./Views/Login.xaml">
+				<Border Grid.Row="1" CornerRadius="8"  Margin="10" Background="{DynamicResource PrimaryColor}">
+					<Frame x:Name="serviceFrame" NavigationUIVisibility="Hidden">
 						<!-- Page Content -->
 					</Frame>
 				</Border>
