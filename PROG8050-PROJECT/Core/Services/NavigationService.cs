@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using PROG8050_PROJECT.Views;
 using PROG8050_PROJECT.ViewModels;
 
 namespace PROG8050_PROJECT.Core.Services
 {
 	class NavigationService : INavigationService
 	{
-		private readonly Dictionary<Type, Type> viewMapping = new()
+		private readonly Dictionary<Type, Uri> viewMapping = new()
 		{
-			[typeof(LoginPageViewModel)] = typeof(LoginPage),
-			[typeof(HomePageViewModel)] = typeof(HomePage),
-			[typeof(ProductPageViewModel)] = typeof(ProductPage)
+			[typeof(LoginPageViewModel)]	= new System.Uri("./Views/LoginPage.xaml", UriKind.Relative),
+			[typeof(HomePageViewModel)]		= new System.Uri("./Views/HomePage.xaml", UriKind.Relative),
+			[typeof(ProductPageViewModel)]	= new System.Uri("./Views/HomePage.xaml", UriKind.Relative)
 		};
 		
 		private readonly Frame frame;

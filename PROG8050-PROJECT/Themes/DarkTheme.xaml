@@ -5,15 +5,16 @@
 
 	<Style x:Key="WindowFonts" TargetType="{x:Type Window}">
 		<Setter Property="FontFamily" Value="Poppins"/>
-		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="FontSize" Value="16"/>
 	</Style>
 
 	<Style x:Key="PageFonts" TargetType="{x:Type Page}">
 		<Setter Property="FontFamily" Value="Poppins"/>
 		<Setter Property="FontSize" Value="16"/>
+
 	</Style>
 
-	
+
 	<SolidColorBrush x:Key="BackgroundPrimaryColor" Color="#131725"/>
 	<SolidColorBrush x:Key="BackgroundSecondaryColor" Color="#1d2335"/>
 
@@ -51,5 +52,7 @@
 	081D2E - 트위터 세컨드
 	
 	3C4151 - 어도비 세컨드
+	
+	F2F2F2
 	-->
 </ResourceDictionary>

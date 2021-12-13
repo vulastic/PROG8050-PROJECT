@@ -44,15 +44,17 @@ namespace PROG8050_PROJECT.ViewModels
 		{
 			MainWindow window = sender as MainWindow;
 
+			string connectionString = "Data Source=./../../../database.sqlite";
+
 			// Service Injection
 			Ioc.Default.ConfigureServices(
 				new ServiceCollection()
 				.AddSingleton<INavigationService>(new NavigationService(window.serviceFrame))
-				.AddSingleton<IDBService, SQLiteDBService>()
+				.AddSingleton<IDBService>(new SQLiteDBService(connectionString))
+				.AddSingleton<ILoginService, LoginService>()
 				.BuildServiceProvider());
 
-			// Go to HomeView
-			Ioc.Default.GetRequiredService<INavigationService>().Navigate<HomePageViewModel>();
+			Ioc.Default.GetService<INavigationService>().Navigate<HomePageViewModel>();
 		}
 
 		private void CloseWindow(object sender)

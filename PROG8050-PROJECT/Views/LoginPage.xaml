@@ -42,21 +42,21 @@
 				</Grid.RowDefinitions>
 
 				<TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
-						   Foreground="{DynamicResource TextColor}"
+						   Foreground="{DynamicResource PrimaryTextColor}"
 						   FontWeight="ExtraBold" FontSize="36"
 						   Text="Sign in"/>
 
 				<TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
-						   Foreground="{DynamicResource TextColor}"
+						   Foreground="{DynamicResource PrimaryTextColor}"
 						   Text="Sign in and start buying electronic equipment!"/>
 
-				<StackPanel Grid.Row="3" DataContext="{Binding Account}">
-					<TextBox x:Name="textBox_ID" Margin="50,15" Height="32"
+				<StackPanel Grid.Row="3">
+					<TextBox Margin="50,15" Height="32"
 							 Style="{StaticResource WaterMarkTextBox}" Tag="E-mail address"
-							 Text="{Binding Email, Mode=TwoWay}"/>
+							 Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-					<PasswordBox x:Name="textBox_PW" Margin="50,15" Height="32"
-								 Style="{StaticResource WaterMarkPasswordBox}" Tag="Password"/>
+					<PasswordBox x:Name="password" Margin="50,15" Height="32"
+								 Style="{StaticResource WaterMarkPasswordBox}" Tag="Password" PasswordChanged="password_PasswordChanged"/>
 				</StackPanel>
 
 				<Grid Grid.Row="4" Margin="50,5" VerticalAlignment="Center">
@@ -68,11 +68,13 @@
 							Content="Forgot password?"/>
 				</Grid>
 
-				<Button x:Name="btnLogin" Grid.Row="5" Margin="50,15" 
+				<Button x:Name="btnLogin" Grid.Row="5" Margin="50,15"
 						Style="{StaticResource BorderButton}"
-						Command="{Binding Login}"
-						CommandParameter="{Binding ElementName=textBox_PW}"
-						Content="Login"/>
+						Command="{Binding SignIn}"
+						CommandParameter="{Binding ElementName=password}"
+						IsEnabled="{Binding CanLogin}"
+						Content="Sign in">
+				</Button>
 			</Grid>
 		</Border>
 	</Grid>

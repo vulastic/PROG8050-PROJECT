@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PROG8050_PROJECT.Core.Services
 {
-	class LoginService
+	class LoginService : ILoginService
 	{
 	}
 }

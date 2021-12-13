@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using PROG8050_PROJECT.Core.Services;
 using PROG8050_PROJECT.Core;
 
 namespace PROG8050_PROJECT.ViewModels
@@ -23,7 +25,11 @@ namespace PROG8050_PROJECT.ViewModels
 
 		private void LoadedPage(object sender)
 		{
-			
+			ILoginService service = Ioc.Default.GetService<ILoginService>();
+			//if (service.IsLogin)
+			{
+				Ioc.Default.GetService<INavigationService>().Navigate<LoginPageViewModel>();
+			}
 		}
 	}
 }

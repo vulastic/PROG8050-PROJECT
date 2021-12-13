@@ -9,39 +9,122 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.Input;
+using PROG8050_PROJECT.Core.Services;
+using System.Text.RegularExpressions;
+using System.Data;
 
 namespace PROG8050_PROJECT.ViewModels
 {
 	class LoginPageViewModel : ObservableObject
 	{
-		/*
-		private Account loginUser = new Account();
-		public Account LoginUser
+		private enum LoginCondition
 		{
-			get => loginUser;
+			Email = 1,
+			Password = 2,
+			Complete = 3
+				
+		}
+
+		public ICommand SignIn { get; }
+
+		public LoginPageViewModel()
+		{
+			SignIn = new RelayCommand<object>(SignInEvent);
+		}
+
+		private sbyte canLogin = (sbyte)LoginCondition.Complete;
+		public bool CanLogin
+		{
+			get => canLogin == (sbyte)LoginCondition.Complete;
 			set
 			{
-				loginUser = value;
-				OnPropertyChanged("LoginUser");
+				this.OnPropertyChanged("CanLogin");
 			}
 		}
 
-		private ICommand login;
-		public ICommand Login => (this.login) ??= new RelayCommand(parameter =>
+		private string email = "tester@gmail.com";
+		public string Email
 		{
-			if (String.IsNullOrEmpty(loginUser.Email))
+			get => email;
+			set
 			{
-				System.Windows.MessageBox.Show("Please Enter the user email");
+				email = value.Replace(" ", String.Empty);
+
+				Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,})+)$");
+				Match match = regex.Match(email);
+				if (match.Success)
+				{
+					canLogin |= (sbyte)LoginCondition.Email;
+					CanLogin = true;
+				}
+				else
+				{
+					canLogin &= ~(sbyte)LoginCondition.Email;
+					CanLogin = false;
+				}
+
+				this.OnPropertyChanged("Email");
+			}
+		}
+
+		private SecureString password;
+		public SecureString Password
+		{
+			get => password;
+			set
+			{
+				password = value;
+				if (value.Length > 0)
+				{
+					canLogin |= (sbyte)LoginCondition.Password;
+					CanLogin = true;
+				}
+				else
+				{
+					canLogin &= ~(sbyte)LoginCondition.Password;
+					CanLogin = false;
+				}
+			}
+		}
+
+		private void SignInEvent(object sender)
+		{
+			if (email == null || String.IsNullOrEmpty(email))
+			{
+				System.Windows.MessageBox.Show("E-mail is empty.", "Ooops!");
 				return;
 			}
 
-			PasswordBox pwBox = parameter as PasswordBox;
-			if (String.IsNullOrEmpty(pwBox.Password))
+			if (password == null || password.Length == 0)
 			{
-				System.Windows.MessageBox.Show("Please Enter the password");
+				System.Windows.MessageBox.Show("Password is empty.", "Ooops!");
 				return;
 			}
 
+			// Login
+			IDBService database = Ioc.Default.GetService<IDBService>();
+
+			if (database.IsOpen)
+			{
+				Dictionary<string, object> param = new Dictionary<string, object>();
+				param.Add("@email", this.email);
+				param.Add("@password", new System.Net.NetworkCredential(string.Empty, password).Password);
+
+				DataTable result = database.ExecuteReader("select id from Account where email = @email and password = @password limit 1;", param);
+
+				System.Windows.MessageBox.Show($"{result.Rows.Count}");
+			}
+
+			System.Windows.MessageBox.Show("sign ok");
+
+			INavigationService navigation = Ioc.Default.GetService<INavigationService>();
+			if (navigation.CanGoBack)
+			{
+				navigation.GoBack();
+			}
+			/*
 			SQLiteDBManager dbManager = SQLiteDBManager.Instance;
 
 			if (!dbManager.IsOpen())
@@ -68,7 +151,7 @@ namespace PROG8050_PROJECT.ViewModels
 
 			System.Windows.MessageBox.Show($"Login Successful");
 			return;
-		});
-		*/
+			*/
+		}
 	}
 }
