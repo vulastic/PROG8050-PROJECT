@@ -13,7 +13,7 @@ using PROG8050_PROJECT.Core;
 
 namespace PROG8050_PROJECT.ViewModels
 {
-	class HomePageViewModel : ObservableObject
+	class HomePageViewModel : ObservableRecipient
 	{
 		public ICommand Loaded { get; }
 
@@ -21,12 +21,11 @@ namespace PROG8050_PROJECT.ViewModels
 		{
 			Loaded = new RelayCommand<object>(LoadedPage);
 		}
-		
 
 		private void LoadedPage(object sender)
 		{
 			ILoginService service = Ioc.Default.GetService<ILoginService>();
-			//if (service.IsLogin)
+			if (!service.IsLogin)
 			{
 				Ioc.Default.GetService<INavigationService>().Navigate<LoginPageViewModel>();
 			}

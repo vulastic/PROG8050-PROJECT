@@ -1,0 +1,1 @@
+INSERT INTO Account (Email, Password) VALUES ('tester@email.com', 'password');

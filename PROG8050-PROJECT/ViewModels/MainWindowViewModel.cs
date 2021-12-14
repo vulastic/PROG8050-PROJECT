@@ -13,10 +13,11 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using PROG8050_PROJECT.Core.Services;
+using MvvmDialogs;
 
 namespace PROG8050_PROJECT.ViewModels
 {
-	class MainWindowViewModel : ObservableObject
+	class MainWindowViewModel : ObservableRecipient
 	{
 		public ICommand Loaded { get; }
 		public ICommand Close { get; }
@@ -51,6 +52,7 @@ namespace PROG8050_PROJECT.ViewModels
 				new ServiceCollection()
 				.AddSingleton<INavigationService>(new NavigationService(window.serviceFrame))
 				.AddSingleton<IDBService>(new SQLiteDBService(connectionString))
+				.AddSingleton<IDialogService, DialogService>() 
 				.AddSingleton<ILoginService, LoginService>()
 				.BuildServiceProvider());
 

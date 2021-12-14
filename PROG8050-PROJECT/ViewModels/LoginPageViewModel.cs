@@ -14,10 +14,13 @@ using Microsoft.Toolkit.Mvvm.Input;
 using PROG8050_PROJECT.Core.Services;
 using System.Text.RegularExpressions;
 using System.Data;
+using MvvmDialogs;
+using PROG8050_PROJECT.ViewModels.Modals;
+using System.Collections.ObjectModel;
 
 namespace PROG8050_PROJECT.ViewModels
 {
-	class LoginPageViewModel : ObservableObject
+	class LoginPageViewModel : ObservableRecipient
 	{
 		private enum LoginCondition
 		{
@@ -27,12 +30,11 @@ namespace PROG8050_PROJECT.ViewModels
 				
 		}
 
-		public ICommand SignIn { get; }
+		private readonly IDialogService dialogService;
 
-		public LoginPageViewModel()
-		{
-			SignIn = new RelayCommand<object>(SignInEvent);
-		}
+		public ICommand SignIn { get; }
+		public ICommand ForgotPassword { get; }
+		public ICommand CreateNewAccount { get; }
 
 		private sbyte canLogin = (sbyte)LoginCondition.Complete;
 		public bool CanLogin
@@ -89,6 +91,17 @@ namespace PROG8050_PROJECT.ViewModels
 			}
 		}
 
+		public ObservableCollection<string> Texts { get; } = new ObservableCollection<string>();
+
+		public LoginPageViewModel()
+		{
+			this.dialogService = Ioc.Default.GetService<IDialogService>();
+
+			SignIn = new RelayCommand<object>(SignInEvent);
+			ForgotPassword = new RelayCommand<object>(ForgotPasswordEvent);
+			CreateNewAccount = new RelayCommand<object>(CreateNewAccountEvent);
+		}
+
 		private void SignInEvent(object sender)
 		{
 			if (email == null || String.IsNullOrEmpty(email))
@@ -103,55 +116,78 @@ namespace PROG8050_PROJECT.ViewModels
 				return;
 			}
 
-			// Login
-			IDBService database = Ioc.Default.GetService<IDBService>();
-
-			if (database.IsOpen)
+			try
 			{
+				// Login
+				IDBService database = Ioc.Default.GetService<IDBService>();
+
+				if (!database.IsOpen)
+				{
+					System.Windows.MessageBox.Show("Cannot connect to the database", "Ooops!");
+					return;
+				}
+
+
 				Dictionary<string, object> param = new Dictionary<string, object>();
 				param.Add("@email", this.email);
 				param.Add("@password", new System.Net.NetworkCredential(string.Empty, password).Password);
 
-				DataTable result = database.ExecuteReader("select id from Account where email = @email and password = @password limit 1;", param);
+				DataTable result = database.ExecuteReader("SELECT id FROM account WHERE Email = @email AND Password = @password LIMIT 1;", param);
+				if (result.Rows.Count == 0)
+				{
+					System.Windows.MessageBox.Show("Invalid e-mail or password", "Ooops!");
+					return;
+				}
 
-				System.Windows.MessageBox.Show($"{result.Rows.Count}");
+				int accountId = Convert.ToInt32(result.Rows[0][0]);
+
+				// Select all user account
+				List<AdminUser> users = database.ExecuteReader<AdminUser>($"SELECT * FROM Admin WHERE AccountId = {accountId} LIMIT 1;");
+				if (users.Count == 0)
+				{
+					System.Windows.MessageBox.Show("Cannot find admin user in the database.", "Ooops!");
+					return;
+				}
+
+				ILoginService loginService = (LoginService)Ioc.Default.GetService<ILoginService>();
+				loginService.SetLogin(this.email, users[0]);
+
+				// Message
+				System.Windows.MessageBox.Show("Login success.", "Welcome!");
+
+				// Go back to previous page
+				INavigationService navigation = Ioc.Default.GetService<INavigationService>();
+				if (navigation.CanGoBack)
+				{
+					navigation.GoBack();
+				}
 			}
-
-			System.Windows.MessageBox.Show("sign ok");
-
-			INavigationService navigation = Ioc.Default.GetService<INavigationService>();
-			if (navigation.CanGoBack)
+			catch (Exception e)
 			{
-				navigation.GoBack();
-			}
-			/*
-			SQLiteDBManager dbManager = SQLiteDBManager.Instance;
-
-			if (!dbManager.IsOpen())
-			{
-				System.Windows.MessageBox.Show("Database is not connected");
-			}
-
-			Dictionary<string, object> param = new Dictionary<string, object>();
-			param.Add("@email", loginUser.Email);
-			List<Account> tempUser = dbManager.ExecuteReader<Account>("select Email, Password from Account where email = @email", param);
-
-			if (tempUser.Count == 0)
-			{
-				System.Windows.MessageBox.Show($"Cannot found the user");
+				System.Windows.MessageBox.Show("Database Error", "Ooops!");
+				Console.WriteLine(e.Message);
 				return;
 			}
+		}
 
-			Account dbUser = tempUser[0];
-			if (pwBox.Password != dbUser.Password)
+		private void ForgotPasswordEvent(object sender)
+		{
+
+		}
+
+		private void CreateNewAccountEvent(object sender)
+		{
+			CreateNewAccountViewModel modalView = new CreateNewAccountViewModel();
+
+			bool? success = dialogService.ShowDialog(this, modalView);
+			if (success == true)
 			{
-				System.Windows.MessageBox.Show($"Wrong Password");
-				return;
+				Texts.Add(modalView.Email);
+				if (Texts.Count > 0)
+				{
+					this.Email = Texts[0];
+				}
 			}
-
-			System.Windows.MessageBox.Show($"Login Successful");
-			return;
-			*/
 		}
 	}
 }
