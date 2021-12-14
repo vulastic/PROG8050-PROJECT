@@ -155,37 +155,37 @@ namespace PROG8050_PROJECT.ViewModels.Modals
 
 			// Insert DB
 			IDBService database = Ioc.Default.GetService<IDBService>();
+			if (!database.IsOpen)
+			{
+				System.Windows.MessageBox.Show("Cannot connect to the database", "Ooops!");
+				return;
+			}
 
-			if (database.IsOpen)
+			try
 			{
 				Dictionary<string, object> param = new Dictionary<string, object>();
 				param.Add("@email", this.email);
 				param.Add("@firstname", firstname);
 				param.Add("@lastname", lastname);
 
-				try
-				{
-					DataTable result = database.ExecuteReader(
-						"SELECT Account.Password From Account INNER JOIN Admin ON Account.Id = Admin.AccountId " +
-						"WHERE Account.Email = @email and Admin.FirstName = @firstname and Admin.LastName = @lastname;", param);
+				DataTable result = database.ExecuteReader(
+					"SELECT Account.Password From Account INNER JOIN Admin ON Account.Id = Admin.AccountId " +
+					"WHERE Account.Email = @email and Admin.FirstName = @firstname and Admin.LastName = @lastname;", param);
 
-					if (result.Rows.Count > 0)
-					{
-						string password = result.Rows[0][0].ToString();
-						System.Windows.MessageBox.Show($"Your password is '{password}'.", "Found password!");
-						this.DialogResult = true;
-					}
-					else
-					{
-						System.Windows.MessageBox.Show($"Cannot found your password.", "Not found password!");
-					}
-				}
-				catch (Exception e)
+				if (result.Rows.Count <= 0)
 				{
-					System.Windows.MessageBox.Show("Fail to find password.", "Ooops!");
-					Debug.WriteLine(e.Message);
+					System.Windows.MessageBox.Show($"Cannot find e-mail and names.", "Not found password!");
+					return;
 				}
-
+				
+				string password = result.Rows[0][0].ToString();
+				System.Windows.MessageBox.Show($"Your password is '{password}'.", "Found password!");
+				this.DialogResult = true;
+			}
+			catch (Exception e)
+			{
+				System.Windows.MessageBox.Show("Database Error.", "Ooops!");
+				Debug.WriteLine(e.Message);
 			}
 		}
 	}

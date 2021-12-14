@@ -207,51 +207,64 @@ namespace PROG8050_PROJECT.ViewModels.Modals
 			// Insert DB
 			IDBService database = Ioc.Default.GetService<IDBService>();
 
-			if (database.IsOpen)
+			if (!database.IsOpen)
 			{
+				System.Windows.MessageBox.Show("Cannot connect to the database", "Ooops!");
+				return;
+			}
+
+			try
+			{
+				DataTable user = database.ExecuteReader($"SELECT * FROM Account WHERE Email = '{this.Email}';");
+				if (user.Rows.Count > 0)
+				{
+					System.Windows.MessageBox.Show($"'{this.Email}' is already exist.", "Opps!");
+					return;
+				}
+
 				Dictionary<string, object> param = new Dictionary<string, object>();
 				param.Add("@email", this.email);
 				param.Add("@password", passwd);
 
-				try
+				int affectedRow = database.ExecuteNonQuery("insert into account (email, password) values (@email, @password);", param);
+				if (affectedRow <= 0)
 				{
-					int row = database.ExecuteNonQuery("insert into account (email, password) values (@email, @password);", param);
-
-					// Insert success and than select id
-					if (row > 0)
-					{
-						DataTable result = database.ExecuteReader("select id from account where email = @email and password = @password limit 1;", param);
-						
-						if (result.Rows.Count > 0)
-						{
-							int accountId = Convert.ToInt32(result.Rows[0][0]);
-							if (accountId > 0)
-							{
-								Dictionary<string, object> adminParam = new Dictionary<string, object>();
-								adminParam.Add(@"id", accountId);
-								adminParam.Add(@"firstname", firstname);
-								adminParam.Add(@"lastname", lastname);
-								adminParam.Add(@"gender", (int)gender);
-								adminParam.Add(@"phoneno", numericPhoneNumber);
-
-								// Insert into admin
-								row = database.ExecuteNonQuery("INSERT INTO Admin (AccountId, FirstName, LastName, Gender, PhoneNo) VALUES (@id, @firstname, @lastname, @gender, @phoneno);", adminParam);
-
-								// success to insert
-								if (row > 0)
-								{
-									System.Windows.MessageBox.Show("Welcome to join us.", "Congraturations!");
-									this.DialogResult = true;
-								}
-							}
-						}
-					}
+					System.Windows.MessageBox.Show("Fail to create new account (1).", "Opps!");
+					return;
 				}
-				catch(Exception e)
+
+				DataTable result = database.ExecuteReader("select id from account where email = @email and password = @password limit 1;", param);
+				if (result.Rows.Count <= 0)
 				{
-					System.Windows.MessageBox.Show("Fail to create account.", "Ooops!");
-					Debug.WriteLine(e.Message);
+					System.Windows.MessageBox.Show("Fail to create new account (2).", "Opps!");
+					return;
 				}
+
+				int accountId = Convert.ToInt32(result.Rows[0][0]);
+
+				Dictionary<string, object> adminParam = new Dictionary<string, object>();
+				adminParam.Add(@"id", accountId);
+				adminParam.Add(@"firstname", firstname);
+				adminParam.Add(@"lastname", lastname);
+				adminParam.Add(@"gender", (int)gender);
+				adminParam.Add(@"phoneno", numericPhoneNumber);
+
+				// Insert into admin
+				affectedRow = database.ExecuteNonQuery("INSERT INTO Admin (AccountId, FirstName, LastName, Gender, PhoneNo) VALUES (@id, @firstname, @lastname, @gender, @phoneno);", adminParam);
+				if (affectedRow <= 0)
+				{
+					System.Windows.MessageBox.Show("Fail to create new account (3).", "Opps!");
+					return;
+				}
+
+				// Success
+				System.Windows.MessageBox.Show("Welcome to join us.", "Congraturations!");
+				this.DialogResult = true;
+			}
+			catch (Exception e)
+			{
+				System.Windows.MessageBox.Show("Database Error.", "Ooops!");
+				Debug.WriteLine(e.Message);
 			}
 		}
 	}
