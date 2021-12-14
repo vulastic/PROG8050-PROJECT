@@ -3,13 +3,28 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	  xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+	  xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
       xmlns:local="clr-namespace:PROG8050_PROJECT.Views"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="CustomerPage">
+	  xmlns:modals="clr-namespace:PROG8050_PROJECT.Views.Modals"
+	  xmlns:viewModels="clr-namespace:PROG8050_PROJECT.ViewModels"
+	  md:DialogServiceViews.IsRegistered="True"
+      mc:Ignorable="d" Title="CustomerPage"
+	  Style="{StaticResource PageFonts}">
 
-    <Grid>
-		<Label x:Name="label" Content="Customer Page" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"/>
+	<Page.DataContext>
+		<viewModels:CustomerPageViewModel/>
+	</Page.DataContext>
+
+	<!-- Loaded event -->
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Loaded">
+			<i:InvokeCommandAction Command="{Binding Loaded}"/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+
+	<Grid>
+		<Label x:Name="label" Content="CustomerPage" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"/>
 
 	</Grid>
 </Page>
