@@ -75,8 +75,7 @@
 				<Button x:Name="btnLogin" Grid.Row="5" Margin="50,15"
 						Style="{StaticResource BorderedButton}"
 						Command="{Binding SignIn}"
-						CommandParameter="{Binding ElementName=password}"
-						IsEnabled="{Binding CanLogin}"
+						IsEnabled="{Binding IsEnabled}"
 						Content="Sign in">
 				</Button>
 			</Grid>

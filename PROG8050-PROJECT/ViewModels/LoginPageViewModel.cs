@@ -22,11 +22,11 @@ namespace PROG8050_PROJECT.ViewModels
 {
 	class LoginPageViewModel : ObservableRecipient
 	{
-		private enum LoginCondition
+		private enum EnableCondition
 		{
-			Email = 1,
-			Password = 2,
-			Complete = 3
+			Email	 = 1 << 0,				// 0b00000001
+			Password = 1 << 1,				// 0b00000010
+			Complete = Email | Password		// 0b00000011
 				
 		}
 
@@ -36,13 +36,13 @@ namespace PROG8050_PROJECT.ViewModels
 		public ICommand ForgotPassword { get; }
 		public ICommand CreateNewAccount { get; }
 
-		private sbyte canLogin = (sbyte)LoginCondition.Complete;
-		public bool CanLogin
+		private int isEnabled = (int)EnableCondition.Complete;	// Tempral. Real is 0;
+		public bool IsEnabled
 		{
-			get => canLogin == (sbyte)LoginCondition.Complete;
+			get => isEnabled == (int) EnableCondition.Complete;
 			set
 			{
-				this.OnPropertyChanged("CanLogin");
+				this.OnPropertyChanged("IsEnabled");
 			}
 		}
 
@@ -58,13 +58,13 @@ namespace PROG8050_PROJECT.ViewModels
 				Match match = regex.Match(email);
 				if (match.Success)
 				{
-					canLogin |= (sbyte)LoginCondition.Email;
-					CanLogin = true;
+					isEnabled |= (sbyte)EnableCondition.Email;
+					IsEnabled = true;
 				}
 				else
 				{
-					canLogin &= ~(sbyte)LoginCondition.Email;
-					CanLogin = false;
+					isEnabled &= ~(sbyte)EnableCondition.Email;
+					IsEnabled = false;
 				}
 
 				this.OnPropertyChanged("Email");
@@ -80,13 +80,13 @@ namespace PROG8050_PROJECT.ViewModels
 				password = value;
 				if (value.Length > 0)
 				{
-					canLogin |= (sbyte)LoginCondition.Password;
-					CanLogin = true;
+					isEnabled |= (sbyte)EnableCondition.Password;
+					IsEnabled = true;
 				}
 				else
 				{
-					canLogin &= ~(sbyte)LoginCondition.Password;
-					CanLogin = false;
+					isEnabled &= ~(sbyte)EnableCondition.Password;
+					IsEnabled = false;
 				}
 			}
 		}
@@ -172,7 +172,13 @@ namespace PROG8050_PROJECT.ViewModels
 
 		private void ForgotPasswordEvent(object sender)
 		{
+			ForgotPasswordViewModel modalView = new ForgotPasswordViewModel();
 
+			bool? success = dialogService.ShowDialog(this, modalView);
+			if (success == true)
+			{
+
+			}
 		}
 
 		private void CreateNewAccountEvent(object sender)

@@ -43,16 +43,4 @@
 	<SolidColorBrush x:Key="PrimaryTextColor" Color="#F2F2F2"/>
 	<SolidColorBrush x:Key="SecondaryTextColor" Color="#ACB7BE"/>
 	<SolidColorBrush x:Key="DisabledColor" Color="#595959"/>
-	<!--
-	21262A
-	00B0F0 - Blue
-	A9D18E - Green
-	48A0EC - 트위터 블루
-	2A4B6A - 트위터 아이콘
-	081D2E - 트위터 세컨드
-	
-	3C4151 - 어도비 세컨드
-	
-	F2F2F2
-	-->
 </ResourceDictionary>

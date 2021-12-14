@@ -1,0 +1,1 @@
+SELECT Account.Password From Account INNER JOIN Admin ON Account.Id = Admin.AccountId WHERE Account.Email = 'aa@ssss.com' and Admin.FirstName = 'aa' and Admin.LastName = 'aa';
