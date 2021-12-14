@@ -92,23 +92,28 @@
 						
 						<RadioButton x:Name="btnCategory" Content="Cateogry" 
 									 Style="{DynamicResource MenuButtonStyle}" 
-									 Tag="{DynamicResource category}"/>
+									 Tag="{DynamicResource category}"
+									 Command="{Binding NavigateCategory}"/>
 						
 						<RadioButton x:Name="btnPromotion" Content="Promotion" 
 									 Style="{DynamicResource MenuButtonStyle}" 
-									 Tag="{DynamicResource promotion}"/>
+									 Tag="{DynamicResource promotion}"
+									 Command="{Binding NavigatePromotion}"/>
 						
 						<RadioButton x:Name="btnCustomer" Content="Customer"
 									 Style="{DynamicResource MenuButtonStyle}" 
-									 Tag="{DynamicResource customer}"/>
+									 Tag="{DynamicResource customer}"
+									 Command="{Binding NavigateCustomer}"/>
 						
 						<RadioButton x:Name="btnOrder" Content="Order"
 									 Style="{DynamicResource MenuButtonStyle}"
-									 Tag="{DynamicResource order}"/>
+									 Tag="{DynamicResource order}"
+									 Command="{Binding NavigateOrder}"/>
 						
-						<RadioButton x:Name="btnUser" Content="User"
+						<RadioButton x:Name="btnUser" Content="Admin"
 									 Style="{DynamicResource MenuButtonStyle}"
-									 Tag="{DynamicResource user}"/>
+									 Tag="{DynamicResource user}"
+									 Command="{Binding NavigateAdmin}"/>
 					</StackPanel>
 				</Grid>
 			</Border>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PROG8050_PROJECT.ViewModels
 {
-	class ProductPageViewModel : ObservableRecipient
+	class OrderPageViewModel : ObservableRecipient
 	{
 	}
 }

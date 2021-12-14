@@ -9,9 +9,14 @@ namespace PROG8050_PROJECT.Core.Services
 	{
 		private readonly Dictionary<Type, Uri> viewMapping = new()
 		{
-			[typeof(LoginPageViewModel)]	= new System.Uri("./Views/LoginPage.xaml", UriKind.Relative),
-			[typeof(HomePageViewModel)]		= new System.Uri("./Views/HomePage.xaml", UriKind.Relative),
-			[typeof(ProductPageViewModel)]	= new System.Uri("./Views/HomePage.xaml", UriKind.Relative)
+			[typeof(LoginPageViewModel)] = new System.Uri("./Views/LoginPage.xaml", UriKind.Relative),
+			[typeof(HomePageViewModel)]	= new System.Uri("./Views/HomePage.xaml", UriKind.Relative),
+			[typeof(ProductPageViewModel)] = new System.Uri("./Views/ProductPage.xaml", UriKind.Relative),
+			[typeof(CategoryPageViewModel)] = new System.Uri("./Views/CategoryPage.xaml", UriKind.Relative),
+			[typeof(PromotionPageViewModel)] = new System.Uri("./Views/PromotionPage.xaml", UriKind.Relative),
+			[typeof(CustomerPageViewModel)] = new System.Uri("./Views/CustomerPage.xaml", UriKind.Relative),
+			[typeof(OrderPageViewModel)] = new System.Uri("./Views/OrderPage.xaml", UriKind.Relative),
+			[typeof(AdminPageViewModel)] = new System.Uri("./Views/AdminPage.xaml", UriKind.Relative)
 		};
 		
 		private readonly Frame frame;

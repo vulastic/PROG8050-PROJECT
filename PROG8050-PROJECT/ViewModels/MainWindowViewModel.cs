@@ -27,6 +27,11 @@ namespace PROG8050_PROJECT.ViewModels
 
 		public ICommand NavigateHome { get; }
 		public ICommand NavigateProduct { get; }
+		public ICommand NavigateCategory { get; }
+		public ICommand NavigatePromotion { get; }
+		public ICommand NavigateCustomer { get; }
+		public ICommand NavigateOrder { get; }
+		public ICommand NavigateAdmin { get; }
 
 		public MainWindowViewModel()
 		{
@@ -38,6 +43,11 @@ namespace PROG8050_PROJECT.ViewModels
 
 			NavigateHome = new RelayCommand(NavigateHomePage);
 			NavigateProduct = new RelayCommand(NavigateProductPage);
+			NavigateCategory = new RelayCommand(NavigateCategoryPage);
+			NavigatePromotion = new RelayCommand(NavigatePromotionPage);
+			NavigateCustomer = new RelayCommand(NavigateCustomerPage);
+			NavigateOrder = new RelayCommand(NavigateOrderPage);
+			NavigateAdmin = new RelayCommand(NavigateAdminPage);
 		}
 
 		#region RelayCommands
@@ -112,6 +122,31 @@ namespace PROG8050_PROJECT.ViewModels
 		private void NavigateProductPage()
 		{
 			Ioc.Default.GetRequiredService<INavigationService>().Navigate<ProductPageViewModel>();
+		}
+
+		private void NavigateCategoryPage()
+		{
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate<CategoryPageViewModel>();
+		}
+
+		private void NavigatePromotionPage()
+		{
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate<PromotionPageViewModel>();
+		}
+
+		private void NavigateCustomerPage()
+		{
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate<CustomerPageViewModel>();
+		}
+
+		private void NavigateOrderPage()
+		{
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate<OrderPageViewModel>();
+		}
+
+		private void NavigateAdminPage()
+		{
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate<AdminPageViewModel>();
 		}
 		#endregion
 	}

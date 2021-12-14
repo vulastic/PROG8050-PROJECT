@@ -20,9 +20,9 @@
 			<i:InvokeCommandAction Command="{Binding Loaded}"/>
 		</i:EventTrigger>
 	</i:Interaction.Triggers>
-	
+
 	<Grid>
-		<Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="2,2,0,0" VerticalAlignment="Top"/>
+		<Label x:Name="label" Content="Home Page" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"/>
 
 	</Grid>
 </Page>
