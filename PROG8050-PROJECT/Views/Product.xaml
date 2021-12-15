@@ -27,7 +27,7 @@
 			       	      FontSize="25" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
 			       	      Text="Product Details"/>
                 <TextBox x:Name="textBox_Search" HorizontalAlignment="Right"  Margin="0 10 90 20" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Product Name / ID"/>
-                <Button x:Name="btnSearch" Content="  Search  " Margin="0 10 10 20" HorizontalAlignment="Right"  FontSize="16" Style="{StaticResource BorderButton}"/>
+                <Button x:Name="btnSearchProduct" Click="btnSearchProduct_Click" Content="  Search  " Margin="0 10 10 20" HorizontalAlignment="Right"  FontSize="16" Style="{StaticResource BorderButton}"/>
             </Grid>
         </StackPanel>
 

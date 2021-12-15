@@ -172,7 +172,9 @@ namespace PROG8050_PROJECT.Views
             try
             {
                 SQLiteCommand cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "select Name from Category where Id =\"{textBox_Search.Text}\"";
+                cmd.CommandText = @"select * from Category where Id Like @id OR Name Like @name Order by Id";
+                cmd.Parameters.AddWithValue("@id", textBox_Search.Text);
+                cmd.Parameters.AddWithValue("@name", textBox_Search.Text);
                 cmd.ExecuteNonQuery();
                mAdapter = new SQLiteDataAdapter(cmd);
                dtable= new DataTable("Category");

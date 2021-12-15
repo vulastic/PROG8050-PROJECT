@@ -194,9 +194,36 @@ namespace PROG8050_PROJECT.Views
             {
             }
         }
-        
 
-       
+        private void btnSearchProduct_Click(object sender, RoutedEventArgs e)
+        {
+
+            SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+            var conn = dbManager.Connection;
+            try
+            {
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = @"select * from Product where Id Like @id OR Name Like @name OR Description Like @decs OR Price Like @price OR Quantity Like @qty  Order by Id";
+                cmd.Parameters.AddWithValue("@id", textBox_Search.Text);
+                cmd.Parameters.AddWithValue("@name", textBox_Search.Text); 
+                cmd.Parameters.AddWithValue("@decs", textBox_Search.Text);
+                cmd.Parameters.AddWithValue("@price", textBox_Search.Text);
+                cmd.Parameters.AddWithValue("@qty", textBox_Search.Text);
+                
+                
+                cmd.ExecuteNonQuery();
+                sAdapter = new SQLiteDataAdapter(cmd);
+                datable = new DataTable("Category");
+                sAdapter.Fill(datable);
+                productDataGrid.ItemsSource = datable.DefaultView;
+                sAdapter.Update(datable);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Message : " + ex);
+            }
+
+        }
 
         private void EditItemUpdateButton_Click(object sender, RoutedEventArgs e)
         {
