@@ -14,6 +14,11 @@ namespace PROG8050_PROJECT.ViewModels
 	class PromotionPageViewModel : ObservableRecipient
 	{
 		public ICommand Loaded { get; }
+		public ICommand AddCategoryPromotion { get; }
+		public ICommand SearchCategoryPromotion { get; }
+		public ICommand AddProductPromotion { get; }
+		public ICommand SearchProductPromotion { get; }
+		public ICommand DeleteProductPromotion { get; }
 
 		public PromotionPageViewModel()
 		{

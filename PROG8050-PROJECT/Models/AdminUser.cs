@@ -1,14 +1,13 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
-using PROG8050_PROJECT.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PROG8050_PROJECT.Core;
 
 namespace PROG8050_PROJECT.Models
 {
-	class AdminUser : ObservableRecipient
+	class AdminUser
 	{
 		private int id;
 		public int Id
@@ -27,7 +26,6 @@ namespace PROG8050_PROJECT.Models
 			set
 			{
 				accountId = value;
-				this.OnPropertyChanged("CanLogin");
 			}
 		}
 
@@ -38,7 +36,6 @@ namespace PROG8050_PROJECT.Models
 			set
 			{
 				firstname = value;
-				this.OnPropertyChanged("FirstName");
 			}
 		}
 
@@ -49,7 +46,6 @@ namespace PROG8050_PROJECT.Models
 			set
 			{
 				lastname = value;
-				this.OnPropertyChanged("LastName");
 			}
 		}
 
@@ -60,7 +56,6 @@ namespace PROG8050_PROJECT.Models
 			set
 			{
 				gender = value;
-				this.OnPropertyChanged("CanLogin");
 			}
 		}
 
@@ -71,7 +66,6 @@ namespace PROG8050_PROJECT.Models
 			set
 			{
 				phoneno = value;
-				this.OnPropertyChanged("PhoneNo");
 			}
 		}
 	}
