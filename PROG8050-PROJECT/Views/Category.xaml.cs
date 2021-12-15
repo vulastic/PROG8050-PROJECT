@@ -187,7 +187,12 @@ namespace PROG8050_PROJECT.Views
 
         public void Button_Delete_CategoryElement_Click(object sender, RoutedEventArgs e)
         {
-            SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+            var Result = MessageBox.Show($"Do you want to delete {this.editcategoryname} ?", "Confirmation",
+                             MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (Result == MessageBoxResult.Yes)
+            {
+                MessageBox.Show("Succesfully Deleted");
+                SQLiteDBManager dbManager = SQLiteDBManager.Instance;
             var conn = dbManager.Connection;
             try {
                 SQLiteCommand cmd = new SQLiteCommand(conn);
@@ -199,7 +204,10 @@ namespace PROG8050_PROJECT.Views
             {
                 MessageBox.Show("Error Message : " + ex);
             }
-
+            }
+            else
+            {
+            }
         }
     }
 
