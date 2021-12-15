@@ -91,8 +91,6 @@ namespace PROG8050_PROJECT.ViewModels
 			}
 		}
 
-		public ObservableCollection<string> Texts { get; } = new ObservableCollection<string>();
-
 		public LoginPageViewModel()
 		{
 			this.dialogService = Ioc.Default.GetService<IDialogService>();
@@ -188,10 +186,9 @@ namespace PROG8050_PROJECT.ViewModels
 			bool? success = dialogService.ShowDialog(this, modalView);
 			if (success == true)
 			{
-				Texts.Add(modalView.Email);
-				if (Texts.Count > 0)
+				if (modalView.Email != null)
 				{
-					this.Email = Texts[0];
+					this.Email = modalView.Email;
 				}
 			}
 		}

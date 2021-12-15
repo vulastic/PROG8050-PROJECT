@@ -441,20 +441,25 @@
 		<!-- Make the border and grid lines a little less imposing -->
 		<Setter Property="SnapsToDevicePixels" Value="true"/>
 		<Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
-		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Background" Value="{DynamicResource BackgroundColor}"/>
 		<Setter Property="BorderBrush" Value="{DynamicResource SecondaryColor}" />
 		<Setter Property="BorderThickness" Value="3"/>
 		<Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource SecondaryColor}" />
 		<Setter Property="VerticalGridLinesBrush" Value="{DynamicResource SecondaryColor}" />
+		<Setter Property="TextBlock.FontSize" Value="14"/>
 		<Setter Property="ColumnHeaderStyle">
 			<Setter.Value>
 				<Style TargetType="DataGridColumnHeader">
 					<Setter Property="Foreground" Value="{DynamicResource PrimaryTextColor}"/>
 					<Setter Property="Background" Value="Transparent"/>
-					<Setter Property="HorizontalAlignment" Value="Center"/>
-					<Setter Property="Width" Value="*"/>
 					<Setter Property="BorderBrush" Value="{DynamicResource SecondaryColor}"/>
 					<Setter Property="BorderThickness" Value="1"/>
+					<Style.Triggers>
+						<!-- Highlight a grid row as the mouse passes over -->
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Foreground" Value="{DynamicResource HighlightColor}" />
+						</Trigger>
+					</Style.Triggers>
 				</Style>
 			</Setter.Value>
 		</Setter>
@@ -464,7 +469,7 @@
 					<Style.Triggers>
 						<!-- Highlight a grid row as the mouse passes over -->
 						<Trigger Property="IsMouseOver" Value="True">
-							<Setter Property="Background" Value="LightCyan" />
+							<Setter Property="Foreground" Value="{DynamicResource HighlightColor}" />
 						</Trigger>
 					</Style.Triggers>
 				</Style>
@@ -476,15 +481,20 @@
 					<Style.Triggers>
 						<!-- Highlight selected rows -->
 						<Trigger Property="IsSelected" Value="True">
-							<Setter Property="Background" Value="#ff66ccff" />
-							<Setter Property="BorderBrush" Value="Transparent" />
-							<Setter Property="Foreground" Value="Black" />
+							<Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource SecondaryColor}" />
+							<Setter Property="Foreground" Value="{DynamicResource SecondaryTextColor}" />
 						</Trigger>
 						<Trigger Property="IsFocused" Value="True">
-							<Setter Property="Background" Value="#ff66ccff" />
-							<Setter Property="BorderBrush" Value="Black" />
+							<Setter Property="Background" Value="{DynamicResource SecondaryColor}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
 							<Setter Property="BorderThickness" Value="1"/>
-							<Setter Property="Foreground" Value="Black" />
+							<Setter Property="Foreground" Value="{DynamicResource HighlightColor}" />
+						</Trigger>
+						<Trigger Property="IsSelected" Value="False">
+							<Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
+							<Setter Property="BorderBrush" Value="{DynamicResource SecondaryColor}" />
+							<Setter Property="Foreground" Value="{DynamicResource SecondaryTextColor}" />
 						</Trigger>
 					</Style.Triggers>
 					<!-- Add some padding around the contents of a cell -->
@@ -506,7 +516,7 @@
 					<Setter Property="FocusVisualStyle">
 						<Setter.Value>
 							<Style TargetType="Control">
-								<Setter Property="BorderBrush" Value="Transparent" />
+								<Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
 							</Style>
 						</Setter.Value>
 					</Setter>
