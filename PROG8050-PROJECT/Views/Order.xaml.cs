@@ -73,17 +73,24 @@ namespace PROG8050_PROJECT.Views
 		private void BtnDelete_Click(object sender, RoutedEventArgs e)
 		{
 			CreateOrder dataRowView = (CreateOrder)tblCProductDetails.SelectedItem;
-			
-			foreach(CreateOrder createOrder in CreateOrder.createOrders)
-            {
-				if(createOrder.Id == dataRowView.Id)
-                {
-					CreateOrder.createOrders.Remove(createOrder);
-					ShowOrders();
-					MessageBox.Show($" {dataRowView.Quantity} {dataRowView.Name} removed from the order list.");
-					return;
-                }
-            }
+			if (dataRowView == null) 
+			{
+				MessageBox.Show($"Select a product to remove from the cart");
+			} 
+			else 
+			{ 
+
+				foreach (CreateOrder createOrder in CreateOrder.createOrders)
+				{
+					if (createOrder.Id == dataRowView.Id)
+					{
+						CreateOrder.createOrders.Remove(createOrder);
+						ShowOrders();
+						MessageBox.Show($" {dataRowView.Quantity} {dataRowView.Name} removed from the order list.");
+						return;
+					}
+				}
+			}
 		}
 
 		private void BtnSelectAll_Click(object sender, RoutedEventArgs e)
