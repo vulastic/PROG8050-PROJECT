@@ -8,9 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Product">
-    <Page.DataContext>
-        <viewModel:ProductViewModel/>
-    </Page.DataContext>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
@@ -55,12 +53,18 @@
                           SelectionChanged="productDataGrid_SelectionChanged" SelectedItem="{Binding Path=SelectedProduct, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="grid1" Header="No" Binding="{Binding Id}"/>
-                <DataGridTextColumn  x:Name="grid2" Header="Category" Binding="{Binding CategoryId}"/>
+                <DataGridTextColumn  x:Name="grid2" Header="Category" Binding="{Binding Category.Name}"/>
                 <DataGridTextColumn  x:Name="grid3" Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn  x:Name="grid4" Header="Description" Binding="{Binding Description}"/>
                 <DataGridTextColumn  x:Name="grid5" Header="Price" Binding="{Binding Price}"/>
                 <DataGridTextColumn  x:Name="grid6" Header="Quantity" Binding="{Binding Quantity}"/>
-                <DataGridTextColumn  x:Name="grid7" Header="Image" Binding="{Binding Image}"/>
+                <DataGridTemplateColumn Header="Image" Width="200" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Path=Image}"  />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -96,7 +100,7 @@
                         </Grid.ColumnDefinitions>
                            <TextBlock Margin="5" Text="Select Category" Grid.Row="0" Grid.Column="0"/>
 
-                        <ComboBox Grid.Column="1" Grid.Row="0"  Name="InputCategoryIdBox" FontSize="10" DisplayMemberPath = "Name" SelectedValuePath = "Id" Margin="5" Width="200">
+                        <ComboBox Grid.Column="1" Grid.Row="0"  Name="InputCategoryIdBox" FontSize="10" Text="{Binding CategoryId,Mode=TwoWay}" Margin="5" Width="200">
                             <!-- <ComboBoxItem Content="Laptops" />
                             <ComboBoxItem Content="Smartphones"/>
                             <ComboBoxItem Content="Tablets"/>
@@ -158,23 +162,23 @@
 
                         <TextBlock Margin="5" Text=" Select Category" Grid.Row="0" Grid.Column="0"/>
 
-                        <ComboBox Grid.Column="1" Grid.Row="0" x:Name="InputEditCategoryIdBox" Margin="5" Width="200" >
+                        <ComboBox Grid.Column="1" Grid.Row="0" x:Name="InputEditCategoryIdBox"  Text="{Binding CategoryId}" Margin="5" Width="200" >
                            
                         </ComboBox>
 
-                        <TextBlock Margin="5" Text=" Product Name" Grid.Row="1" Grid.Column="0"/>
-                        <TextBox x:Name="InputEditProductNameBox"  Margin="5" Width="200" Grid.Row="1" Grid.Column="1"/>
+                        <TextBlock Margin="5" Text=" Product Name"  Grid.Row="1" Grid.Column="0"/>
+                        <TextBox x:Name="InputEditProductNameBox" Text="{Binding Name}"  Margin="5" Width="200" Grid.Row="1" Grid.Column="1"/>
                         <TextBlock Margin="5" Text="  Description" Grid.Row="2" Grid.Column="0"/>
-                        <TextBox x:Name="InputEditProductDescriptionBox" Margin="5" Width="200" Grid.Row="2" Grid.Column="1"/>
+                        <TextBox x:Name="InputEditProductDescriptionBox"  Text="{Binding Description}" Margin="5" Width="200" Grid.Row="2" Grid.Column="1"/>
                         <TextBlock Margin="5" Text="  Price" Grid.Row="3" Grid.Column="0"/>
-                        <TextBox x:Name="InputEditProductPriceBox"  Margin="5" Width="200" Grid.Row="3" Grid.Column="1"/>
+                        <TextBox x:Name="InputEditProductPriceBox"  Text="{Binding Price}" Margin="5" Width="200" Grid.Row="3" Grid.Column="1"/>
                         <TextBlock Margin="5" Text="  Quantity" Grid.Row="4" Grid.Column="0"/>
-                        <TextBox x:Name="InputEditProductQuantityBox"  Margin="5" Width="200" Grid.Row="4" Grid.Column="1"/>
+                        <TextBox x:Name="InputEditProductQuantityBox"  Text="{Binding Quantity}" Margin="5" Width="200" Grid.Row="4" Grid.Column="1"/>
                         <TextBlock Margin="5" Text=" Id" Grid.Row="5" Grid.Column="0"/>
-                        <TextBox x:Name="InputEditId" Margin="5" Width="200" Grid.Row="5" Grid.Column="1"/>
+                        <TextBox x:Name="InputEditId"  Text="{Binding Id}" Margin="5" Width="200" Grid.Row="5" Grid.Column="1"/>
                         <Button x:Name="BtnEditFromFile" Margin="10 10 90 10" Height="20" Width="50" Grid.Column="0" Grid.Row="8" Click="BtnEditFromFile_Click" Content="Browse" Style="{StaticResource BorderButton}"/>
                         <Canvas Grid.Row="8" Grid.Column="1">
-                            <Image  Name="imgEditProduct"  Canvas.Left="1" Canvas.Top="0" Width="167" Height="30"/>
+                            <Image  Name="imgEditProduct"  Source="{Binding Image}" Canvas.Left="1" Canvas.Top="0" Width="167" Height="30"/>
                         </Canvas>
                     </Grid>
 

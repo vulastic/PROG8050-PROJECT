@@ -10,6 +10,8 @@ namespace PROG8050_PROJECT.Models
 	class Product : Notifier
 	{
 
+		
+
 
 		private int id;
 		public int Id

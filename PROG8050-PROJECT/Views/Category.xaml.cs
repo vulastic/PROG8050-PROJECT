@@ -78,45 +78,64 @@ namespace PROG8050_PROJECT.Views
             AddCategoryElementInputBox.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        private void Button_Submit_CategoryElement_Click(object sender, RoutedEventArgs e)
+    private void Button_Submit_CategoryElement_Click(object sender, RoutedEventArgs e)
+    {
+        
+        SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+        var conn = dbManager.Connection;
+        using (var cmd = new SQLiteCommand(conn))
         {
-            SQLiteDBManager dbManager = SQLiteDBManager.Instance;
-            var conn = dbManager.Connection;
-            try { 
-            using var cmd = new SQLiteCommand(conn);
-            cmd.CommandText = "Insert into Category (Name)VALUES('" + this.InputCategoryBox.Text.ToString() + "')";
-            cmd.ExecuteNonQuery();
-            FillDataGrid();
-            AddCategoryElementInputBox.Visibility = System.Windows.Visibility.Hidden;
-            MessageBox.Show($"{InputCategoryBox.Text} Category is succesfully inserted", "Success",
-             MessageBoxButton.OK);
+                if (InputCategoryBox.Text != "")
+                {
+                    try
+                    {
+                        cmd.CommandText = "Insert into Category (Name)VALUES('" + this.InputCategoryBox.Text.ToString() + "')";
+                        cmd.ExecuteNonQuery();
+                        FillDataGrid();
+                        AddCategoryElementInputBox.Visibility = System.Windows.Visibility.Hidden;
+                        MessageBox.Show($"{InputCategoryBox.Text} Category is succesfully inserted", "Success",
+                         MessageBoxButton.OK);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error Message : " + ex);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(" Field Cannot be empty!");
+                }      
         }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error Message : " + ex);
-            }
-        }
+    }
 
         private void EditCategoryUpdateButton_Click(object sender, RoutedEventArgs e)
         {
             SQLiteDBManager dbManager = SQLiteDBManager.Instance;
             var conn = dbManager.Connection;
-            try
+            using (var cmd = new SQLiteCommand(conn))
             {
-                var cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "update Category SET Name = '" + this.InputEditCategoryBox.Text.ToString()
-                    + "' where Id =" + Int32.Parse(this.InputEditCategoryIdBox.Text.ToString());
-                cmd.ExecuteNonQuery();
-                FillDataGrid();
-                EditCategoryElementInputBox.Visibility = System.Windows.Visibility.Hidden;
-                MessageBox.Show($"{InputEditCategoryBox.Text} Product is succesfully Updated", "Success",
-              MessageBoxButton.OK);
+                if (InputEditCategoryBox.Text != "")
+                {
+                    try
+                    {
+                        cmd.CommandText = "update Category SET Name = '" + this.InputEditCategoryBox.Text.ToString()
+                       + "' where Id =" + Int32.Parse(this.InputEditCategoryIdBox.Text.ToString());
+                        cmd.ExecuteNonQuery();
+                        FillDataGrid();
+                        EditCategoryElementInputBox.Visibility = System.Windows.Visibility.Hidden;
+                        MessageBox.Show($"{InputEditCategoryBox.Text} Product is succesfully Updated", "Success",
+                      MessageBoxButton.OK);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error Message : " + ex);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(" Field Cannot be empty!");
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error Message : " + ex);
-            }
-
         }
         private void EditCategoryCancelButton_Click(object sender, RoutedEventArgs e)
         {
