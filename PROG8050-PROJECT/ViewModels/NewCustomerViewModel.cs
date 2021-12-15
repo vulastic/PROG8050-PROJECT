@@ -96,6 +96,7 @@ namespace PROG8050_PROJECT.ViewModels
                         if (result == 1)
                         {
 							MessageBoxResult messageBox = System.Windows.MessageBox.Show($"Customer {customer.Email} added successfully");
+							//System.Windows.Controls.btnClose.Click();
 							return;
 						}
 						else

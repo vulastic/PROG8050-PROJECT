@@ -5,9 +5,12 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PROG8050_PROJECT.View" 
 	  xmlns:viewModel="clr-namespace:PROG8050_PROJECT.ViewModels" 
-      xmlns:assembly="PROG8050_PROJECT"
+      xmlns:assembly="PROG8050_PROJECT" d:DataContext="{d:DesignInstance Type=viewModel:NewCustomerViewModel}"
       mc:Ignorable="d"  
       Title="New Customer">
+    <Page.DataContext>
+        <viewModel:NewCustomerViewModel/>
+    </Page.DataContext>
     <Grid Name="NewCustomerWindow">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

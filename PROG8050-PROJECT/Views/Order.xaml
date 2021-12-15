@@ -85,13 +85,12 @@
             <DatePicker HorizontalAlignment="Left" Width="168" Margin="122,0,0,20" />
         </Grid> -->
         <!-- Show all orders Button-->
-        <Button x:Name="btnShowOrders" Grid.Row="3" Grid.Column="3" Content="Show All Orders" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnShowOrders_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="74" Height="30"/>
+        <!--<Button x:Name="btnShowOrders" Grid.Row="3" Grid.Column="3" Content="Show All Orders" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnShowOrders_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="74" Height="30"/>-->
         <StackPanel Grid.Row="3" Grid.Column="3" Orientation="Horizontal" FlowDirection="RightToLeft">
             
             <!-- Delete Selected Button-->
             <Button x:Name="btnDelete" Content="Delete Selected" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnDelete_Click" Height="30" VerticalAlignment="Top" Margin="5" Width="74" />
-            <!-- Select All Button-->
-                <Button x:Name="btnSelectAll" Content="Select All" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnSelectAll_Click" Height="30" VerticalAlignment="Top" Margin="5" Width="74" />
+            
             </StackPanel>
 
         <!-- Order creation Table -->

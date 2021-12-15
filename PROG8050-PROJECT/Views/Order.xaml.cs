@@ -72,7 +72,18 @@ namespace PROG8050_PROJECT.Views
 
 		private void BtnDelete_Click(object sender, RoutedEventArgs e)
 		{
-			MessageBox.Show($"Selected Products are deleted!");
+			CreateOrder dataRowView = (CreateOrder)tblCProductDetails.SelectedItem;
+			
+			foreach(CreateOrder createOrder in CreateOrder.createOrders)
+            {
+				if(createOrder.Id == dataRowView.Id)
+                {
+					CreateOrder.createOrders.Remove(createOrder);
+					ShowOrders();
+					MessageBox.Show($" {dataRowView.Quantity} {dataRowView.Name} removed from the order list.");
+					return;
+                }
+            }
 		}
 
 		private void BtnSelectAll_Click(object sender, RoutedEventArgs e)
@@ -83,37 +94,46 @@ namespace PROG8050_PROJECT.Views
 		private void btnCreateOrder_Click(object sender, RoutedEventArgs e)
 		{
 			//string time = DateTime.Now.ToString().Remove(DateTime.Now.ToString().Length-3);
-			int OrderId = 0;
-			Int64 quantiy = 0;
-			Dictionary<string, object> param = new Dictionary<string, object>();
-			param.Add("@id", Id);
-			int result = dbManager.ExecuteNonQuery("INSERT INTO \"Order\"(CustomerId) VALUES(@id)", param);
-			if (result == 1)
+			if (CreateOrder.createOrders.Count == 0)
 			{
-				var temp= dbManager.ExecuteReader("Select Id from \"Order\"",param);
-				
-                while (temp.Read())
-                {
-					OrderId = Convert.ToInt32(temp["Id"].ToString());
-                }
-				foreach(CreateOrder order in CreateOrder.createOrders)
-                {
-					temp = dbManager.ExecuteReader($"Select Quantity from Product where Id={order.Id}", param);
-                    while (temp.Read())
-                    {
-						quantiy= Convert.ToInt64(temp["Quantity"].ToString());
-					}
-					quantiy -= order.Quantity;
-					result = dbManager.ExecuteNonQuery($"UPDATE Product set Quantity={quantiy} WHERE Id={order.Id}", param);
-					result = dbManager.ExecuteNonQuery($"INSERT INTO OrderDetail (OrderId,ProductId,Quantity) VALUES({OrderId},{order.Id},{order.Quantity})");
-				}
-
+				MessageBox.Show($"Cart is empty! Add products to complete your order");
 			}
-			MessageBox.Show($"Order {OrderId} is placed successfully!", "Success", MessageBoxButton.OK);
-			
-			//tblProductDetails.Items.Clear();
-			//tblCProductDetails.Items.Clear();
-			PrintOrder.Visibility = Visibility.Visible;
+			else
+			{
+				int OrderId = 0;
+				Int64 quantiy = 0;
+				Dictionary<string, object> param = new Dictionary<string, object>();
+				param.Add("@id", Id);
+				int result = dbManager.ExecuteNonQuery("INSERT INTO \"Order\"(CustomerId) VALUES(@id)", param);
+				if (result == 1)
+				{
+					var temp = dbManager.ExecuteReader("Select Id from \"Order\"", param);
+
+					while (temp.Read())
+					{
+						OrderId = Convert.ToInt32(temp["Id"].ToString());
+					}
+					foreach (CreateOrder order in CreateOrder.createOrders)
+					{
+						temp = dbManager.ExecuteReader($"Select Quantity from Product where Id={order.Id}", param);
+						while (temp.Read())
+						{
+							quantiy = Convert.ToInt64(temp["Quantity"].ToString());
+						}
+						quantiy -= order.Quantity;
+						result = dbManager.ExecuteNonQuery($"UPDATE Product set Quantity={quantiy} WHERE Id={order.Id}", param);
+						result = dbManager.ExecuteNonQuery($"INSERT INTO OrderDetail (OrderId,ProductId,Quantity) VALUES({OrderId},{order.Id},{order.Quantity})");
+					}
+
+				}
+				MessageBox.Show($"Order {OrderId} is placed successfully!", "Success", MessageBoxButton.OK);
+				CreateOrder.createOrders.Clear();
+				ShowOrders();
+
+				//tblProductDetails.Items.Clear();
+				//tblCProductDetails.Items.Clear();
+				PrintOrder.Visibility = Visibility.Visible;
+			}
 		}
 		private void Row_CustomerDetail_Click(object sender, MouseButtonEventArgs e)
 		{
@@ -176,9 +196,9 @@ namespace PROG8050_PROJECT.Views
 		}
         private void OnSelection(object sender, EventArgs e)
         {
-			if (Id==null|Id==0)
+			if (Id==0)
 			{
-				System.Windows.MessageBox.Show($"Select a customer proceed further");
+				System.Windows.MessageBox.Show($"Select a customer to proceed further");
 			}
 			else
 			{
