@@ -7,18 +7,28 @@ using System.Threading.Tasks;
 
 namespace PROG8050_PROJECT.Models
 {
-	class Category
+	class Category:Notifier
 	{
 
-		public int Id { get; set; }
-		public int Name { get; set; }
-
-
-
-		public override string ToString()
+		private int id;
+		public int Id
 		{
-			return $"{Name}";
+			get => id;
+			set
+			{
+				id = value;
+				OnPropertyChanged("id");
+			}
 		}
-
+		private string name;
+		public string Name
+		{
+			get => name;
+			set
+			{
+				name = value;
+				OnPropertyChanged("Name");
+			}
+		}
 	}
 }

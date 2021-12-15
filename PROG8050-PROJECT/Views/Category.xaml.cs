@@ -193,18 +193,21 @@ namespace PROG8050_PROJECT.Views
                              MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (Result == MessageBoxResult.Yes)
             {
-                MessageBox.Show("Succesfully Deleted");
+
+                try
+                {
+                   
                 SQLiteDBManager dbManager = SQLiteDBManager.Instance;
-            var conn = dbManager.Connection;
-            try {
+                var conn = dbManager.Connection;
                 SQLiteCommand cmd = new SQLiteCommand(conn);
                 cmd.CommandText = "delete from Category where Id = " + Int32.Parse(editcategoryid);
-                cmd.ExecuteNonQuery();
+                    MessageBox.Show("Succesfully Deleted");
+                    cmd.ExecuteNonQuery();
                 FillDataGrid();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error Message : " + ex);
+                MessageBox.Show("Select Category to delete");
             }
             }
             else

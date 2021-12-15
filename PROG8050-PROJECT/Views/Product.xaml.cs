@@ -179,16 +179,20 @@ namespace PROG8050_PROJECT.Views
         {
 
             var Result = MessageBox.Show($"Do you want to delete {this.editproductname} ? ", "Confirmation",
-                            MessageBoxButton.YesNo, MessageBoxImage.Question); 
-                           if (Result == MessageBoxResult.Yes)
+                            MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (Result == MessageBoxResult.Yes)
             {
-                MessageBox.Show("Succesfully Deleted");
-                SQLiteDBManager dbManager = SQLiteDBManager.Instance;
-                var conn = dbManager.Connection;
-                var cmd = new SQLiteCommand(conn);
-                cmd.CommandText = "delete from Product where Id = " + Int32.Parse(editpdctid);
-                cmd.ExecuteNonQuery();
-                FillDataGrid();
+                try { SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+                    var conn = dbManager.Connection;
+                    var cmd = new SQLiteCommand(conn);
+                    cmd.CommandText = "delete from Product where Id = " + Int32.Parse(editpdctid);
+                    MessageBox.Show("Succesfully Deleted");
+                    cmd.ExecuteNonQuery();
+                    FillDataGrid();
+                }catch (Exception ex)
+                      {
+                    MessageBox.Show("Select Product to delete");
+                        }
             }
             else
             {
