@@ -44,5 +44,10 @@ namespace PROG8050_PROJECT.View
 				this.NavigationService.Navigate(new Uri("./Views/Order.xaml", UriKind.RelativeOrAbsolute));
 			}
 		}
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+			this.NavigationService.Navigate(new Uri("./Views/Order.xaml", UriKind.RelativeOrAbsolute));
+		}
     }
 }

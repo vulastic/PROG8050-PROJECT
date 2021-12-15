@@ -8,6 +8,26 @@ namespace PROG8050_PROJECT.Models
 {
     class Customer:Notifier
     {
+		private int id;
+		public int Id
+		{
+			get => id;
+			set
+			{
+				id = value;
+				OnPropertyChanged("Id");
+			}
+		}
+		private int accountId;
+		public int AccountId
+		{
+			get => accountId;
+			set
+			{
+				accountId = value;
+				OnPropertyChanged("AccountId");
+			}
+		}
 		private string email;
 		public string Email
 		{
@@ -18,15 +38,46 @@ namespace PROG8050_PROJECT.Models
 				OnPropertyChanged("Email");
 			}
 		}
-
-		private string name;
-		public string Name
+        private string password;
+        public string Password
+        {
+            get => password;
+            set
+            {
+                password = value;
+                OnPropertyChanged("Password");
+            }
+        }
+        private string firstName;
+		public string FirstName
 		{
-			get => name;
+			get => firstName;
 			set
 			{
-				name = value;
-				OnPropertyChanged("Name");
+				firstName = value;
+				OnPropertyChanged("FirstName");
+			}
+		}
+		
+
+		private string lastName;
+		public string LastName
+		{
+			get => lastName;
+			set
+			{
+				lastName = value;
+				OnPropertyChanged("LastName");
+			}
+		}
+		private string phoneNo;
+		public string PhoneNo
+		{
+			get => phoneNo;
+			set
+			{
+				phoneNo = value;
+				OnPropertyChanged("PhoneNo");
 			}
 		}
 
@@ -41,15 +92,6 @@ namespace PROG8050_PROJECT.Models
 			}
 		}
 
-		private string phoneNo;
-		public string PhoneNo
-		{
-			get => phoneNo;
-			set
-			{
-				phoneNo = value;
-				OnPropertyChanged("PhoneNo");
-			}
-		}
+		
 	}
 }

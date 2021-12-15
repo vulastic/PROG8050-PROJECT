@@ -8,10 +8,7 @@
       xmlns:assembly="PROG8050_PROJECT"
       mc:Ignorable="d"  
       Title="New Customer">
-    <Page.DataContext>
-        <viewModel:NewCustomerViewModel/>
-    </Page.DataContext>
-    <Grid>
+    <Grid Name="NewCustomerWindow">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="400"/>
@@ -27,39 +24,43 @@
         <Border Grid.Column="1" Grid.Row="1" CornerRadius="8" BorderBrush="{DynamicResource TextPrimaryColor}" BorderThickness="1">
             <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="50"/>
-                    <RowDefinition Height="100"/>
                     <RowDefinition/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-
+                <Button x:Name="btnClose" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" Style="{StaticResource IconButtonStyle}" Content="{DynamicResource close}" Tag="IsCloseButton" Click="btnClose_Click"/>
                 <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
-						   FontSize="36" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
+						   FontSize="30" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
 						   Text="New Customer"/>
                 <StackPanel Grid.Row="2" Grid.Column="0">
                     <Label Content="Email: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
-                    <Label Content="Full Name: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
+                    <Label Content="Password: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
+                    <Label Content="First Name: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
+                    <Label Content="Last Name: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
                     <Label Content="Gender: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
                     <Label Content="Phone No: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical" DataContext="{Binding Customer}">
-                    <TextBox x:Name="textBox_Email" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Email" Margin="15"  Text="{Binding Email, Mode=TwoWay}"/>
-                    <TextBox x:Name="textBox_FullName" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Full Name" Margin="15"  Text="{Binding Name, Mode=TwoWay}"/>
-                    <ComboBox x:Name="comboboxCategoryList" FontSize="16" Margin="15"  ItemsSource="{Binding Gender, Mode=TwoWay}">
-                        <ComboBoxItem Content="Male"/>
-                        <ComboBoxItem Content="Female"/>
-                        <ComboBoxItem Content="Others"/>
+                    <TextBox x:Name="textBox_Email" FontSize="16" TextWrapping="NoWrap" Style="{StaticResource WaterMarkedTextBox}" Tag="Email" Margin="15"  Text="{Binding Email, Mode=TwoWay}"/>
+                    <PasswordBox x:Name="textBox_Password"  FontSize="16" Style="{StaticResource WaterMarkedPasswordBox}" Tag="Password" Margin="15"/>
+                    <TextBox x:Name="textBox_FirstName" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="First Name" Margin="15"  Text="{Binding FirstName, Mode=TwoWay}"/>
+                    <TextBox x:Name="textBox_LastName" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Last Name" Margin="15"  Text="{Binding LastName, Mode=TwoWay}"/>
+                    <ComboBox x:Name="comboboxCategoryList" SelectedValuePath="Tag" FontSize="16" Margin="15" SelectedValue="{Binding Gender, Mode=TwoWay}">
+                        <ComboBoxItem Content="Male" Tag="0"/>
+                        <ComboBoxItem Content="Female" Tag="1"/>
+                        <ComboBoxItem Content="Others" Tag="2"/>
                     </ComboBox>
 
                     <TextBox x:Name="textBox_PhoneNo" Margin="15" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Phone No"  Text="{Binding PhoneNo, Mode=TwoWay}"/>
                 </StackPanel>
                 <Grid Grid.Row="3" Grid.ColumnSpan="2">
                     <Button x:Name="btnCancel" Content="Cancel" FontSize="16" Style="{StaticResource BorderButton}" Background="{DynamicResource RedPrimaryColor}" Click="btnCancel_Click" Width="100" Height="30" Margin="20,14,0,18" HorizontalAlignment="Left"/>
-                    <Button x:Name="btnAdd" Content="Add" FontSize="16" Style="{StaticResource BorderButton}" Command="{Binding AddCustomer}" CommandParameter="{Binding ElementName=textBox_PhoneNo}" Width="100" Height="30" Margin="278,14,0,18" HorizontalAlignment="Left"/>
+                    <Button x:Name="btnAdd" Content="Add" FontSize="16" Style="{StaticResource BorderButton}" Command="{Binding AddCustomer}" CommandParameter="{Binding ElementName=textBox_Password}" Width="100" Height="30" Margin="278,14,0,18" HorizontalAlignment="Left"/>
                 </Grid>
 
             </Grid>
