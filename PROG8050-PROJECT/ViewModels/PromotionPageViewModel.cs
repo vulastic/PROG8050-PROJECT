@@ -114,12 +114,6 @@ namespace PROG8050_PROJECT.ViewModels
 
 		private void LoadedPage(object sender)
 		{
-			ILoginService service = Ioc.Default.GetService<ILoginService>();
-			if (!service.IsLogin)
-			{
-				Ioc.Default.GetService<INavigationService>().Navigate<LoginPageViewModel>();
-			}
-
 			// Load All Promotions
 			RetrivePromptions();
 		}

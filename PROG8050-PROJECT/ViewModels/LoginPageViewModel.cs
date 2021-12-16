@@ -155,7 +155,11 @@ namespace PROG8050_PROJECT.ViewModels
 
 				// Go back to previous page
 				INavigationService navigation = Ioc.Default.GetService<INavigationService>();
-				if (navigation.CanGoBack)
+				if (navigation.Next != null)
+				{
+					navigation.Navigate(navigation.Next);
+				}
+				else if (navigation.CanGoBack)
 				{
 					navigation.GoBack();
 				}

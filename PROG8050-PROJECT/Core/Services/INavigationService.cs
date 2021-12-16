@@ -8,8 +8,11 @@ namespace PROG8050_PROJECT.Core.Services
 {
 	interface INavigationService
 	{
+		string Next { get; set; }
+
 		bool CanGoBack { get; }
 		void GoBack();
 		void Navigate<T>(object args = null);
+		void Navigate(string name);
 	}
 }

@@ -121,16 +121,49 @@ namespace PROG8050_PROJECT.ViewModels
 
 		private void NavigateProductPage()
 		{
-			Ioc.Default.GetRequiredService<INavigationService>().Navigate<ProductPageViewModel>();
+			ILoginService loginService = Ioc.Default.GetRequiredService<ILoginService>();
+			if (!loginService.IsLogin)
+			{
+				// Set Next to Promotion
+				INavigationService navigationService = Ioc.Default.GetRequiredService<INavigationService>();
+				navigationService.Next = "ProductPage";
+
+				navigationService.Navigate<LoginPageViewModel>();
+				return;
+			}
+
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate("ProductPage");
 		}
 
 		private void NavigateCategoryPage()
 		{
-			Ioc.Default.GetRequiredService<INavigationService>().Navigate<CategoryPageViewModel>();
+			ILoginService loginService = Ioc.Default.GetRequiredService<ILoginService>();
+			if (!loginService.IsLogin)
+			{
+				// Set Next to Promotion
+				INavigationService navigationService = Ioc.Default.GetRequiredService<INavigationService>();
+				navigationService.Next = "CategoryPage";
+
+				navigationService.Navigate<LoginPageViewModel>();
+				return;
+			}
+
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate("CategoryPage");
 		}
 
 		private void NavigatePromotionPage()
 		{
+			ILoginService loginService = Ioc.Default.GetRequiredService<ILoginService>();
+			if (!loginService.IsLogin)
+			{
+				// Set Next to Promotion
+				INavigationService navigationService = Ioc.Default.GetRequiredService<INavigationService>();
+				navigationService.Next = "PromotionPage";
+
+				navigationService.Navigate<LoginPageViewModel>();
+				return;
+			}
+
 			Ioc.Default.GetRequiredService<INavigationService>().Navigate<PromotionPageViewModel>();
 		}
 
