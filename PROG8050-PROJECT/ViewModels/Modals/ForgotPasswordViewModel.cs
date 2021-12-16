@@ -120,7 +120,7 @@ namespace PROG8050_PROJECT.ViewModels.Modals
 
 		private void CloseWindow(object sender)
 		{
-			(sender as Window).Close();
+			this.DialogResult = false;
 		}
 
 		private void FindPasswordEvent(object sender)

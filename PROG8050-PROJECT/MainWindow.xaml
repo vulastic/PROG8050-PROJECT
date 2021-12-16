@@ -51,7 +51,7 @@
 					</Grid.RowDefinitions>
 
 					<!-- Menu Toggle Button -->
-					<ToggleButton Grid.Row="0" x:Name="btnToggle" 
+					<ToggleButton Grid.Row="0"
 								  Style="{StaticResource ToggleButtonStyle}" 
 								  Width="24" Height="24" 
 								  HorizontalAlignment="Left" 
@@ -68,7 +68,7 @@
 							</EventTrigger>
 							<EventTrigger RoutedEvent="ToggleButton.Checked">
 								<BeginStoryboard>
-									<Storyboard x:Name="ShowStackPanel">
+									<Storyboard>
 										<DoubleAnimation Storyboard.TargetName="gridMenu" 
 														 Storyboard.TargetProperty="Width" 
 														 BeginTime="0:0:0" From="60" To="200" Duration="0:0:0.2"/>
@@ -80,40 +80,40 @@
 
 					<!-- Menu Buttons -->
 					<StackPanel Grid.Row="1" Margin="0,30">
-						<RadioButton x:Name="btnHome" Content="Home" IsChecked="True"
-									 Style="{DynamicResource MenuButtonStyle}" 
+						<RadioButton Style="{DynamicResource MenuButtonStyle}" 
 									 Tag="{DynamicResource home}"
-									 Command="{Binding NavigateHome}"/>
+									 Command="{Binding NavigateHome}"
+									 Content="Home" IsChecked="True"/>
 						
-						<RadioButton x:Name="btnProduct" Content="Product" 
-									 Style="{DynamicResource MenuButtonStyle}" 
+						<RadioButton Style="{DynamicResource MenuButtonStyle}" 
 									 Tag="{DynamicResource product}"
-									 Command="{Binding NavigateProduct}"/>
+									 Command="{Binding NavigateProduct}"
+									 Content="Product"/>
 						
-						<RadioButton x:Name="btnCategory" Content="Cateogry" 
-									 Style="{DynamicResource MenuButtonStyle}" 
+						<RadioButton Style="{DynamicResource MenuButtonStyle}" 
 									 Tag="{DynamicResource category}"
-									 Command="{Binding NavigateCategory}"/>
+									 Command="{Binding NavigateCategory}"
+									 Content="Cateogry" />
 						
-						<RadioButton x:Name="btnPromotion" Content="Promotion" 
-									 Style="{DynamicResource MenuButtonStyle}" 
+						<RadioButton Style="{DynamicResource MenuButtonStyle}" 
 									 Tag="{DynamicResource promotion}"
-									 Command="{Binding NavigatePromotion}"/>
+									 Command="{Binding NavigatePromotion}"
+									 Content="Promotion" />
 						
-						<RadioButton x:Name="btnCustomer" Content="Customer"
-									 Style="{DynamicResource MenuButtonStyle}" 
+						<RadioButton Style="{DynamicResource MenuButtonStyle}" 
 									 Tag="{DynamicResource customer}"
-									 Command="{Binding NavigateCustomer}"/>
+									 Command="{Binding NavigateCustomer}"
+									 Content="Customer"/>
 						
-						<RadioButton x:Name="btnOrder" Content="Order"
-									 Style="{DynamicResource MenuButtonStyle}"
+						<RadioButton Style="{DynamicResource MenuButtonStyle}"
 									 Tag="{DynamicResource order}"
-									 Command="{Binding NavigateOrder}"/>
+									 Command="{Binding NavigateOrder}"
+									 Content="Order"/>
 						
-						<RadioButton x:Name="btnUser" Content="Admin"
-									 Style="{DynamicResource MenuButtonStyle}"
+						<RadioButton Style="{DynamicResource MenuButtonStyle}"
 									 Tag="{DynamicResource user}"
-									 Command="{Binding NavigateAdmin}"/>
+									 Command="{Binding NavigateAdmin}"
+									 Content="Admin"/>
 					</StackPanel>
 				</Grid>
 			</Border>
@@ -138,12 +138,12 @@
 				<StackPanel Grid.Row="0" Grid.Column="4" 
 							HorizontalAlignment="Right" VerticalAlignment="Top" 
 							Margin="0,5,10,0" Height="30" Orientation="Horizontal" FlowDirection="RightToLeft">
-					<Button x:Name="btnClose" Tag="IsCloseButton"
+					<Button Tag="IsCloseButton"
 							Style="{StaticResource IconButtonStyle}"
 							Content="{DynamicResource close}"
 							Command="{Binding Close}"
 							CommandParameter="{Binding ElementName=mainWindow}"/>
-					<Button x:Name="btnRestore" Margin="5,0"
+					<Button Margin="5,0"
 							Command="{Binding Restore}"
 							CommandParameter="{Binding ElementName=mainWindow}">
 						<Button.Style>
@@ -157,8 +157,7 @@
                             </Style>
                         </Button.Style>
 					</Button>
-					<Button x:Name="btnMinimize"
-							Style="{StaticResource IconButtonStyle}"
+					<Button Style="{StaticResource IconButtonStyle}"
 							Content="{DynamicResource minimize}"
 							Command="{Binding Minimize}"
 							CommandParameter="{Binding ElementName=mainWindow}"/>

@@ -33,12 +33,11 @@
 			</Grid.ColumnDefinitions>
 
 			<StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" 
-							Margin="0,5,10,0" Height="30" Orientation="Horizontal" FlowDirection="RightToLeft">
-				<Button x:Name="btnClose" Tag="IsCloseButton"
-							Style="{StaticResource IconButtonStyle}"
-							Content="{DynamicResource close}"
-							Command="{Binding Close}"
-							CommandParameter="{Binding ElementName=addNewPromotion}"/>
+						Margin="0,5,10,0" Height="30" Orientation="Horizontal" FlowDirection="RightToLeft">
+				<Button Tag="IsCloseButton"
+						Style="{StaticResource IconButtonStyle}"
+						Content="{DynamicResource close}"
+						Command="{Binding Close}"/>
 			</StackPanel>
 
 			<Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
@@ -56,9 +55,9 @@
 
 					<StackPanel Grid.Row="1">
 						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
-						   Foreground="{DynamicResource PrimaryTextColor}"
-						   FontWeight="ExtraBold" FontSize="36"
-						   Text="New Promotion"/>
+								   Foreground="{DynamicResource PrimaryTextColor}"
+								   FontWeight="ExtraBold" FontSize="36"
+								   Text="New Promotion"/>
 						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"
 								   Foreground="{DynamicResource PrimaryTextColor}"
 								   FontWeight="Regular" FontSize="18"
@@ -67,8 +66,8 @@
 
 					<StackPanel Grid.Row="3">
 						<TextBox Margin="50,10" Height="32"
-							 Style="{StaticResource WaterMarkTextBox}" Tag="Name of Promotion"
-							 Text="{Binding Name}"/>
+								 Style="{StaticResource WaterMarkTextBox}" Tag="Name of Promotion"
+								 Text="{Binding Name}"/>
 
 						<ComboBox Margin="50,10" Height="32" Style="{StaticResource BorderedComboBox}"
 								  ItemsSource="{Binding Categories}"
@@ -76,15 +75,15 @@
 								  DisplayMemberPath="Name"/>
 
 						<TextBox Margin="50,10" Height="32"
-							 Style="{StaticResource WaterMarkTextBox}" Tag="Discount Percentage"
-							 Text="{Binding Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+								 Style="{StaticResource WaterMarkTextBox}" Tag="Discount Percentage"
+								 Text="{Binding Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
 
 						<DatePicker Margin="50,10" Height="32" SelectedDate="{Binding StartDate}"/>
 						<DatePicker Margin="50,10" Height="32" SelectedDate="{Binding EndDate}"/>
 
 						<TextBox Margin="50,10" Height="32"
-							 Style="{StaticResource WaterMarkTextBox}" Tag="Description"
-							 Text="{Binding Description}"/>
+								 Style="{StaticResource WaterMarkTextBox}" Tag="Description"
+								 Text="{Binding Description}"/>
 					</StackPanel>
 
 					<Grid Grid.Row="4" Margin="50,20" Height="32">
@@ -96,7 +95,6 @@
 						<Button Grid.Column="0" Margin="0,0,15,0"
 								Style="{StaticResource BorderedButton}"
 								Command="{Binding Close}"
-								CommandParameter="{Binding ElementName=addNewPromotion}"
 								Content="Cancle">
 						</Button>
 

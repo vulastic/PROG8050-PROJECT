@@ -25,12 +25,11 @@ namespace PROG8050_PROJECT.ViewModels
 		public ICommand AddPromotion { get; }
 		public ICommand DeletePromotion { get; }
 
-		public ICommand SearchProductPromotion { get; }
-		public ICommand AddProductPromotion { get; }
-		public ICommand DeleteProductPromotion { get; }
+		public ICommand SearchPromotionDetail { get; }
+		public ICommand SelectAllPromotionDetail { get; }
 
-		
-		public ICommand EndDateChanged { get; }
+		public ICommand AddPromotionDetail { get; }
+		public ICommand DeletePromotionDetail { get; }
 
 		private ObservableCollection<Promotion> promotionTable = new ObservableCollection<Promotion>();
 		public ObservableCollection<Promotion> PromotionTable
@@ -75,6 +74,8 @@ namespace PROG8050_PROJECT.ViewModels
 		}
 
 		bool isSelectAllPromotion = false;
+		private List<Promotion> promotions;
+		
 
 		private ObservableCollection<PromotionDetail> promotionDetailTable = new ObservableCollection<PromotionDetail>();
 		public ObservableCollection<PromotionDetail> PromotionDetailTable
@@ -86,8 +87,9 @@ namespace PROG8050_PROJECT.ViewModels
 			}
 		}
 
-		private List<Promotion> promotions;
+		bool isSelectAllPromotionDetail = false;
 		private List<PromotionDetail> promotionDetails;
+
 
 		private IDialogService dialogService;
 
@@ -103,12 +105,11 @@ namespace PROG8050_PROJECT.ViewModels
 			AddPromotion = new RelayCommand<object>(AddPromotionEvent);
 			DeletePromotion = new RelayCommand<object>(DeletePromotionEvent);
 
-			SearchProductPromotion = new RelayCommand<object>(SearchProductPromotionEvent);
-			AddProductPromotion = new RelayCommand<object>(AddProductPromotionEvent);
-			DeleteProductPromotion = new RelayCommand<object>(DeleteProductPromotionEvent);
+			SearchPromotionDetail = new RelayCommand<object>(SearchPromotionDetailEvent);
+			SelectAllPromotionDetail = new RelayCommand<object>(SelectAllPromotionDetailEvent);
 
-			
-			EndDateChanged = new RelayCommand<object>(EndDateChangedEvent);
+			AddPromotionDetail = new RelayCommand<object>(AddPromotionDetailEvent);
+			DeletePromotionDetail = new RelayCommand<object>(DeletePromotionDetailEvent);
 		}
 
 		private void LoadedPage(object sender)
@@ -125,10 +126,19 @@ namespace PROG8050_PROJECT.ViewModels
 
 		private void SearchPromotionEvent(object sender)
 		{
+			if (promotions == null || promotionDetails == null)
+			{
+				return;
+			}
+
 			if (string.IsNullOrEmpty(sender as string))
 			{
 				promotionTable.Clear();
-				promotions.ForEach(x => promotionTable.Add(x));
+				promotions.ForEach((x) =>
+				{
+					x.IsSelected = false;
+					promotionTable.Add(x);
+				});
 				return;
 			}
 
@@ -140,6 +150,7 @@ namespace PROG8050_PROJECT.ViewModels
 				{
 					if (promotion.Id == inputId)
 					{
+						promotion.IsSelected = false;
 						promotionTable.Add(promotion);
 					}
 				}
@@ -152,6 +163,7 @@ namespace PROG8050_PROJECT.ViewModels
 				{
 					if (promotion.Name.ToLower().Contains(inputName.ToLower()))
 					{
+						promotion.IsSelected = false;
 						promotionTable.Add(promotion);
 					}
 				}
@@ -180,7 +192,6 @@ namespace PROG8050_PROJECT.ViewModels
 
 				int promotionId = modalView.PromotionId;
 				RetrivePromotionDetail(promotionId);
-
 			}
 		}
 
@@ -237,54 +248,143 @@ namespace PROG8050_PROJECT.ViewModels
 			}
 		}
 
-		private void RefreshAll()
+		private void SearchPromotionDetailEvent(object sender)
 		{
-			// Promotion
-			if (promotions != null)
-			{
-				promotions.Clear();
-			}
-
-			if (promotionTable != null)
-			{
-				promotionTable.Clear();
-			}
-
-			PromotionTable.Clear();
-			SelectedPromotion = null;
-
-			// Promotion Detail
-			if (promotionDetails != null)
-			{
-				promotionDetails.Clear();
-			}
-
-			if (promotionDetailTable != null)
+			if (selectedPromotion == null)
 			{
 				promotionDetailTable.Clear();
+				return;
 			}
 
-			PromotionDetailTable.Clear();
+			if (promotionDetails == null)
+			{
+				return;
+			}
+
+			if (string.IsNullOrEmpty(sender as string))
+			{
+				promotionDetailTable.Clear();
+				promotionDetails.ForEach((x) =>
+				{
+					if (selectedPromotion.Id == x.PromotionId)
+					{
+						x.IsSelected = false;
+						promotionDetailTable.Add(x);
+					}
+				});
+				return;
+			}
+
+			int inputId;
+			if (Int32.TryParse(sender as string, out inputId))
+			{
+				promotionDetailTable.Clear();
+				foreach (PromotionDetail promotionDetail in promotionDetails)
+				{
+					if (selectedPromotion.Id != promotionDetail.PromotionId)
+					{
+						continue;
+					}
+
+					if (promotionDetail.ProductId == inputId)
+					{
+						promotionDetail.IsSelected = false;
+						promotionDetailTable.Add(promotionDetail);
+					}
+				}
+			}
+			else
+			{
+				string inputName = sender as string;
+				promotionDetailTable.Clear();
+				foreach (PromotionDetail promotionDetail in promotionDetails)
+				{
+					if (selectedPromotion.Id != promotionDetail.PromotionId)
+					{
+						continue;
+					}
+
+					if (promotionDetail.Name.ToLower().Contains(inputName.ToLower()))
+					{
+						promotionDetail.IsSelected = false;
+						promotionDetailTable.Add(promotionDetail);
+					}
+				}
+			}
 		}
 
-		private void SearchProductPromotionEvent(object sender)
+		private void SelectAllPromotionDetailEvent(object sender)
 		{
+			isSelectAllPromotionDetail = !isSelectAllPromotionDetail;
+			foreach (PromotionDetail promotionDetail in promotionDetailTable)
+			{
+				promotionDetail.IsSelected = isSelectAllPromotionDetail;
+			}
 		}
 
-		private void AddProductPromotionEvent(object sender)
+		private void AddPromotionDetailEvent(object sender)
 		{
 			AddNewPromotionDetailViewModel modalView = new AddNewPromotionDetailViewModel();
 
 			bool? success = dialogService.ShowDialog(this, modalView);
 			if (success == true)
 			{
-				
+				int promotionId = modalView.SelectedPromotion.Id;
+				RetrivePromotionDetail(promotionId);
 			}
 		}
 
-		private void DeleteProductPromotionEvent(object sender)
+		private void DeletePromotionDetailEvent(object sender)
 		{
+			// Insert DB
+			IDBService database = Ioc.Default.GetService<IDBService>();
+			if (!database.IsOpen)
+			{
+				System.Windows.MessageBox.Show("Cannot connect to the database", "Ooops!");
+				return;
+			}
 
+			try
+			{
+				StringBuilder builder = new StringBuilder();
+				foreach (PromotionDetail promotionDetail in PromotionDetailTable)
+				{
+					if (promotionDetail.IsSelected)
+					{
+						if (builder.Length != 0)
+						{
+							builder.Append(",");
+						}
+						builder.Append(promotionDetail.Id);
+					}
+				}
+
+				// Nothing selected
+				if (builder.Length <= 0)
+				{
+					return;
+				}
+
+				// First, delete all promotion details.
+				int affectedRow = database.ExecuteNonQuery($"DELETE FROM PromotionDetail WHERE Id IN ({builder.ToString()});");
+
+				if (affectedRow < 0)
+				{
+					return;
+				}
+
+				// Get Promotion Again
+				if (selectedPromotion != null)
+				{
+					RetrivePromotionDetail(selectedPromotion.Id);
+					isSelectAllPromotionDetail = false;
+				}
+			}
+			catch (Exception e)
+			{
+				System.Windows.MessageBox.Show("Database Error.", "Ooops!");
+				Debug.WriteLine(e.Message);
+			}
 		}
 
 		private void RetrivePromptions()
@@ -310,9 +410,6 @@ namespace PROG8050_PROJECT.ViewModels
 				result.ForEach(p => promotionTable.Add(p));
 				PromotionTable = promotionTable;
 
-				// Selected
-				selectedPromotion = promotionTable.First();
-
 				// Backup Copy
 				promotions = result;
 			}
@@ -321,11 +418,6 @@ namespace PROG8050_PROJECT.ViewModels
 				System.Windows.MessageBox.Show("Database Error.", "Ooops!");
 				Debug.WriteLine(e.Message);
 			}
-		}
-
-		private void EndDateChangedEvent(object sender)
-		{
-
 		}
 
 		private void RetrivePromotionDetail(int? promotionId = null)
@@ -343,11 +435,7 @@ namespace PROG8050_PROJECT.ViewModels
 					"SELECT PromotionDetail.Id as 'Id', PromotionDetail.PromotionId as 'PromotionId', PromotionDetail.ProductId as 'ProductId', Product.CategoryId as 'Category', " +
 					"Product.Name as 'Name', Product.Price as 'Price', Product.Quantity as 'Quantity', PromotionDetail.Discount as 'Discount' " +
 					"FROM PromotionDetail INNER JOIN Product ON PromotionDetail.ProductId = Product.Id;");
-				if (result.Count <= 0)
-				{
-					return;
-				}
-
+				
 				this.promotionDetailTable.Clear();
 				result.ForEach((p) =>
 				{
@@ -358,6 +446,19 @@ namespace PROG8050_PROJECT.ViewModels
 					PromotionDetailTable = promotionDetailTable;
 				});
 
+				// Bug fix
+				if (selectedPromotion == null)
+				{
+					foreach (Promotion promotion in promotions)
+					{
+						if (promotion.Id == promotionId)
+						{
+							selectedPromotion = promotion;
+							break;
+						}
+					}
+				}
+
 				promotionDetails = result;
 			}
 			catch (Exception e)
@@ -365,6 +466,39 @@ namespace PROG8050_PROJECT.ViewModels
 				System.Windows.MessageBox.Show("Database Error.", "Ooops!");
 				Debug.WriteLine(e.Message);
 			}
+		}
+
+		private void RefreshAll()
+		{
+			// Promotion
+			if (promotions != null)
+			{
+				promotions.Clear();
+			}
+
+			if (promotionTable != null)
+			{
+				promotionTable.Clear();
+			}
+
+			PromotionTable.Clear();
+			isSelectAllPromotion = false;
+
+			SelectedPromotion = null;
+
+			// Promotion Detail
+			if (promotionDetails != null)
+			{
+				promotionDetails.Clear();
+			}
+
+			if (promotionDetailTable != null)
+			{
+				promotionDetailTable.Clear();
+			}
+
+			PromotionDetailTable.Clear();
+			isSelectAllPromotionDetail = false;
 		}
 	}
 }

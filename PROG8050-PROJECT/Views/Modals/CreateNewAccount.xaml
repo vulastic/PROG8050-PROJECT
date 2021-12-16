@@ -6,8 +6,7 @@
 		xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
 		xmlns:local="clr-namespace:PROG8050_PROJECT.Views.Modals"
 		xmlns:modal="clr-namespace:PROG8050_PROJECT.ViewModels.Modals"
-        mc:Ignorable="d" Name="createNewAccount"
-		Width="400" Height="600"
+        mc:Ignorable="d" Width="400" Height="600"
 		WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize"
 		Background="Transparent" AllowsTransparency="True"
 		Style="{StaticResource WindowFonts}"
@@ -25,12 +24,11 @@
 			</Grid.ColumnDefinitions>
 
 			<StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" 
-							Margin="0,5,10,0" Height="30" Orientation="Horizontal" FlowDirection="RightToLeft">
-				<Button x:Name="btnClose" Tag="IsCloseButton"
-							Style="{StaticResource IconButtonStyle}"
-							Content="{DynamicResource close}"
-							Command="{Binding Close}"
-							CommandParameter="{Binding ElementName=createNewAccount}"/>
+						Margin="0,5,10,0" Height="30" Orientation="Horizontal" FlowDirection="RightToLeft">
+				<Button Tag="IsCloseButton"
+						Style="{StaticResource IconButtonStyle}"
+						Content="{DynamicResource close}"
+						Command="{Binding Close}"/>
 			</StackPanel>
 
 			<Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
@@ -47,30 +45,30 @@
 					</Grid.RowDefinitions>
 
 					<TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
-						   Foreground="{DynamicResource PrimaryTextColor}"
-						   FontWeight="ExtraBold" FontSize="36"
-						   Text="Sign Up"/>
+							   Foreground="{DynamicResource PrimaryTextColor}"
+							   FontWeight="ExtraBold" FontSize="36"
+							   Text="Sign Up"/>
 
 					<StackPanel Grid.Row="3">
 						<TextBox Margin="50,10" Height="32"
-							 Style="{StaticResource WaterMarkTextBox}" Tag="E-mail address"
-							 Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+								 Style="{StaticResource WaterMarkTextBox}" Tag="E-mail address"
+								 Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-						<PasswordBox x:Name="password" Margin="50,10" Height="32"
+						<PasswordBox Margin="50,10" Height="32"
 									 Style="{StaticResource WaterMarkPasswordBox}" Tag="Password" 
 									 PasswordChanged="password_PasswordChanged"/>
 
-						<PasswordBox x:Name="confirm" Margin="50,10" Height="32"
+						<PasswordBox Margin="50,10" Height="32"
 									 Style="{StaticResource WaterMarkPasswordBox}" Tag="Confirm Password"
 									 PasswordChanged="confirm_PasswordChanged"/>
 
 						<TextBox Margin="50,10" Height="32"
-							 Style="{StaticResource WaterMarkTextBox}" Tag="First Name"
-							 Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+								 Style="{StaticResource WaterMarkTextBox}" Tag="First Name"
+								 Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
 						<TextBox Margin="50,10" Height="32"
-							 Style="{StaticResource WaterMarkTextBox}" Tag="Last Name"
-							 Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+								 Style="{StaticResource WaterMarkTextBox}" Tag="Last Name"
+								 Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
 						<ComboBox Margin="50,10" Height="32" Style="{StaticResource BorderedComboBox}">
 							<ComboBoxItem IsSelected="True">Male</ComboBoxItem>
@@ -78,14 +76,14 @@
 						</ComboBox>
 						
 						<TextBox Margin="50,10" Height="32"
-							 Style="{StaticResource WaterMarkTextBox}" Tag="Phone Number"
-							 Text="{Binding PhoneNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+								 Style="{StaticResource WaterMarkTextBox}" Tag="Phone Number"
+								 Text="{Binding PhoneNo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 					</StackPanel>
 
-					<Button x:Name="btnLogin" Grid.Row="4" Margin="50,15" Height="32"
-						Style="{StaticResource BorderedButton}"
-						Command="{Binding SignUp}"
-						Content="Sign Up">
+					<Button Grid.Row="4" Margin="50,15" Height="32"
+							Style="{StaticResource BorderedButton}"
+							Command="{Binding SignUp}"
+							Content="Sign Up">
 					</Button>
 				</Grid>
 			</Border>

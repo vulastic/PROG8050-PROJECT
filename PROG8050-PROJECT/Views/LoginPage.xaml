@@ -9,8 +9,7 @@
 	  xmlns:modals="clr-namespace:PROG8050_PROJECT.Views.Modals"
 	  xmlns:viewModels="clr-namespace:PROG8050_PROJECT.ViewModels"
 	  md:DialogServiceViews.IsRegistered="True"
-      mc:Ignorable="d" Title="LoginPage"
-	  Style="{StaticResource PageFonts}">
+      mc:Ignorable="d" Style="{StaticResource PageFonts}">
 
 	<Page.DataContext>
 		<viewModels:LoginPageViewModel/>
@@ -62,17 +61,17 @@
 				</StackPanel>
 
 				<Grid Grid.Row="4" Margin="50,5" VerticalAlignment="Center">
-					<Button x:Name="btnNewUser" HorizontalAlignment="Left" 
+					<Button HorizontalAlignment="Left" 
 							Style="{StaticResource TextButton}"
 							Command="{Binding CreateNewAccount}"
 							Content="Create new account"/>
-					<Button x:Name="btnForgot" HorizontalAlignment="Right"
+					<Button HorizontalAlignment="Right"
 							Style="{StaticResource TextButton}"
 							Command="{Binding ForgotPassword}"
 							Content="Forgot password?"/>
 				</Grid>
 
-				<Button x:Name="btnLogin" Grid.Row="5" Margin="50,15"
+				<Button Grid.Row="5" Margin="50,15"
 						Style="{StaticResource BorderedButton}"
 						Command="{Binding SignIn}"
 						IsEnabled="{Binding IsEnabled}"

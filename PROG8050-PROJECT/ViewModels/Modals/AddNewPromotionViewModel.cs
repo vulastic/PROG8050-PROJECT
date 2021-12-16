@@ -54,14 +54,12 @@ namespace PROG8050_PROJECT.ViewModels.Modals
 		public int PromotionId { get; set; }
 
 		private double discount = 0;
-		public string Discount
+		public double Discount
 		{
-			get => discount.ToString();
+			get => discount;
 			set
 			{
-				string temp = Regex.Replace(value, @"[^\d]", "");
-				discount = Convert.ToInt32(temp);
-
+				discount = value;
 				if (discount > 100.0)
 				{
 					discount = 100.0;
@@ -98,38 +96,7 @@ namespace PROG8050_PROJECT.ViewModels.Modals
 
 		private void CloseWindow(object sender)
 		{
-			this.dialogResult = false;
-			(sender as Window).Close();
-		}
-
-		private void RetriveCategories()
-		{
-			IDBService database = Ioc.Default.GetService<IDBService>();
-			if (!database.IsOpen)
-			{
-				System.Windows.MessageBox.Show("Cannot connect to the database", "Ooops!");
-				return;
-			}
-
-			try
-			{
-				List<Category> result = database.ExecuteReader<Category>("SELECT * FROM Category;");
-				if (result.Count <= 0)
-				{
-					return;
-				}
-
-				// DataGrid Copy
-				this.categories.Clear();
-				result.ForEach(p => categories.Add(p));
-
-				this.SelectedCategory = categories.First();
-			}
-			catch (Exception e)
-			{
-				System.Windows.MessageBox.Show("Database Error.", "Ooops!");
-				Debug.WriteLine(e.Message);
-			}
+			this.DialogResult = false;
 		}
 
 		public void AddNewPromotionEvent(object sender)
@@ -144,6 +111,12 @@ namespace PROG8050_PROJECT.ViewModels.Modals
 			if (selectedCateogy == null)
 			{
 				System.Windows.MessageBox.Show("Please select the category.", "Ooops!");
+				return;
+			}
+
+			if (discount <= 0)
+			{
+				System.Windows.MessageBox.Show("Zero promotion discount.", "Ooops!");
 				return;
 			}
 
@@ -163,7 +136,7 @@ namespace PROG8050_PROJECT.ViewModels.Modals
 			try
 			{
 				// First. Find Exist Promotion
-				DataTable exist = database.ExecuteReader($"SELECT Id FROM Promotion WHERE Name = {this.Name}");
+				DataTable exist = database.ExecuteReader($"SELECT Id FROM Promotion WHERE Name = '{this.Name}'");
 				if (exist.Rows.Count > 0)
 				{
 					System.Windows.MessageBox.Show($"{this.Name} already added.", "Ooops!");
@@ -207,5 +180,34 @@ namespace PROG8050_PROJECT.ViewModels.Modals
 			}
 		}
 
+		private void RetriveCategories()
+		{
+			IDBService database = Ioc.Default.GetService<IDBService>();
+			if (!database.IsOpen)
+			{
+				System.Windows.MessageBox.Show("Cannot connect to the database", "Ooops!");
+				return;
+			}
+
+			try
+			{
+				List<Category> result = database.ExecuteReader<Category>("SELECT * FROM Category;");
+				if (result.Count <= 0)
+				{
+					return;
+				}
+
+				// DataGrid Copy
+				this.categories.Clear();
+				result.ForEach(p => categories.Add(p));
+
+				this.SelectedCategory = categories.First();
+			}
+			catch (Exception e)
+			{
+				System.Windows.MessageBox.Show("Database Error.", "Ooops!");
+				Debug.WriteLine(e.Message);
+			}
+		}
 	}
 }

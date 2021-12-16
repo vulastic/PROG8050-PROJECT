@@ -3,17 +3,105 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+		xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
         xmlns:local="clr-namespace:PROG8050_PROJECT.Views.Modals"
 		xmlns:modal="clr-namespace:PROG8050_PROJECT.ViewModels.Modals"
-        mc:Ignorable="d" Title="AddNewPromotionDetail"
-		Width="400" Height="400"
+        mc:Ignorable="d" Name="addNewPromotionDetail"
+		Width="500" Height="550"
 		WindowStartupLocation="CenterOwner" WindowStyle="None" ResizeMode="NoResize"
 		Background="Transparent" AllowsTransparency="True"
 		Style="{StaticResource WindowFonts}"
         d:DataContext="{d:DesignInstance {x:Type modal:AddNewPromotionDetailViewModel}}">
+
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Loaded">
+			<i:InvokeCommandAction Command="{Binding Loaded}"/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+
 	<Border CornerRadius="8" Background="{DynamicResource BackgroundColor}">
 		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
 
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+
+			<StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" 
+						Margin="0,5,10,0" Height="30" Orientation="Horizontal" FlowDirection="RightToLeft">
+				<Button Style="{StaticResource IconButtonStyle}"
+						Content="{DynamicResource close}"
+						Command="{Binding Close}"/>
+			</StackPanel>
+
+			<Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+					Margin="10" CornerRadius="8" 
+					Background="{DynamicResource PrimaryColor}">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+
+					<StackPanel Grid.Row="1">
+						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" 
+								   Foreground="{DynamicResource PrimaryTextColor}"
+								   FontWeight="ExtraBold" FontSize="36"
+								   Text="New Promotion Details"/>
+						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0"
+								   Foreground="{DynamicResource PrimaryTextColor}"
+								   FontWeight="Regular" FontSize="18"
+								   Text="Admin can add individual products under the promotion."/>
+					</StackPanel>
+
+					<StackPanel Grid.Row="3">
+						<ComboBox Margin="50,15" Height="32" Style="{StaticResource BorderedComboBox}"
+								  ItemsSource="{Binding Promotions}" SelectedItem="{Binding SelectedPromotion}"
+								  DisplayMemberPath="Name"/>
+
+						<ComboBox Margin="50,15" Height="32" Style="{StaticResource BorderedComboBox}"
+								  ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}"
+								  DisplayMemberPath="Name" IsEnabled="{Binding IsCategoryEnabled}"/>
+
+						<ComboBox Margin="50,15" Height="32" Style="{StaticResource BorderedComboBox}"
+								  ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}"
+								  DisplayMemberPath="Name" IsEnabled="{Binding IsProductEnabled}"/>
+
+						<TextBox Margin="50,15" Height="32"
+								 Style="{StaticResource WaterMarkTextBox}" Tag="Discount Percentage"
+								 Text="{Binding Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}"/>
+					</StackPanel>
+
+					<Grid Grid.Row="4" Margin="50,20" Height="32">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+
+						<Button Grid.Column="0" Margin="0,0,15,0"
+								Style="{StaticResource BorderedButton}"
+								Command="{Binding Close}"
+								Content="Cancle">
+						</Button>
+
+						<Button Grid.Column="1" Margin="15,0,0,0"
+								Style="{StaticResource BorderedButton}"
+								IsEnabled="{Binding IsProductEnabled}"
+								Command="{Binding AddNewPromotionDetail}"
+								Content="Add">
+						</Button>
+					</Grid>
+				</Grid>
+			</Border>
 		</Grid>
 	</Border>
 </Window>

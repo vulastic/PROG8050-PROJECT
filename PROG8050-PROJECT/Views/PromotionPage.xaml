@@ -65,13 +65,13 @@
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
 
-					<TextBox x:Name="textBoxCategory" Grid.Column="0" Margin="0,4"
+					<TextBox x:Name="textBoxSearchPromotion" Grid.Column="0" Margin="0,4"
 							Style="{StaticResource WaterMarkTextBox}"
 							Tag="Promotion Id or Name"/>
 					<Button Grid.Column="1" Margin="10,4,0,4"
 							Style="{StaticResource BorderedButton}"
 							Command="{Binding SearchPromotion}"
-							CommandParameter="{Binding ElementName=textBoxCategory, Path=Text}"
+							CommandParameter="{Binding ElementName=textBoxSearchPromotion, Path=Text}"
 							Content="Search"/>
 					<Button Grid.Column="2" Margin="10,4,0,4"
 							Style="{StaticResource BorderedButton}"
@@ -85,12 +85,12 @@
 						  SelectedItem="{Binding SelectedPromotion}"
 						  AutoGenerateColumns="False" CanUserAddRows="False" RowHeaderWidth="0">
 					<DataGrid.Columns>
-						<DataGridTextColumn Header=" ID" Width="Auto" IsReadOnly="True" Binding="{Binding Id}"/>
-						<DataGridTextColumn Header=" Name" Width="Auto" IsReadOnly="True" Binding="{Binding Name}"/>
-						<DataGridTextColumn Header=" Start Time" Width="Auto" IsReadOnly="True" Binding="{Binding Start}"/>
-						<DataGridTextColumn Header=" End Time" Width="Auto" IsReadOnly="True" Binding="{Binding End}"/>
-						<DataGridTextColumn Header=" Description" Width="*" IsReadOnly="True" Binding="{Binding Description}"/>
-						<DataGridCheckBoxColumn Header="Selected" Width="Auto" IsReadOnly="False" Binding="{Binding IsSelected}"/>
+						<DataGridTextColumn Header=" ID " Width="Auto" IsReadOnly="True" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header=" Name " Width="Auto" IsReadOnly="True" Binding="{Binding Name}"/>
+						<DataGridTextColumn Header=" Start Time " Width="Auto" IsReadOnly="True" Binding="{Binding Start}"/>
+						<DataGridTextColumn Header=" End Time " Width="Auto" IsReadOnly="True" Binding="{Binding End}"/>
+						<DataGridTextColumn Header=" Description " Width="*" IsReadOnly="True" Binding="{Binding Description}"/>
+						<DataGridCheckBoxColumn Header="Selected " Width="Auto" IsReadOnly="False" Binding="{Binding IsSelected}"/>
 					</DataGrid.Columns>
 					<DataGrid.RowStyle>
 						<Style TargetType="DataGridRow">
@@ -121,40 +121,40 @@
 						   HorizontalAlignment="Center" FontSize="36" FontWeight="ExtraBold"
 						   Foreground="{DynamicResource PrimaryTextColor}"
 						   Text="Promotion Details"/>
-				
+
 				<Grid Grid.Column="1" Grid.Row="1" Margin="15,0,0,0">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="4*"/>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="*"/>
 					</Grid.ColumnDefinitions>
-					<TextBox Grid.Column="0" Margin="0,4"
-							Style="{StaticResource WaterMarkTextBox}"
-							Tag="Product ID"/>
+					<TextBox x:Name="textBoxSearchPromotionDetail" Grid.Column="0" Margin="0,4"
+							 Style="{StaticResource WaterMarkTextBox}"
+							 Tag="Product ID or Name"/>
 					<Button Grid.Column="1" Margin="10,4,0,4"
 							Style="{StaticResource BorderedButton}" 
-							Command="{Binding SearchProductPromotion}"
-							CommandParameter="{Binding ElementName=textBoxCategory}"
+							Command="{Binding SearchPromotionDetail}"
+							CommandParameter="{Binding ElementName=textBoxSearchPromotionDetail, Path=Text}"
 							Content="Search"/>
 					<Button Grid.Column="2" Margin="10,4,0,4"
 							Style="{StaticResource BorderedButton}"
-							Command="{Binding SearchPromotion}"
+							Command="{Binding SelectAllPromotionDetail}"
 							Content="Select All"/>
 				</Grid>
-
 
 				<DataGrid Grid.Column="1" Grid.Row="2" Margin="15,10,0,0" 
 						  Style="{DynamicResource BorderedDataGrid}"
 						  ItemsSource="{Binding Path=PromotionDetailTable, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
 						  AutoGenerateColumns="False" CanUserAddRows="False" RowHeaderWidth="0">
 					<DataGrid.Columns>
-						<DataGridTextColumn Header="Promotion Id" Width="Auto" IsReadOnly="True" Binding="{Binding PromotionId}"/>
-						<DataGridTextColumn Header="Detail Id" Width="Auto" IsReadOnly="True" Binding="{Binding Id}"/>
-						<DataGridTextColumn Header="Name" Width="*" IsReadOnly="True" Binding="{Binding Name}"/>
-						<DataGridTextColumn Header="Price" Width="Auto" IsReadOnly="True" Binding="{Binding Price}"/>
-						<DataGridTextColumn Header="Quantity" Width="Auto" IsReadOnly="True" Binding="{Binding Quantity}"/>
-						<DataGridTextColumn Header="Discount" Width="Auto" IsReadOnly="True" Binding="{Binding Discount}"/>
-						<DataGridCheckBoxColumn Header="Select" Width="Auto" Binding="{Binding IsSelected}"/>
+						<DataGridTextColumn Header=" Promotion Id " Width="Auto" IsReadOnly="True" Binding="{Binding PromotionId}"/>
+						<DataGridTextColumn Header=" Detail Id " Width="Auto" IsReadOnly="True" Binding="{Binding Id}"/>
+						<DataGridTextColumn Header=" Product Id " Width="Auto" IsReadOnly="True" Binding="{Binding ProductId}"/>
+						<DataGridTextColumn Header=" Product Name " Width="*" IsReadOnly="True" Binding="{Binding Name}"/>
+						<DataGridTextColumn Header=" Price " Width="Auto" IsReadOnly="True" Binding="{Binding Price}"/>
+						<DataGridTextColumn Header=" Quantity " Width="Auto" IsReadOnly="True" Binding="{Binding Quantity}"/>
+						<DataGridTextColumn Header=" Discount " Width="Auto" IsReadOnly="True" Binding="{Binding Discount}"/>
+						<DataGridCheckBoxColumn Header=" Select " Width="Auto" Binding="{Binding IsSelected}"/>
 					</DataGrid.Columns>
 				</DataGrid>
 
@@ -166,11 +166,11 @@
 					</Grid.ColumnDefinitions>
 					<Button Grid.Column="1" Margin="10,4,0,4"
 							Style="{StaticResource BorderedButton}" 
-							Command="{Binding AddProductPromotion}"
+							Command="{Binding AddPromotionDetail}"
 							Content="Add New"/>
 					<Button Grid.Column="2" Margin="10,4,0,4"
 							Style="{StaticResource BorderedButton}" 
-							Command="{Binding DeleteProductPromotion}"
+							Command="{Binding DeletePromotionDetail}"
 							Content="Delete Selected"/>
 				</Grid>
 			</Grid>

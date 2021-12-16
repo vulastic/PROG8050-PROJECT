@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PROG8050_PROJECT.Models
 {
-	class PromotionDetail
+	class PromotionDetail : ObservableRecipient
 	{
 		public int Id { get; set; }
 		public int PromotionId { get; set; }
@@ -17,6 +18,16 @@ namespace PROG8050_PROJECT.Models
 		public double Price { get; set; }
 		public int Quantity { get; set; }
 		public double Discount { get; set; }
-		public bool IsSelected { get; set; } = false;
+
+		private bool isSlected = false;
+		public bool IsSelected
+		{
+			get => isSlected;
+			set
+			{
+				isSlected = value;
+				this.OnPropertyChanged("IsSelected");
+			}
+		}
 	}
 }
