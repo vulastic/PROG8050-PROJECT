@@ -175,7 +175,7 @@
                         <TextBlock Margin="5" Text="  Quantity" Grid.Row="4" Grid.Column="0"/>
                         <TextBox x:Name="InputEditProductQuantityBox"  Text="{Binding Quantity}" Margin="5" Width="200" Grid.Row="4" Grid.Column="1"/>
                         <TextBlock Margin="5" Text=" Id" Grid.Row="5" Grid.Column="0"/>
-                        <TextBox x:Name="InputEditId"  Text="{Binding Id}" Margin="5" Width="200" Grid.Row="5" Grid.Column="1"/>
+                        <TextBox x:Name="InputEditId"  Text="{Binding Id}" Margin="5" Width="200" Grid.Row="5" IsReadOnly="True" Grid.Column="1"/>
                         <Button x:Name="BtnEditFromFile" Margin="10 10 90 10" Height="20" Width="50" Grid.Column="0" Grid.Row="8" Click="BtnEditFromFile_Click" Content="Browse" Style="{StaticResource BorderButton}"/>
                         <Canvas Grid.Row="8" Grid.Column="1">
                             <Image  Name="imgEditProduct"  Source="{Binding Image}" Canvas.Left="1" Canvas.Top="0" Width="167" Height="30"/>

@@ -260,7 +260,7 @@ namespace PROG8050_PROJECT.Views
                     {
                         Dictionary<string, object> param = new Dictionary<string, object>();
                         string categoryId = "";
-                        param.Add("@categoryName", InputCategoryIdBox.SelectedItem.ToString());
+                        param.Add("@categoryName", InputEditCategoryIdBox.SelectedItem.ToString());
                         var temp = dbManager.ExecuteReader("Select * from Category where Name=@categoryName", param);
                         if (temp != null)
                         {
