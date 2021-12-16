@@ -11,20 +11,248 @@
 	  md:DialogServiceViews.IsRegistered="True"
       mc:Ignorable="d" Title="ProductPage"
 	  Style="{StaticResource PageFonts}">
-
-	<Page.DataContext>
-		<viewModels:ProductPageViewModel/>
-	</Page.DataContext>
-
-	<!-- Loaded event -->
-	<i:Interaction.Triggers>
-		<i:EventTrigger EventName="Loaded">
-			<i:InvokeCommandAction Command="{Binding Loaded}"/>
-		</i:EventTrigger>
-	</i:Interaction.Triggers>
-
+	
 	<Grid>
-		<Label x:Name="label" Content="ProductPage" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"/>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="1200*"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
 
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="665*"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<Border Grid.Column="1" Grid.Row="1" Margin="20" Padding="20" CornerRadius="8"
+				BorderBrush="{DynamicResource SecondaryColor}"
+				BorderThickness="3">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="150"/>
+					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="150"/>
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="40"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,0,0,10"
+						   HorizontalAlignment="Center" FontSize="36" FontWeight="ExtraBold"
+						   Foreground="{DynamicResource PrimaryTextColor}"
+						   Text="Product Details"/>
+
+				<TextBox x:Name="textBox_Search" Grid.Row="1" Grid.Column="2" Margin="10,4"
+						 Style="{StaticResource WaterMarkTextBox}" Tag="Product Name / ID"/>
+				<Button x:Name="btnSearchProduct" Grid.Row="1" Grid.Column="3"
+						Margin="10,4" Style="{StaticResource BorderedButton}"
+						Click="btnSearchProduct_Click" Content="Search"/>
+
+				<StackPanel Grid.Row="2" Grid.Column="0" Margin="0,20,10,0">
+					<Button Height="32"
+							Style="{StaticResource BorderedButton}"
+							Content="Add Product" Click="Button_Add_ItemElement_Click"/>
+					<Button Margin="0,10,0,0" Height="32"
+							Style="{StaticResource BorderedButton}"
+                            Content="Update" Click="Button_Edit_ItemElement_Click"/>
+					<Button Margin="0,10" Height="32"
+							Style="{StaticResource BorderedButton}"
+							Content="Delete" Click="Button_DeleteProductClick" />
+				</StackPanel>
+
+				<DataGrid x:Name="productDataGrid" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Margin="10,20,0,0"
+						  AutoGenerateColumns="False" CanUserAddRows="False" RowHeaderWidth="0" 
+						  Style="{StaticResource BorderedDataGrid}">
+					<DataGrid.Columns>
+						<DataGridTextColumn IsReadOnly="True" Header=" No " Width="Auto" Binding="{Binding Id}"/>
+						<DataGridTextColumn IsReadOnly="True" Header=" Category " Width="Auto" Binding="{Binding CategoryName}"/>
+						<DataGridTextColumn IsReadOnly="True" Header=" Name " Width="Auto" Binding="{Binding Name}"/>
+						<DataGridTextColumn IsReadOnly="True" Header=" Description " Width="*" Binding="{Binding Description}"/>
+						<DataGridTextColumn IsReadOnly="True" Header=" Price " Width="Auto" Binding="{Binding Price}"/>
+						<DataGridTextColumn IsReadOnly="True" Header=" Quantity " Width="Auto" Binding="{Binding Quantity}"/>
+						<DataGridTemplateColumn Header=" Image " Width="*" IsReadOnly="True">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<Image Source="{Binding Path=Image}"  />
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+					</DataGrid.Columns>
+				</DataGrid>
+
+			</Grid>
+		</Border> 
+
+		<!-- End of the XAML as it needs to be on top of everything else! -->
+		<Grid Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"  x:Name="AddItemElementInputBox" Visibility="Collapsed">
+			<Border MinWidth="400" Height="Auto"
+					Background="{DynamicResource PrimaryColor}" 
+                    BorderBrush="{DynamicResource SecondaryColor}" 
+                    BorderThickness="3" CornerRadius="8" 
+					HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="50"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="150"/>
+						<RowDefinition Height="40"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="120"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" FontSize="32" 
+							   TextAlignment="Center" Text="Add Product" FontWeight="Bold" 
+							   Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<!-- Left Columns -->
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Category" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="2" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Name" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="3" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Description" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="4" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Price" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="5" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Quantity" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<Button x:Name="BtnLoadFromFile" Grid.Row="6" Grid.Column="0" Margin="10,5" Height="32" VerticalAlignment="Top"
+							Click="BtnLoadFromFile_Click" Content="Browse" Style="{StaticResource BorderedButton}"/>
+					
+					<!-- Right Columns -->
+					<ComboBox Grid.Row="1" Grid.Column="1" Margin="10,5" Style="{StaticResource BorderedComboBox}"
+								  Name="InputCategoryIdBox"/>
+
+					<TextBox x:Name="InputProductNameBox" Grid.Row="2" Grid.Column="1" Margin="10,5" 
+							 Style="{StaticResource WaterMarkTextBox}"/>
+
+					<TextBox x:Name="InputProductDescriptionBox" Grid.Row="3" Grid.Column="1" Margin="10,5"
+							 Style="{StaticResource WaterMarkTextBox}"/>
+
+					<TextBox x:Name="InputProductPriceBox" Grid.Row="4" Grid.Column="1" Margin="10,5"
+							 Style="{StaticResource WaterMarkTextBox}"/>
+					
+					<TextBox x:Name="InputProducQuantityBox" Grid.Row="5" Grid.Column="1" Margin="10,5"
+							 Style="{StaticResource WaterMarkTextBox}"/>
+
+					<Border Grid.Row="6" Grid.Column="1" Margin="10,5" Padding="5"
+							BorderBrush="{DynamicResource SecondaryColor}" BorderThickness="3" CornerRadius="8">
+						<Image Name="imgProduct" Canvas.Left="1" Canvas.Top="0" MaxWidth="235" MaxHeight="120"
+								   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+					</Border>
+
+					<Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<Button x:Name="ProductCancelButton" Grid.Column="0" Margin="20, 4" Content="Cancel" Style="{StaticResource BorderedButton}" Click="ProductCancelButton_Click" />
+						<Button x:Name="ProductSubmitButton" Grid.Column="1" Margin="20, 4" Content="Submit" Style="{StaticResource BorderedButton}" Click="ProductSubmitButton_Click"/>
+					</Grid>
+				</Grid>
+			</Border>
+		</Grid>
+
+		<!-- Edit/Update Form Started Here-->
+		<Grid  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" x:Name="EditItemElementInputBox" Visibility="Collapsed">
+			<Border MinWidth="400" Height="Auto"
+					Background="{DynamicResource PrimaryColor}" 
+                    BorderBrush="{DynamicResource SecondaryColor}" 
+                    BorderThickness="3" CornerRadius="8" 
+					HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="50"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="150"/>
+						<RowDefinition Height="40"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="120"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" FontSize="32" 
+							   TextAlignment="Center" Text="AUpdate Product" FontWeight="Bold" 
+							   Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<!-- Left Columns -->
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Id" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="2" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Category" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="3" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Name" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="4" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Description" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="5" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Price" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="6" Grid.Column="0" Margin="10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Quantity" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<Button x:Name="BtnEditFromFile" Grid.Row="7" Grid.Column="0" Margin="10,5" Height="32" VerticalAlignment="Top"
+							Click="BtnEditFromFile_Click" Content="Browse" Style="{StaticResource BorderedButton}"/>
+
+					<!-- Right Columns-->
+					<TextBox x:Name="InputEditId" Grid.Row="1" Grid.Column="1" Margin="10, 5" IsReadOnly="True"
+							 Style="{StaticResource WaterMarkTextBox}"/>
+
+					<ComboBox x:Name="InputEditCategoryIdBox" Grid.Row="2" Grid.Column="1" Margin="10, 5"
+							  Style="{StaticResource BorderedComboBox}"/>
+
+					<TextBox x:Name="InputEditProductNameBox" Grid.Row="3" Grid.Column="1" Margin="10, 5"
+							 Style="{StaticResource WaterMarkTextBox}"/>
+
+					<TextBox x:Name="InputEditProductDescriptionBox" Grid.Row="4" Grid.Column="1" Margin="10, 5" 
+							 Style="{StaticResource WaterMarkTextBox}"/>
+
+					<TextBox x:Name="InputEditProductPriceBox" Grid.Row="5" Grid.Column="1" Margin="10, 5"
+							 Style="{StaticResource WaterMarkTextBox}"/>
+					
+					<TextBox x:Name="InputEditProductQuantityBox" Grid.Row="6" Grid.Column="1" Margin="10, 5"
+							 Style="{StaticResource WaterMarkTextBox}"/>
+
+					<Border Grid.Row="7" Grid.Column="1" Margin="10,5" Padding="5"
+							BorderBrush="{DynamicResource SecondaryColor}" BorderThickness="3" CornerRadius="8">
+						<Image Name="imgEditProduct" Canvas.Left="1" Canvas.Top="0" MaxWidth="235" MaxHeight="120"
+								   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+					</Border>
+
+					<Grid Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<Button x:Name="EditItemCancelButton" Grid.Column="0" Margin="20, 4" Content="Cancel" Style="{StaticResource BorderedButton}" Click="EditItemCancelButton_Click" />
+						<Button x:Name="EditItemUpdateButton" Grid.Column="1" Margin="20, 4" Content="Submit" Style="{StaticResource BorderedButton}" Click="EditItemUpdateButton_Click"/>
+					</Grid>
+				</Grid>
+			</Border>
+		</Grid>
 	</Grid>
 </Page>
