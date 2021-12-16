@@ -269,10 +269,10 @@
         </Grid>
         
         <!--Print Order Page-->
-        <Grid Name="PrintOrder"  Grid.Row="2" Grid.Column="1" Height="400" Width="400" Background="WhiteSmoke" Visibility="Collapsed">
+        <Grid Name="PrintOrder"  Grid.Row="2" Grid.Column="1" Height="400" Width="500" Background="WhiteSmoke" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="500"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
@@ -297,18 +297,13 @@
 						   FontSize="30" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
 						   Text="Print Order"/>
                     <Button x:Name="btnPrintOrder" Content="Print Selected Order" FontSize="16" Style="{StaticResource BorderButton}" Click="btnPrintOrder_Click" Width="170" Height="30" HorizontalAlignment="Right" Margin="10" Grid.Row="2"/>
-                    <DataGrid FontSize="14" IsReadOnly="False" Grid.Row="3" Margin="50,15" Name="tblOrderDetails">
+                    <DataGrid FontSize="14" AutoGenerateColumns="False" ItemsSource="{Binding PrintOrders}" IsReadOnly="False" Grid.Row="3" Margin="50,15" Name="tblPrintOrderDetails">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header=""/>
-                            <DataGridTextColumn Header="Order ID"/>
-                            <DataGridTextColumn Header="E-mail"/>
-                            <DataGridTextColumn Header="Name"/>
-                            <DataGridTextColumn Header="Order Date" Width="*"/>
+                            <DataGridTextColumn Header="Order ID" Binding="{Binding OrderId}"/>
+                            <DataGridTextColumn Header="E-mail"  Binding="{Binding Email}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Order Date" Width="*" Binding="{Binding OrderDate}"/>
                         </DataGrid.Columns>
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
                     </DataGrid>
                 </Grid>
             </Border>

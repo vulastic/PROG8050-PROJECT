@@ -47,7 +47,7 @@ namespace PROG8050_PROJECT.Views
             }
 			textBox_ActiveCustomerCount.Text = count.ToString(); //Active customer -all customers with order history
 			
-			temp = dbManager.ExecuteReader($"SELECT o.Quantity, p.Price FROM OrderDetail o INNER JOIN Product p ON o.ProductId = p.Id; ");
+			temp = dbManager.ExecuteReader($"SELECT o.Email, p.FirstName,p.LastName FROM Account o INNER JOIN Customer p ON o.Id = p.AccountId");
 			count = 0;
             while (temp.Read())
             {

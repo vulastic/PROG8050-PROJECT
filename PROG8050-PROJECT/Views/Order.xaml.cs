@@ -109,16 +109,18 @@ namespace PROG8050_PROJECT.Views
 			{
 				int OrderId = 0;
 				Int64 quantiy = 0;
+				string date="";
 				Dictionary<string, object> param = new Dictionary<string, object>();
 				param.Add("@id", Id);
 				int result = dbManager.ExecuteNonQuery("INSERT INTO \"Order\"(CustomerId) VALUES(@id)", param);
 				if (result == 1)
 				{
-					var temp = dbManager.ExecuteReader("Select Id from \"Order\"", param);
+					var temp = dbManager.ExecuteReader("Select Id,Datetime from \"Order\"", param);
 
 					while (temp.Read())
 					{
 						OrderId = Convert.ToInt32(temp["Id"].ToString());
+						date = temp["Datetime"].ToString();
 					}
 					foreach (CreateOrder order in CreateOrder.createOrders)
 					{
@@ -136,9 +138,18 @@ namespace PROG8050_PROJECT.Views
 				MessageBox.Show($"Order {OrderId} is placed successfully!", "Success", MessageBoxButton.OK);
 				CreateOrder.createOrders.Clear();
 				ShowOrders();
+				
+				PrintOrders printOrders = new PrintOrders();
+				printOrders.OrderId = OrderId;
+				printOrders.OrderDate = date;
+				var temp1= dbManager.ExecuteReader($"SELECT o.Email, p.FirstName,p.LastName FROM Account o LEFT OUTER JOIN Customer p ON o.Id = p.AccountId WHERE p.Id={Id}");
 
-				//tblProductDetails.Items.Clear();
-				//tblCProductDetails.Items.Clear();
+				while (temp1.Read())
+                {
+					printOrders.Email = temp1["Email"].ToString();
+					printOrders.Name = temp1["FirstName"].ToString() +" "+ temp1["LastName"].ToString();
+                }
+				tblPrintOrderDetails.Items.Add(printOrders);
 				PrintOrder.Visibility = Visibility.Visible;
 			}
 		}
