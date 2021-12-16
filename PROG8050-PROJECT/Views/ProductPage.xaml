@@ -78,7 +78,7 @@
 						<DataGridTemplateColumn Header=" Image " Width="*" IsReadOnly="True">
 							<DataGridTemplateColumn.CellTemplate>
 								<DataTemplate>
-									<Image Source="{Binding Path=Image}"  />
+									<Image Source="{Binding Path=Image}" MaxHeight="35"/>
 								</DataTemplate>
 							</DataGridTemplateColumn.CellTemplate>
 						</DataGridTemplateColumn>

@@ -174,6 +174,17 @@ namespace PROG8050_PROJECT.ViewModels
 
 		private void NavigateOrderPage()
 		{
+			ILoginService loginService = Ioc.Default.GetRequiredService<ILoginService>();
+			if (!loginService.IsLogin)
+			{
+				// Set Next to Promotion
+				INavigationService navigationService = Ioc.Default.GetRequiredService<INavigationService>();
+				navigationService.Next = "OrderPage";
+
+				navigationService.Navigate<LoginPageViewModel>();
+				return;
+			}
+
 			Ioc.Default.GetRequiredService<INavigationService>().Navigate<OrderPageViewModel>();
 		}
 

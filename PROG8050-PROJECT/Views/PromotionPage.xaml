@@ -11,6 +11,16 @@
 	  md:DialogServiceViews.IsRegistered="True"
       mc:Ignorable="d" Title="PromotionPage"
 	  Style="{StaticResource PageFonts}">
+
+	<Page.DataContext>
+		<viewModels:PromotionPageViewModel/>
+	</Page.DataContext>
+
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Loaded">
+			<i:InvokeCommandAction Command="{Binding Loaded}"/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
 	
 	<Grid>
 		<Grid.ColumnDefinitions>
