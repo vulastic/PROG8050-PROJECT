@@ -221,7 +221,7 @@ namespace PROG8050_PROJECT.Views
 			Product product = this.productDataGrid.SelectedItem as Product;
 			if (product == null)
 			{
-				MessageBox.Show("Please select the product.s");
+				MessageBox.Show("Please select the product.");
 				return;
 			}
 

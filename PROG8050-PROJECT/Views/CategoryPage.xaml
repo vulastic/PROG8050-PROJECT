@@ -12,19 +12,162 @@
       mc:Ignorable="d" Title="CategoryPage"
 	  Style="{StaticResource PageFonts}">
 
-	<Page.DataContext>
-		<viewModels:CategoryPageViewModel/>
-	</Page.DataContext>
-
-	<!-- Loaded event -->
-	<i:Interaction.Triggers>
-		<i:EventTrigger EventName="Loaded">
-			<i:InvokeCommandAction Command="{Binding Loaded}"/>
-		</i:EventTrigger>
-	</i:Interaction.Triggers>
-
 	<Grid>
-		<Label x:Name="label" Content="CategoryPage" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"/>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="1200*"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
 
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="665*"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+
+		<Border Grid.Column="1" Grid.Row="1" Margin="20" Padding="20" CornerRadius="8"
+				BorderBrush="{DynamicResource SecondaryColor}"
+				BorderThickness="3">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="150"/>
+					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="150"/>
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="40"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,0,0,10"
+						   HorizontalAlignment="Center" FontSize="36" FontWeight="ExtraBold"
+						   Foreground="{DynamicResource PrimaryTextColor}"
+						   Text="Category Details"/>
+
+				<TextBox x:Name="textBox_Search" Grid.Row="1" Grid.Column="2" Margin="10,4"
+						 Style="{StaticResource WaterMarkTextBox}" Tag="Category Name / ID"/>
+				<Button x:Name="btnSearch" Grid.Row="1" Grid.Column="3"
+						Margin="10,4" Style="{StaticResource BorderedButton}"
+						Click="btnSearch_Click" Content="Search"/>
+
+				<StackPanel Grid.Row="2" Grid.Column="0" Margin="0,20,10,0">
+					<Button Height="32"
+							Style="{StaticResource BorderedButton}"
+							Content="Add Category" Click="Button_Add_CategoryElement_Click"/>
+					<Button Margin="0,10,0,0" Height="32"
+							Style="{StaticResource BorderedButton}"
+                            Content="Update" Click="Button_Edit_CategoryElement_Click"/>
+					<Button Margin="0,10" Height="32"
+							Style="{StaticResource BorderedButton}"
+							Content="Delete" Click="Button_Delete_CategoryElement_Click" />
+				</StackPanel>
+
+				<DataGrid x:Name="categoryDataGrid" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Margin="10,20,0,0"
+						  AutoGenerateColumns="False" CanUserAddRows="False" RowHeaderWidth="0" 
+						  Style="{StaticResource BorderedDataGrid}">
+					<DataGrid.Columns>
+						<DataGridTextColumn IsReadOnly="True" Header=" No " Width="Auto" Binding="{Binding Id}"/>
+						<DataGridTextColumn IsReadOnly="True" Header=" Name " Width="*" Binding="{Binding Name}"/>
+					</DataGrid.Columns>
+				</DataGrid>
+
+			</Grid>
+		</Border>
+
+
+		<!-- Add Modal Popup -->
+		<Grid Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"  x:Name="AddCategoryElementInputBox" Visibility="Collapsed">
+			<Border MinWidth="400" Height="Auto"
+					Background="{DynamicResource PrimaryColor}" 
+                    BorderBrush="{DynamicResource SecondaryColor}" 
+                    BorderThickness="3" CornerRadius="8" 
+					HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="50"/>
+						<RowDefinition Height="50"/>
+						<RowDefinition Height="50"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="150"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" FontSize="32" 
+							   TextAlignment="Center" Text="Add Category" FontWeight="Bold" 
+							   Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<!-- Left Columns -->
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="20,5,10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Category Name" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+
+					<!-- Right Columns -->
+					<TextBox x:Name="InputCategoryBox" Grid.Row="1" Grid.Column="1" Margin="10,5,20,5" 
+							 Height ="32" Style="{StaticResource WaterMarkTextBox}"/>
+
+					<Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<Button x:Name="CategoryCancelButton" Grid.Column="0" Margin="20,0" Height="32" Content="Cancel" Style="{StaticResource BorderedButton}" Click="Button_Close_CategoryElement_Click" />
+						<Button x:Name="CategorySubmitButton" Grid.Column="1" Margin="20,0" Height="32" Content="Submit" Style="{StaticResource BorderedButton}" Click="Button_Submit_CategoryElement_Click"/>
+					</Grid>
+				</Grid>
+			</Border>
+		</Grid>
+
+		<!-- Update Modal Popup -->
+		<Grid Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"  x:Name="EditCategoryElementInputBox" Visibility="Collapsed">
+			<Border MinWidth="400" Height="Auto"
+					Background="{DynamicResource PrimaryColor}" 
+                    BorderBrush="{DynamicResource SecondaryColor}" 
+                    BorderThickness="3" CornerRadius="8" 
+					HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="50"/>
+						<RowDefinition Height="50"/>
+						<RowDefinition Height="50"/>
+						<RowDefinition Height="50"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="150"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" FontSize="32" 
+							   TextAlignment="Center" Text="Update Category" FontWeight="Bold" 
+							   Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<!-- Left Columns -->
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="20,5,10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Category Id" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="2" Grid.Column="0" Margin="20,5,10,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Category Name" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<!-- Right Columns -->
+					<TextBox x:Name="InputEditCategoryIdBox" Grid.Row="1" Grid.Column="1" Margin="10,5,20,5" IsReadOnly="True"
+							 Height="32" Style="{StaticResource WaterMarkTextBox}"/>
+
+					<TextBox x:Name="InputEditCategoryBox" Grid.Row="2" Grid.Column="1" Margin="10,5,20,5"
+							 Height="32" Style="{StaticResource WaterMarkTextBox}"/>
+
+					<Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<Button x:Name="EditCategoryCancelButton" Grid.Column="0" Margin="20,0" Height="32" Content="Cancel" Style="{StaticResource BorderedButton}" Click="EditCategoryCancelButton_Click" />
+						<Button x:Name="EditCategoryUpdateButton" Grid.Column="1" Margin="20,0" Height="32" Content="Submit" Style="{StaticResource BorderedButton}" Click="EditCategoryUpdateButton_Click"/>
+					</Grid>
+				</Grid>
+			</Border>
+		</Grid>
 	</Grid>
 </Page>

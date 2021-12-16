@@ -86,9 +86,9 @@
 				</DataGrid>
 
 			</Grid>
-		</Border> 
+		</Border>
 
-		<!-- End of the XAML as it needs to be on top of everything else! -->
+		<!-- Add Modal Popup -->
 		<Grid Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"  x:Name="AddItemElementInputBox" Visibility="Collapsed">
 			<Border MinWidth="400" Height="Auto"
 					Background="{DynamicResource PrimaryColor}" 
@@ -104,7 +104,7 @@
 						<RowDefinition Height="40"/>
 						<RowDefinition Height="40"/>
 						<RowDefinition Height="150"/>
-						<RowDefinition Height="40"/>
+						<RowDefinition Height="50"/>
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="120"/>
@@ -161,14 +161,14 @@
 							<ColumnDefinition/>
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
-						<Button x:Name="ProductCancelButton" Grid.Column="0" Margin="20, 4" Content="Cancel" Style="{StaticResource BorderedButton}" Click="ProductCancelButton_Click" />
-						<Button x:Name="ProductSubmitButton" Grid.Column="1" Margin="20, 4" Content="Submit" Style="{StaticResource BorderedButton}" Click="ProductSubmitButton_Click"/>
+						<Button x:Name="ProductCancelButton" Grid.Column="0" Margin="20,0" Height="32" Content="Cancel" Style="{StaticResource BorderedButton}" Click="ProductCancelButton_Click" />
+						<Button x:Name="ProductSubmitButton" Grid.Column="1" Margin="20,0" Height="32" Content="Submit" Style="{StaticResource BorderedButton}" Click="ProductSubmitButton_Click"/>
 					</Grid>
 				</Grid>
 			</Border>
 		</Grid>
 
-		<!-- Edit/Update Form Started Here-->
+		<!-- Update Modal Popup -->
 		<Grid  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" x:Name="EditItemElementInputBox" Visibility="Collapsed">
 			<Border MinWidth="400" Height="Auto"
 					Background="{DynamicResource PrimaryColor}" 
@@ -185,7 +185,7 @@
 						<RowDefinition Height="40"/>
 						<RowDefinition Height="40"/>
 						<RowDefinition Height="150"/>
-						<RowDefinition Height="40"/>
+						<RowDefinition Height="50"/>
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="120"/>
@@ -248,8 +248,8 @@
 							<ColumnDefinition/>
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
-						<Button x:Name="EditItemCancelButton" Grid.Column="0" Margin="20, 4" Content="Cancel" Style="{StaticResource BorderedButton}" Click="EditItemCancelButton_Click" />
-						<Button x:Name="EditItemUpdateButton" Grid.Column="1" Margin="20, 4" Content="Submit" Style="{StaticResource BorderedButton}" Click="EditItemUpdateButton_Click"/>
+						<Button x:Name="EditItemCancelButton" Grid.Column="0" Margin="20,0" Height="32" Content="Cancel" Style="{StaticResource BorderedButton}" Click="EditItemCancelButton_Click" />
+						<Button x:Name="EditItemUpdateButton" Grid.Column="1" Margin="20,0" Height="32" Content="Submit" Style="{StaticResource BorderedButton}" Click="EditItemUpdateButton_Click"/>
 					</Grid>
 				</Grid>
 			</Border>
