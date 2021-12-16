@@ -53,7 +53,7 @@
                           SelectionChanged="productDataGrid_SelectionChanged" SelectedItem="{Binding Path=SelectedProduct, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="grid1" Header="No" Binding="{Binding Id}"/>
-                <DataGridTextColumn  x:Name="grid2" Header="Category" Binding="{Binding Category.Name}"/>
+                <DataGridTextColumn  x:Name="grid2" Header="Category" Binding="{Binding Category}"/>
                 <DataGridTextColumn  x:Name="grid3" Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn  x:Name="grid4" Header="Description" Binding="{Binding Description}"/>
                 <DataGridTextColumn  x:Name="grid5" Header="Price" Binding="{Binding Price}"/>

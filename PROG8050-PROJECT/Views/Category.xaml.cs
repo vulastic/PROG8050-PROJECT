@@ -56,21 +56,23 @@ namespace PROG8050_PROJECT.Views
 
         private void categoryDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                if (this.categoryDataGrid.SelectedItem != null)
+           
+                try
                 {
-                    item = this.categoryDataGrid.SelectedItem;
-                    editcategoryid = (this.categoryDataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
-                    this.InputEditCategoryIdBox.Text = editcategoryid;
-                    editcategoryname = (this.categoryDataGrid.SelectedCells[1].Column.GetCellContent(item) as TextBlock).Text;
-                    this.InputEditCategoryBox.Text = editcategoryname;
+                    if (this.categoryDataGrid.SelectedItem != null)
+                    {
+                        item = this.categoryDataGrid.SelectedItem;
+                        editcategoryid = (this.categoryDataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
+                        this.InputEditCategoryIdBox.Text = editcategoryid;
+                        editcategoryname = (this.categoryDataGrid.SelectedCells[1].Column.GetCellContent(item) as TextBlock).Text;
+                        this.InputEditCategoryBox.Text = editcategoryname;
+                    }
                 }
-            }
-            catch (Exception exp)
-            {
-                MessageBox.Show("Message:" + exp);
-            }
+                catch (Exception exp)
+                {
+                    MessageBox.Show("Message:" + exp);
+                }
+            
         }
         //
         private void Button_Close_CategoryElement_Click(object sender, RoutedEventArgs e)

@@ -46,7 +46,7 @@
         <DataGrid x:Name="categoryDataGrid" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Height="350"
                               AutoGenerateColumns="False" 
                               
-                          SelectionChanged="categoryDataGrid_SelectionChanged" SelectedItem="{Binding Path=SelectedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="45,11,45,11">
+                          SelectionChanged="categoryDataGrid_SelectionChanged" SelectedItem="{Binding Path=SelectedCategory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="100,11,245,11">
             <DataGrid.Columns >
                 <DataGridTextColumn Header="No" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Category Name" Binding="{Binding Name}"/>
@@ -54,9 +54,10 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <DataGrid x:Name="PdctGrid" Grid.Column="1" Visibility="Hidden" Grid.Row="2" Grid.RowSpan="3" Margin="10 0 0 0">
+        <DataGrid x:Name="ProductcatGrid" Grid.Column="1" Visibility="Hidden" Grid.Row="2" Grid.RowSpan="3" Margin="10 0 0 0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Products" Binding="{Binding Products}"/>
+                
             </DataGrid.Columns>
         </DataGrid>
 

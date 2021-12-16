@@ -56,7 +56,6 @@ namespace PROG8050_PROJECT.Views
             InputProductDescriptionBox.Text = null;
             InputProductPriceBox.Text = null;
             InputProducQuantityBox.Text = null;
-             InputCategoryIdBox = null;
             imgProduct.Source=null;
         }
 
@@ -126,6 +125,8 @@ namespace PROG8050_PROJECT.Views
                 {
                     InputCategoryIdBox.Items.Add(dr["Name"].ToString());
                     InputEditCategoryIdBox.Items.Add(dr["Name"].ToString());
+                    
+
                 }
 
             }
@@ -135,6 +136,7 @@ namespace PROG8050_PROJECT.Views
                 MessageBox.Show("Error occured!");
             }
         }
+      
         private void ProductSubmitButton_Click(object sender, RoutedEventArgs e)
         {
             byte[] data = null;
@@ -147,11 +149,23 @@ namespace PROG8050_PROJECT.Views
                 if (InputProductNameBox.Text != "" || InputProductDescriptionBox.Text != "")
                 {
                     try
+
                     {
+                        Dictionary<string, object> param = new Dictionary<string, object>();
+                        string categoryId = "";
+                        param.Add("@categoryName", InputCategoryIdBox.SelectedItem.ToString());
+                        var temp = dbManager.ExecuteReader("Select * from Category where Name=@categoryName", param);
+                        if (temp != null)
+                        {
+                            while (temp.Read())
+                            {
+                                categoryId = temp[0].ToString();
+                            }
+                        }
                         data = File.ReadAllBytes(image);
                         cmd.CommandText = @"Insert into Product(Name, CategoryId, Description, Price, Quantity, Image)VALUES(@name,@cid,@description,@price,@quantity,@img)";
                         cmd.Parameters.Add(new SQLiteParameter("@name", InputProductNameBox.Text));
-                        cmd.Parameters.Add(new SQLiteParameter("@cid", InputCategoryIdBox.SelectedIndex));
+                        cmd.Parameters.Add(new SQLiteParameter("@cid", categoryId));
                         cmd.Parameters.Add(new SQLiteParameter("@description", InputProductDescriptionBox.Text));
                         cmd.Parameters.Add(new SQLiteParameter("@price", InputProductPriceBox.Text));
                         cmd.Parameters.Add(new SQLiteParameter("@quantity", InputProducQuantityBox.Text));
@@ -177,25 +191,28 @@ namespace PROG8050_PROJECT.Views
         }
         private void Button_DeleteProductClick(object sender, RoutedEventArgs e)
         {
-
-            var Result = MessageBox.Show($"Do you want to delete {this.editproductname} ? ", "Confirmation",
+            try
+            {
+                var Result = MessageBox.Show($"Do you want to delete {this.editproductname} ? ", "Confirmation",
                             MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (Result == MessageBoxResult.Yes)
             {
-                try { SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+                SQLiteDBManager dbManager = SQLiteDBManager.Instance;
                     var conn = dbManager.Connection;
                     var cmd = new SQLiteCommand(conn);
                     cmd.CommandText = "delete from Product where Id = " + Int32.Parse(editpdctid);
                     MessageBox.Show("Succesfully Deleted");
                     cmd.ExecuteNonQuery();
                     FillDataGrid();
-                }catch (Exception ex)
-                      {
-                    MessageBox.Show("Select Product to delete");
-                        }
+               
             }
             else
             {
+            }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Select Product to delete");
             }
         }
 
@@ -241,26 +258,27 @@ namespace PROG8050_PROJECT.Views
                 {
                     try
                     {
-
+                        Dictionary<string, object> param = new Dictionary<string, object>();
+                        string categoryId = "";
+                        param.Add("@categoryName", InputCategoryIdBox.SelectedItem.ToString());
+                        var temp = dbManager.ExecuteReader("Select * from Category where Name=@categoryName", param);
+                        if (temp != null)
+                        {
+                            while (temp.Read())
+                            {
+                                categoryId = temp[0].ToString();
+                            }
+                        }
                         data = File.ReadAllBytes(image);
                         cmd.CommandText ="update Product set Name=:name,CategoryId=:cid,Description=:description,Price=:price,Quantity=:quantity,Image=:img where Id =:pid";
                         cmd.Parameters.Add("name", DbType.String).Value =  InputEditProductNameBox.Text;
-                        cmd.Parameters.Add(":cid", DbType.Int32).Value= InputEditCategoryIdBox.SelectedIndex;
+                        cmd.Parameters.Add(new SQLiteParameter(":cid", categoryId));
                         cmd.Parameters.Add(":description",DbType.String).Value= InputEditProductDescriptionBox.Text;
                         cmd.Parameters.Add(":price",DbType.Currency).Value= InputEditProductPriceBox.Text;
                         cmd.Parameters.Add(":quantity",DbType.Int32).Value= InputEditProductQuantityBox.Text;
                         cmd.Parameters.Add(":img", DbType.Binary, data.Length);
                         cmd.Parameters[":img"].Value = data;
                         cmd.Parameters.Add(":pid",DbType.Int32).Value= InputEditId.Text;
-                      
-
-                        // cmd.CommandText=  "update Product SET Name = '" + this.InputEditProductNameBox.Text.ToString()
-                        //     + "', CategoryId ='" + this.InputEditCategoryIdBox.Text.ToString()
-                        //  + "', Description ='" + this.InputEditProductDescriptionBox.Text.ToString()
-                        //  + "', Price ='" + this.InputEditProductPriceBox.Text.ToString()
-                        //   + "', Quantity ='" + this.InputProducQuantityBox.Text.ToString()
-                      //     + "', Image ='" + this.imgEditProduct
-                        // + "' where Id =" + Int32.Parse(this.InputEditId.Text.ToString());
                         cmd.ExecuteNonQuery();
                         FillDataGrid();
                         EditItemElementInputBox.Visibility = System.Windows.Visibility.Hidden;
@@ -323,13 +341,13 @@ namespace PROG8050_PROJECT.Views
            var con = dbManager.Connection;
            try { 
            var cmd = new SQLiteCommand(con);
-           cmd.CommandText = "SELECT Product.Id,Product.Name,Category.Name,Product.Description,Product.Price," +
+           cmd.CommandText = "SELECT Product.Id,Product.Name,Category.Name AS Category,Product.Description,Product.Price," +
                     "Product.Quantity,Product.Image FROM Product Left outer JOIN Category ON Product.CategoryId= Category.Id"; 
            cmd.ExecuteNonQuery();
            
            sAdapter = new SQLiteDataAdapter(cmd);
            datable = new DataTable();
-                sAdapter.Fill(datable);
+           sAdapter.Fill(datable);
            productDataGrid.ItemsSource = datable.AsDataView();
            sAdapter.Update(datable);
               
