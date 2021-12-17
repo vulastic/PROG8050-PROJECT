@@ -19,135 +19,164 @@
 	<Page.Resources>
 		<BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
 	</Page.Resources>
-	
+
 	<Grid>
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="30"/>
-				<RowDefinition Height="auto"/>
-				<RowDefinition Height="5"/>
-				<RowDefinition Height="250"/>
-				<RowDefinition Height="5"/>
-				<RowDefinition Height="auto"/>
-				<RowDefinition Height="5"/>
-				<RowDefinition Height="250"/>
-				<RowDefinition Height="20"/>
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="20"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="20"/>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="20"/>
-			</Grid.ColumnDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="1200*"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
 
-			<TextBlock Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center"
-						   FontSize="25" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
-						   Text="Order"/>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="665*"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
 
-			<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-				<!--Search Bar -->
-				<TextBox x:Name="textBox_CustomerSearchbar" FontSize="10" Style="{StaticResource WaterMarkTextBox}" Tag="Enter Customer First Name" Margin="5" HorizontalAlignment="Left" Width="201"/>
-				<!-- Search Button-->
-				<Button x:Name="btnSearch" Content="Search" FontSize="10" Style="{StaticResource BorderedButton}" Click="BtnSearch_Click" Width="74" Height="30"  HorizontalAlignment="Right" VerticalAlignment="Center"/>
+		<Border Grid.Column="1" Grid.Row="1" Margin="20" Padding="20" CornerRadius="8"
+				BorderBrush="{DynamicResource SecondaryColor}"
+				BorderThickness="3">
 
-			</StackPanel>
-			<!-- Add New Button-->
-			<Button x:Name="btnAddNew" Grid.Row="1" Grid.Column="1" Content="Add New" FontSize="10" Style="{StaticResource BorderedButton}" Click="BtnAddNew_Click" HorizontalAlignment="Right" Height="30" Width="74"/>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="40"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="50"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
 
-			<!-- Customer Details Table -->
-			<DataGrid IsReadOnly="True" ScrollViewer.CanContentScroll="True" 
+				<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="36" FontWeight="ExtraBold" HorizontalAlignment="Center"
+						   Foreground="{DynamicResource PrimaryTextColor}" Text="Product Details"/>
+
+				<Grid Grid.Row="1" Grid.Column="0" Margin="0,4,10,4">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*"/>
+						<ColumnDefinition/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
+					
+					<!--Search Bar -->
+					<TextBox Grid.Column="0" x:Name="CustomerSearchBar"
+							 Style="{StaticResource WaterMarkTextBox}"
+							 Tag="Enter Customer First Name"/>
+					
+					<!-- Search Button-->
+					<Button Grid.Column="1" x:Name="btnSearch" Content="Search" Margin="10,0,0,0" 
+							Style="{StaticResource BorderedButton}" 
+							Command="{Binding SearchCustomer}"
+							CommandParameter="{Binding ElementName=CustomerSearchBar, Path=Text}"/>
+					
+					<!-- Add New Button-->
+					<Button Grid.Column="2" Margin="10,0,0,0" 
+							Style="{StaticResource BorderedButton}" Content="Add New"
+							Command="{Binding AddNewCustomer}"/>
+				</Grid>
+
+
+				<!-- Customer Details Table -->
+				<DataGrid Grid.Row="2" Grid.Column="0"  IsReadOnly="True" ScrollViewer.CanContentScroll="True" Margin="0,10,10,0"
                   ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                  Grid.Row="3" Grid.Column="1" Style="{StaticResource BorderedDataGrid}"
+                  Style="{StaticResource BorderedDataGrid}"
                   Name="tblCustomerDetails"
 					  AutoGenerateColumns="False" CanUserAddRows="False" RowHeaderWidth="0"
 					  ItemsSource="{Binding Customers, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
 					  SelectedItem="{Binding SelectedCustomer}">
-				<DataGrid.Columns >
-					<DataGridTextColumn Header=" Customer Id " IsReadOnly="True" Binding="{Binding Id}" Width="Auto"/>
-					<DataGridTextColumn Header=" First Name " IsReadOnly="True" Binding="{Binding FirstName}" Width="*"/>
-					<DataGridTextColumn Header=" Last Name " IsReadOnly="True" Binding="{Binding LastName}" Width="*"/>
-					<DataGridTextColumn Header=" Phone No " IsReadOnly="True" Binding="{Binding PhoneNo}" Width="*"/>
-					<DataGridTextColumn Header=" Gender " IsReadOnly="True" Binding="{Binding Gender}" Width="Auto"/>
-				</DataGrid.Columns>
-				<DataGrid.InputBindings>
-					<MouseBinding MouseAction="LeftDoubleClick"
+					<DataGrid.Columns >
+						<DataGridTextColumn Header=" Customer Id " IsReadOnly="True" Binding="{Binding Id}" Width="Auto"/>
+						<DataGridTextColumn Header=" First Name " IsReadOnly="True" Binding="{Binding FirstName}" Width="*"/>
+						<DataGridTextColumn Header=" Last Name " IsReadOnly="True" Binding="{Binding LastName}" Width="*"/>
+						<DataGridTextColumn Header=" Phone No " IsReadOnly="True" Binding="{Binding PhoneNo}" Width="*"/>
+						<DataGridTextColumn Header=" Gender " IsReadOnly="True" Binding="{Binding Gender}" Width="Auto"/>
+					</DataGrid.Columns>
+					<DataGrid.InputBindings>
+						<MouseBinding MouseAction="LeftDoubleClick"
 								  Command="{Binding DoubleClickCustomers}"/>
-				</DataGrid.InputBindings>
-			</DataGrid>
+					</DataGrid.InputBindings>
+				</DataGrid>
 
-			<!-- Category list dropdown-->
-			<ComboBox Name="comboboxCategoryList" Margin="50,15" Grid.Column="1" Grid.Row="5" 
+				<!-- Category list dropdown-->
+				<ComboBox Grid.Row="3" Grid.Column="0" Name="comboboxCategoryList" Margin="20,14,30,4" 
 					  Style="{StaticResource BorderedComboBox}"
 					  ItemsSource="{Binding Categories}" DisplayMemberPath="Name"
 					  SelectedItem="{Binding SelectedCategory}">
-			</ComboBox>
+				</ComboBox>
 
-			<!-- Product Details Table -->
-			<DataGrid Grid.Row="7" Grid.Column="1" IsReadOnly="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+				<!-- Product Details Table -->
+				<DataGrid Grid.Row="4" Grid.Column="0" Grid.RowSpan="2" Margin="0,10,10,0"  IsReadOnly="True" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" 
 					  AutoGenerateColumns="False" CanUserAddRows="False" RowHeaderWidth="0"
 					  ItemsSource="{Binding Products, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
 					  SelectedItem="{Binding SelectedProduct}"
 					  Style="{StaticResource BorderedDataGrid}">
-				<DataGrid.Columns>
-					<DataGridTextColumn Header=" Product Id " Binding="{Binding Id}" Width="Auto"/>
-					<DataGridTextColumn Header=" Name " Binding="{Binding Name}" Width="*"/>
-					<DataGridTextColumn Header=" Quantity " Binding="{Binding Quantity}" Width="Auto"/>
-					<DataGridTextColumn Header=" Price " Binding="{Binding Price}" Width="Auto"/>
-					<DataGridTemplateColumn Header=" Image " Width="*" IsReadOnly="True">
-						<DataGridTemplateColumn.CellTemplate>
-							<DataTemplate>
-								<Image Source="{Binding Image}" MaxHeight="35"/>
-							</DataTemplate>
-						</DataGridTemplateColumn.CellTemplate>
-					</DataGridTemplateColumn>
-				</DataGrid.Columns>
-				<DataGrid.InputBindings>
-					<MouseBinding MouseAction="LeftDoubleClick"
+					<DataGrid.Columns>
+						<DataGridTextColumn Header=" Product Id " Binding="{Binding Id}" Width="Auto"/>
+						<DataGridTextColumn Header=" Name " Binding="{Binding Name}" Width="*"/>
+						<DataGridTextColumn Header=" Quantity " Binding="{Binding Quantity}" Width="Auto"/>
+						<DataGridTextColumn Header=" Price " Binding="{Binding Price}" Width="Auto"/>
+						<DataGridTemplateColumn Header=" Image " Width="*" IsReadOnly="True">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<Image Source="{Binding Image}" MaxHeight="35"/>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+					</DataGrid.Columns>
+					<DataGrid.InputBindings>
+						<MouseBinding MouseAction="LeftDoubleClick"
 								  Command="{Binding DoubleClickSelectQuantity}"/>
-				</DataGrid.InputBindings>
-			</DataGrid>
+					</DataGrid.InputBindings>
+				</DataGrid>
 
-			<!-- Order Date -->
-			<!--<Grid Grid.Row="1" Grid.Column="3">
-            <Label Content="Order Date: " HorizontalAlignment="Left" Margin="54,-3,0,23" RenderTransformOrigin="0.233,0.385"/>
-            <DatePicker HorizontalAlignment="Left" Width="168" Margin="122,0,0,20" />
-        </Grid> -->
-			<!-- Show all orders Button-->
-			<!--<Button x:Name="btnShowOrders" Grid.Row="3" Grid.Column="3" Content="Show All Orders" FontSize="10" Style="{StaticResource BorderButton}" Click="BtnShowOrders_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="74" Height="30"/>-->
-			<StackPanel Grid.Row="3" Grid.Column="3" Orientation="Horizontal" FlowDirection="RightToLeft">
+				<Grid Grid.Row="1" Grid.Column="1" Margin="10,4,0,4">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="3*"/>
+						<ColumnDefinition/>
+					</Grid.ColumnDefinitions>
 
-				<!-- Delete Selected Button-->
-				<Button x:Name="btnDelete" Content="Delete Selected" FontSize="10" Style="{StaticResource BorderedButton}" Click="BtnDelete_Click" Height="30" VerticalAlignment="Top" Margin="5" Width="74" />
+					<!-- Delete Selected Button-->
+					<Button Grid.Column="1" x:Name="btnDelete" Content="Delete Selected" 
+							Margin="10,0,0,0" Style="{StaticResource BorderedButton}" 
+							Height="32" Command="{Binding DeleteSelectedOrder}"/>
+				</Grid>
 
-			</StackPanel>
+				<DataGrid Grid.Row="2" Grid.Column="1" Grid.RowSpan="3" Margin="10,10,0,0"
+						  AutoGenerateColumns="False" CanUserAddRows="False" RowHeaderWidth="0"
+						  Style="{StaticResource BorderedDataGrid}"
+						  ItemsSource="{Binding CreateOrders, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"
+						  SelectedItem="{Binding SelectedOrder}">
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="Auto" IsReadOnly="True"/>
+						<DataGridTextColumn Header="Product Name" Binding="{Binding Name}" Width="2*" IsReadOnly="True"/>
+						<DataGridTextColumn Header= "Price" Binding="{Binding Price}" Width="*" IsReadOnly="True"/>
+						<DataGridTextColumn Header=" Quantity " Binding="{Binding Quantity}" Width="*" IsReadOnly="True"/>
+						<DataGridTextColumn Header=" Total Price " Binding="{Binding TotalPrice}" Width="*" IsReadOnly="True"/>
+						<DataGridCheckBoxColumn Header=" Selected " Width="Auto" IsReadOnly="False" Binding="{Binding IsSelected}"/>
+					</DataGrid.Columns>
+					<DataGrid.InputBindings>
+						<MouseBinding MouseAction="LeftDoubleClick"
+								  Command="{Binding DoubleClickUpdateQuantity}"/>
+					</DataGrid.InputBindings>
+				</DataGrid>
 
-			<!-- Order creation Table -->
-			<DataGrid IsReadOnly="True" MouseDoubleClick="Row_ProductDetailEdit_Click" 
-					  Margin="20,40,0,61"  Grid.Row="3" Grid.Column="2" Grid.RowSpan="5" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"
-					  AutoGenerateColumns="False" CanUserAddRows="False" RowHeaderWidth="0"
-					  Style="{StaticResource BorderedDataGrid}"
-					  ItemsSource="{Binding CreateOrders, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}">
-				<DataGrid.Columns>
-					<DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="Auto" IsReadOnly="True"/>
-					<DataGridTextColumn Header="Product Name" Binding="{Binding Name}" Width="2*" IsReadOnly="True"/>
-					<DataGridTextColumn Header= "Price" Binding="{Binding Price}" Width="*" IsReadOnly="True"/>
-					<DataGridTextColumn Header=" Quantity " Binding="{Binding Quantity}" Width="*" IsReadOnly="True"/>
-					<DataGridTextColumn Header=" Total Price " Binding="{Binding TotalPrice}" Width="*" IsReadOnly="True"/>
-					<DataGridCheckBoxColumn Header=" Selected " Width="Auto" IsReadOnly="False" Binding="{Binding IsSelected}"/>
-				</DataGrid.Columns>
-			</DataGrid>
-			<StackPanel Grid.Row="7" Grid.Column="3" Orientation="Horizontal">
-				<!-- Total Price-->
-				<Label Content="Total Price: " HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-				<TextBlock Name="Total_Price" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="0"/>
+				<Grid Grid.Row="5" Grid.Column="1" Margin="10,10,0,0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="2*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Label Grid.Column="0" Content="Total Price:" Foreground="{DynamicResource PrimaryTextColor}" VerticalAlignment="Center"/>
+					<TextBlock Grid.Column="1" Name="Total_Price" VerticalAlignment="Center"  Foreground="{DynamicResource PrimaryTextColor}" Text="0"/>
+					<Button Grid.Column="3" Content="Create Order" Style="{StaticResource BorderedButton}" Command="{Binding CreateOrder}"/>
+				</Grid>
+			</Grid>
+		</Border>
 
-			</StackPanel>
-			<!-- Create Order button-->
-			<Button x:Name="btnCreateOrder" Grid.Row="7" Grid.Column="3" Content="Create Order" FontSize="10" Style="{StaticResource BorderedButton}" Background="{DynamicResource IconActionColor}" Click="btnCreateOrder_Click" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="26" Width="74"/>
-		</Grid>
-		
-		
 		<!--Update Customer-->
 		<Grid Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" 
 			  Visibility="{Binding IsUpdateCustomerVisible, Converter={StaticResource BooleanToVisibility}, FallbackValue=Hidden}">
@@ -188,7 +217,7 @@
 							   Text="Phone No" Foreground="{DynamicResource PrimaryTextColor}"/>
 
 					<!-- Right Columns -->
-					<TextBox Grid.Row="1" Grid.Column="1" Margin="10,5,20,5" Text="{Binding Path=SelectedCustomer.Id}"
+					<TextBox Grid.Row="1" Grid.Column="1" Margin="10,5,20,5" Text="{Binding Path=SelectedCustomer.Id}" IsReadOnly="True"
 							 Style="{StaticResource WaterMarkTextBox}"/>
 
 					<TextBox Grid.Row="2" Grid.Column="1" Margin="10,5,20,5" Text="{Binding Path=SelectedCustomer.FirstName}"
@@ -274,99 +303,105 @@
 		</Grid>
 
 		<!--Update Product Quantity-->
-		<Grid Name="quantityUpdateProductOrder" Grid.Row="2" Grid.Column="1" Height="300" Width="400" Background="WhiteSmoke" 
+		<Grid Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" 
 			  Visibility="{Binding IsUpdateQuantityVisible, Converter={StaticResource BooleanToVisibility}, FallbackValue=Hidden}">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition/>
-				<ColumnDefinition Width="400"/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
-
-			<Grid.RowDefinitions>
-				<RowDefinition/>
-				<RowDefinition Height="300"/>
-				<RowDefinition/>
-			</Grid.RowDefinitions>
-
-			<Border Grid.Column="1" Grid.Row="1" CornerRadius="8" BorderBrush="{DynamicResource TextPrimaryColor}" BorderThickness="1">
-				<Grid Grid.Column="1" Grid.Row="1">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="10"/>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-						<ColumnDefinition Width="10"/>
-					</Grid.ColumnDefinitions>
+			<Border MinWidth="400" Height="Auto"
+					Background="{DynamicResource PrimaryColor}" 
+                    BorderBrush="{DynamicResource SecondaryColor}" 
+                    BorderThickness="3" CornerRadius="8" 
+					HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Grid>
 					<Grid.RowDefinitions>
-						<RowDefinition Height="20"/>
-						<RowDefinition/>
-						<RowDefinition/>
-						<RowDefinition/>
-						<RowDefinition/>
-						<RowDefinition Height="20"/>
+						<RowDefinition Height="50"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="50"/>
 					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="150"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
 
-					<TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" 
-						   FontSize="20" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
-						   Text="Update Quantity Product Order"/>
-					<Label Grid.Column="1" Content="Product: " FontWeight="Bold" Margin="5" HorizontalAlignment="Right" Grid.Row="2" FontSize="14" VerticalAlignment="Center"/>
-					<TextBlock Name="UProduct_Name" TextWrapping="Wrap" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="2" Margin="5" FontSize="14" FontWeight="SemiBold" Text="Product Name" VerticalAlignment="Center"/>
-					<Label Content="ID: " FontWeight="Bold" HorizontalAlignment="Right" Margin="5" Grid.Row="2" Grid.Column="3" FontSize="14" VerticalAlignment="Center"/>
-					<TextBlock Name="UProduct_Id" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="4" Text="Product ID" Margin="5" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap" VerticalAlignment="Center"/>
-					<TextBlock Name="UProduct_Price" Visibility="Hidden" Text="Product ID"/>
-					<Label Content="Quantity: " FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" FontSize="14" />
-					<ComboBox Name="comboboxUProductQuantity" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5" FontSize="16" Width="200">
-					</ComboBox>
-					<Button x:Name="btnUUQCancel" Content="Cancel" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" FontSize="16" Style="{StaticResource BorderedButton}" VerticalContentAlignment="Center" Background="{DynamicResource AlertColor}" Click="btnUOQCancel_Click" Width="74" Height="30" Margin="15"/>
-					<Button x:Name="btnUUQOk" Content="Update"  Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" FontSize="16" Style="{StaticResource BorderedButton}" Click="btnUOQUpdate_Click" Width="74" Height="30" Margin="15"/>
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" FontSize="32" 
+							   TextAlignment="Center" Text="Update Order Quantity" FontWeight="Bold" 
+							   Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<!-- Left Columns -->
+					<TextBlock Grid.Row="1" Grid.Column="0" Margin="20,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Product Id" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="2" Grid.Column="0" Margin="20,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Product Name" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<TextBlock Grid.Row="3" Grid.Column="0" Margin="20,5" FontWeight="Bold" VerticalAlignment="Center"
+							   Text="Quantity" Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<!-- Right Columns -->
+					<TextBox Grid.Row="1" Grid.Column="1" Margin="10,5,20,5" Text="{Binding Path=SelectedProduct.Id}" IsReadOnly="True"
+							 Style="{StaticResource WaterMarkTextBox}"/>
+
+					<TextBox Grid.Row="2" Grid.Column="1" Margin="10,5,20,5" Text="{Binding Path=SelectedProduct.Name}" IsReadOnly="True"
+							 Style="{StaticResource WaterMarkTextBox}"/>
+
+					<ComboBox Grid.Row="3" Grid.Column="1" Margin="10,5,20,5" Style="{StaticResource BorderedComboBox}" 
+							  ItemsSource="{Binding SelectedQuantities}" SelectedItem="{Binding SelectedQuantity}"/>
+
+					<Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<Button Grid.Column="0" Margin="20,0" Height="32" Content="Cancel" 
+								Style="{StaticResource BorderedButton}" Command="{Binding CancelUpdateQuantity}"/>
+						<Button Grid.Column="1" Margin="20,0" Height="32" Content="Select" 
+								Style="{StaticResource BorderedButton}" Command="{Binding UpdateQuantity}"/>
+					</Grid>
 				</Grid>
 			</Border>
 		</Grid>
 
-		<!--Print Order Page-->
-		<Grid Name="PrintOrder"  Grid.Row="2" Grid.Column="1" Height="400" Width="400" Background="WhiteSmoke" 
+		<Grid Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" 
 			  Visibility="{Binding IsPrintOrderVisible, Converter={StaticResource BooleanToVisibility}, FallbackValue=Hidden}">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition/>
-				<ColumnDefinition Width="400"/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
-
-			<Grid.RowDefinitions>
-				<RowDefinition/>
-				<RowDefinition Height="400"/>
-				<RowDefinition/>
-			</Grid.RowDefinitions>
-
-			<Border Grid.Column="1" Grid.Row="1" CornerRadius="8" BorderBrush="{DynamicResource TextPrimaryColor}" BorderThickness="1">
-				<Grid Grid.Column="1" Grid.Row="1">
+			<Border Width="500" Height="Auto"
+					Background="{DynamicResource PrimaryColor}" 
+                    BorderBrush="{DynamicResource SecondaryColor}" 
+                    BorderThickness="3" CornerRadius="8" 
+					HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Grid>
 					<Grid.RowDefinitions>
-						<RowDefinition Height="20"/>
-						<RowDefinition Height="70"/>
 						<RowDefinition Height="50"/>
-						<RowDefinition />
-						<RowDefinition Height="10"/>
+						<RowDefinition Height="40"/>
+						<RowDefinition Height="*" MinHeight="150"/>
 					</Grid.RowDefinitions>
-					<Button x:Name="btnClose" Style="{StaticResource IconButtonStyle}" Content="{DynamicResource close}" Click="btnClose_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Tag="IsCloseButton"/>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
 
-					<TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
-						   FontSize="30" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
-						   Text="Print Order"/>
-					<Button x:Name="btnPrintOrder" Content="Print Selected Order" FontSize="16" Style="{StaticResource BorderedButton}" Click="btnPrintOrder_Click" Width="170" Height="30" HorizontalAlignment="Right" Margin="10" Grid.Row="2"/>
-					<DataGrid FontSize="14" IsReadOnly="False" Grid.Row="3" Margin="50,15" Name="tblOrderDetails">
+					<TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" FontSize="32" 
+							   TextAlignment="Center" Text="Print Order" FontWeight="Bold" 
+							   Foreground="{DynamicResource PrimaryTextColor}"/>
+
+					<Button x:Name="btnClose" Grid.Row="0" Grid.Column="2" VerticalAlignment="Top"
+							Style="{StaticResource IconButtonStyle}" Tag="IsCloseButton"
+							Command="{Binding CancelPrintOrder}"/>
+
+					<Button Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,4" Content="Print Order" 
+								Style="{StaticResource BorderedButton}" Command="{Binding PrintOrder}"/>
+
+					<DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="10"
+							  AutoGenerateColumns="False" CanUserAddRows="False" RowHeaderWidth="0"
+							  Style="{StaticResource BorderedDataGrid}" IsReadOnly="False" Name="tblOrderDetails">
 						<DataGrid.Columns>
-							<DataGridTextColumn Header=""/>
-							<DataGridTextColumn Header="Order ID"/>
-							<DataGridTextColumn Header="E-mail"/>
-							<DataGridTextColumn Header="Name"/>
+							<DataGridTextColumn Header="Order ID" Width="Auto"/>
+							<DataGridTextColumn Header="E-mail" Width="*"/>
+							<DataGridTextColumn Header="Name" Width="*"/>
 							<DataGridTextColumn Header="Order Date" Width="*"/>
 						</DataGrid.Columns>
-						<RowDefinition Height="1*" />
-						<RowDefinition Height="1*" />
-						<RowDefinition Height="1*" />
-						<RowDefinition Height="1*" />
 					</DataGrid>
+
 				</Grid>
 			</Border>
 		</Grid>

@@ -66,7 +66,18 @@ namespace PROG8050_PROJECT.ViewModels
 				.AddSingleton<ILoginService, LoginService>()
 				.BuildServiceProvider());
 
-			Ioc.Default.GetService<INavigationService>().Navigate<HomePageViewModel>();
+			ILoginService loginService = Ioc.Default.GetRequiredService<ILoginService>();
+			if (!loginService.IsLogin)
+			{
+				// Set Next to Promotion
+				INavigationService navigationService = Ioc.Default.GetRequiredService<INavigationService>();
+				navigationService.Next = "HomePage";
+
+				navigationService.Navigate<LoginPageViewModel>();
+				return;
+			}
+
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate("HomePage");
 		}
 
 		private void CloseWindow(object sender)
@@ -116,7 +127,18 @@ namespace PROG8050_PROJECT.ViewModels
 
 		private void NavigateHomePage()
 		{
-			Ioc.Default.GetRequiredService<INavigationService>().Navigate<HomePageViewModel>();
+			ILoginService loginService = Ioc.Default.GetRequiredService<ILoginService>();
+			if (!loginService.IsLogin)
+			{
+				// Set Next to Promotion
+				INavigationService navigationService = Ioc.Default.GetRequiredService<INavigationService>();
+				navigationService.Next = "HomePage";
+
+				navigationService.Navigate<LoginPageViewModel>();
+				return;
+			}
+
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate("HomePage");
 		}
 
 		private void NavigateProductPage()

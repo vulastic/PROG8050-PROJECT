@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\화면 캡처 2021-12-16 175504.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
@@ -24,7 +28,7 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy &quot;$(ProjectDir)\database.sqlite&quot; &quot;$(OutDir)&quot;" />
+    <Exec Command="copy &quot;$(ProjectDir)\database.sqlite&quot; &quot;$(OutDir)&quot;&#xD;&#xA;copy &quot;$(ProjectDir)\Assets\logo.png&quot; &quot;$(OutDir)\Assets\&quot;" />
   </Target>
 
 </Project>

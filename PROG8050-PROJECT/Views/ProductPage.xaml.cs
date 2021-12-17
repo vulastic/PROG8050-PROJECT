@@ -84,42 +84,6 @@ namespace PROG8050_PROJECT.Views
 			}
 		}
 
-		/*
-		private void productDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			try
-			{
-				if (this.productDataGrid.SelectedItem != null)
-				{
-					item = this.productDataGrid.SelectedItem;
-					editpdctid = (this.productDataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
-					this.InputEditId.Text = editpdctid;
-					editcategoryProduct = (this.productDataGrid.SelectedCells[1].Column.GetCellContent(item) as TextBlock).Text;
-					this.InputEditCategoryIdBox.Text = editcategoryProduct;
-					editproductname = (this.productDataGrid.SelectedCells[2].Column.GetCellContent(item) as TextBlock).Text;
-					this.InputEditProductNameBox.Text = editproductname;
-					editproductdescription = (this.productDataGrid.SelectedCells[3].Column.GetCellContent(item) as TextBlock).Text;
-					this.InputEditProductDescriptionBox.Text = editproductdescription;
-					editproductprice = (this.productDataGrid.SelectedCells[4].Column.GetCellContent(item) as TextBlock).Text;
-					this.InputEditProductPriceBox.Text = editproductprice;
-					editproductquantity = (this.productDataGrid.SelectedCells[5].Column.GetCellContent(item) as TextBlock).Text;
-					this.InputEditProductQuantityBox.Text = editproductquantity;
-					//object image = (item as DataRowView).Field<object>("Image");
-					//imgEditProduct.Source = image as ImageSource;
-					//imgEditProduct.Source = 
-					//imageSource = productDataGrid.SelectedCells[6].Column.GetCellContent as ImageSource;
-					//  byte[] imgEditProduct  = (byte[])productDataGrid.SelectedCells[6].Column.GetCellContent;
-					// this.imgEditProduct.Source = editproductimage;
-				}
-			}
-			catch (Exception exp)
-			{
-				MessageBox.Show("Message:" + exp);
-			}
-		}
-		*/
-
-		//
 		private void ProductCancelButton_Click(object sender, RoutedEventArgs e)
 		{
 			AddItemElementInputBox.Visibility = System.Windows.Visibility.Hidden;
@@ -315,7 +279,7 @@ namespace PROG8050_PROJECT.Views
 				{
 					Dictionary<string, object> parameter = new();
 					parameter.Add(":pid", Convert.ToInt32(InputEditId.Text));
-					parameter.Add("name", InputEditProductNameBox.Text);
+					parameter.Add(":name", InputEditProductNameBox.Text);
 					parameter.Add(":cid", InputEditCategoryIdBox.SelectedIndex);
 					parameter.Add(":description", InputEditProductDescriptionBox.Text);
 					parameter.Add(":price", price);

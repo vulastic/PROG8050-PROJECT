@@ -39,37 +39,6 @@ namespace PROG8050_PROJECT.Views
 			//tblCProductDetails.ItemsSource = createOrders;
 		}
 
-		private void BtnSearch_Click(object sender, RoutedEventArgs e)
-		{
-			IDBService database = Ioc.Default.GetService<IDBService>();
-			if (!database.IsOpen)
-			{
-				System.Windows.MessageBox.Show("Cannot connect to the database", "Ooops!");
-				return;
-			}
-
-			try
-			{
-				//MessageBox.Show($"Customer: {textBox_CustomerSearchbar.Text} details loaded!");
-				string search_txt = textBox_CustomerSearchbar.Text;
-				if (String.IsNullOrEmpty(search_txt) || String.IsNullOrWhiteSpace(search_txt))
-				{
-					List<Customer> customers = database.ExecuteReader<Customer>($"select Id, FirstName, LastName, PhoneNo from Customer;");
-					//tblCustomerDetails.ItemsSource = customers;
-				}
-				else
-				{
-					List<Customer> customers = database.ExecuteReader<Customer>($"select Id, FirstName, LastName, PhoneNo from Customer where FirstName = '{search_txt}';");
-					//tblCustomerDetails.ItemsSource = customers;
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error: " + ex.Message);
-			}
-			
-		}
-
 		private void BtnAddNew_Click(object sender, RoutedEventArgs e)
 		{
 			this.NavigationService.Navigate(new Uri("./Views/NewCustomer.xaml", UriKind.RelativeOrAbsolute));
@@ -174,7 +143,7 @@ namespace PROG8050_PROJECT.Views
 				createOrders.Clear();
 				ShowOrders();
 				*/
-				PrintOrder.Visibility = Visibility.Visible;
+				//PrintOrder.Visibility = Visibility.Visible;
 			}
 			catch (Exception ex)
 			{
@@ -358,7 +327,7 @@ namespace PROG8050_PROJECT.Views
 
 		private void btnUOQCancel_Click(object sender, RoutedEventArgs e)
 		{
-			quantityUpdateProductOrder.Visibility = Visibility.Collapsed;
+			//quantityUpdateProductOrder.Visibility = Visibility.Collapsed;
 
 		}
 
@@ -397,7 +366,7 @@ namespace PROG8050_PROJECT.Views
 
 		private void btnClose_Click(object sender, RoutedEventArgs e)
 		{
-			PrintOrder.Visibility = Visibility.Collapsed;
+			//PrintOrder.Visibility = Visibility.Collapsed;
 
 		}
 
