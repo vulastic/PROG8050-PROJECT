@@ -28,7 +28,7 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy &quot;$(ProjectDir)\database.sqlite&quot; &quot;$(OutDir)&quot;&#xD;&#xA;copy &quot;$(ProjectDir)\Assets\logo.png&quot; &quot;$(OutDir)\Assets\&quot;" />
+    <Exec Command="copy &quot;$(ProjectDir)\database.sqlite&quot; &quot;$(OutDir)&quot;" />
   </Target>
 
 </Project>
