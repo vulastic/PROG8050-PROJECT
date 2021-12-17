@@ -46,7 +46,7 @@ namespace PROG8050_PROJECT.ViewModels
 			}
 		}
 
-		private string email = "tester@gmail.com";
+		private string email;
 		public string Email
 		{
 			get => email;
