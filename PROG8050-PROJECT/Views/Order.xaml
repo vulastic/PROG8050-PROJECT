@@ -141,8 +141,11 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition Height="70"/>
-                        <RowDefinition/>
-                        <RowDefinition Height="150"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
@@ -152,19 +155,19 @@
                     <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" 
 						   FontSize="30" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryColor}"
 						   Text="Update Customer"/>
-                    <StackPanel Grid.Row="2" Grid.Column="0">
-                        <Label Content="Customer Id: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
-                        <Label Content="First Name: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
-                        <Label Content="Last Name: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
-                        <Label Content="Phone No: " FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
-                    </StackPanel>
-                    <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical" DataContext="{Binding Customer}">
-                        <TextBox x:Name="textBox_CustId" IsReadOnly="True" FontSize="16" TextWrapping="NoWrap" Style="{StaticResource WaterMarkedTextBox}" Tag="Id" Margin="15"  Text="{Binding Id, Mode=TwoWay}"/>
-                        <TextBox x:Name="textBox_FirstName" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="First Name" Margin="15"  Text="{Binding FirstName, Mode=TwoWay}"/>
-                        <TextBox x:Name="textBox_LastName" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Last Name" Margin="15"  Text="{Binding LastName, Mode=TwoWay}"/>
-                        <TextBox x:Name="textBox_PhoneNo" Margin="15" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Phone No"  Text="{Binding PhoneNo, Mode=TwoWay}"/>
-                    </StackPanel>
-                    <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                    <!--<StackPanel Grid.Column="0">-->
+                        <Label Content="Customer Id: " Grid.Row="2" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
+                    <Label Content="First Name: " Grid.Row="3" Grid.Column="0"  FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
+                    <Label Content="Last Name: " Grid.Row="4" Grid.Column="0"   FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
+                    <Label Content="Phone No: " Grid.Row="5" Grid.Column="0"  FontWeight="Bold" HorizontalAlignment="Center" FontSize="16" Margin="0,15"/>
+                    <!--</StackPanel>-->
+                    <!--<StackPanel Grid.Column="2" Orientation="Vertical" DataContext="{Binding Customer}">-->
+                        <TextBox x:Name="textBox_CustId" Grid.Row="2" Grid.Column="1" IsReadOnly="True" FontSize="16" TextWrapping="NoWrap" Style="{StaticResource WaterMarkedTextBox}" Tag="Id" Margin="15"  Text="{Binding Id, Mode=TwoWay}"/>
+                    <TextBox x:Name="textBox_FirstName" Grid.Row="3" Grid.Column="1" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="First Name" Margin="15"  Text="{Binding FirstName, Mode=TwoWay}"/>
+                    <TextBox x:Name="textBox_LastName" Grid.Row="4" Grid.Column="1" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Last Name" Margin="15"  Text="{Binding LastName, Mode=TwoWay}"/>
+                    <TextBox x:Name="textBox_PhoneNo" Grid.Row="5" Grid.Column="1" Margin="15" FontSize="16" Style="{StaticResource WaterMarkedTextBox}" Tag="Phone No"  Text="{Binding PhoneNo, Mode=TwoWay}"/>
+                    <!--</StackPanel>-->
+                    <Grid Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center">
                         <Button x:Name="btnCancel" Content="Cancel" FontSize="16" Style="{StaticResource BorderButton}" Background="{DynamicResource RedPrimaryColor}" Click="btnCUCancel_Click" Width="100" Height="30" Margin="20,14,0,18" HorizontalAlignment="Left"/>
                         <Button x:Name="btnUpdate" Content="Update" FontSize="16" Style="{StaticResource BorderButton}" Click="btnCUUpdate_Click" Width="100" Height="30" Margin="278,14,0,18" HorizontalAlignment="Left"/>
                     </Grid>
@@ -274,10 +277,10 @@
         </Grid>
         
         <!--Print Order Page-->
-        <Grid Name="PrintOrder"  Grid.Row="2" Grid.Column="1" Height="400" Width="500" Background="WhiteSmoke" Visibility="Collapsed">
+        <Grid Name="PrintOrder"  Grid.Row="2" Grid.Column="1" Height="400" Width="600" Background="WhiteSmoke" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="600"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 

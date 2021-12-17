@@ -61,7 +61,7 @@
                 <DataGridTemplateColumn Header="Image" Width="200" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding Path=Image}"  />
+                            <Image Source="{Binding Path=Image}" MaxHeight="35" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
