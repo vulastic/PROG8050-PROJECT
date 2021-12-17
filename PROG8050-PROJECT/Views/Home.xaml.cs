@@ -30,7 +30,7 @@ namespace PROG8050_PROJECT.Views
         {
 			var temp = dbManager.ExecuteReader($"Select * from Customer");
 			int count = 0;
-			string date="";
+			string date = "";
 			int orderCount = 0;
 			int Quantity = 0;
 			while (temp.Read())
@@ -41,32 +41,31 @@ namespace PROG8050_PROJECT.Views
 
 			count = 0;
 			temp = dbManager.ExecuteReader($"select distinct CustomerId from \"Order\"");
-            while (temp.Read())
-            {
+			while (temp.Read())
+			{
 				count++;
-            }
+			}
 			textBox_ActiveCustomerCount.Text = count.ToString(); //Active customer -all customers with order history
-			
-			temp = dbManager.ExecuteReader($"SELECT o.Email, p.FirstName,p.LastName FROM Account o INNER JOIN Customer p ON o.Id = p.AccountId");
+
+			temp = dbManager.ExecuteReader($"SELECT o.Quantity, p.Price FROM OrderDetail o INNER JOIN Product p ON o.ProductId = p.Id; ");
 			count = 0;
-            while (temp.Read())
-            {
+			while (temp.Read())
+			{
 				count += Convert.ToInt32(temp["Quantity"].ToString()) * Convert.ToInt32(temp["Price"].ToString());
 				orderCount++;
-				Quantity+=Convert.ToInt32(temp["Quantity"].ToString());
-            }
+				Quantity += Convert.ToInt32(temp["Quantity"].ToString());
+			}
 			textBox_TotalOrderAmount.Text = count.ToString(); //Total order amount
 			count = 0;
 
-			temp= dbManager.ExecuteReader($"select Datetime from \"Order\"");
+			temp = dbManager.ExecuteReader($"select Datetime from \"Order\"");
 			while (temp.Read())
 			{
 				date = temp["Datetime"].ToString();
 			}
 			textBox_LastOrderDate.Text = date.ToString(); //Last Order Date
 			textBox_OrderCountW.Text = orderCount.ToString(); //Order Count
-			textBox_TotalProductsSoldW.Text=Quantity.ToString();//total products sold
-
+			textBox_TotalProductsSoldW.Text = Quantity.ToString();//total products sold
 
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -22,6 +23,8 @@ using System.Data.SQLite;
 using System.Data.SqlClient;
 using System.Collections;
 using System.ComponentModel;
+using Microsoft.Win32;
+
 namespace PROG8050_PROJECT.Views
 {
     /// <summary>
@@ -32,13 +35,15 @@ namespace PROG8050_PROJECT.Views
 
         SQLiteDataAdapter sAdapter;
         DataTable datable;
-
-        string editcategoryid, editcategoryname, editcategorydescription;
-        string editcategoryProduct, editproductname, editproductdescription, editproductprice, editproductquantity, editproductdimage;
+        string image;
+        byte[] data;
+        string editpdctid;
+        string editcategoryProduct, editproductname, editproductdescription, editproductprice, editproductquantity, editproductimage;
         object item;
         public Product()
         {
             InitializeComponent();
+            fill_category();
             FillDataGrid();
         }
 
@@ -46,17 +51,25 @@ namespace PROG8050_PROJECT.Views
         private void Button_Add_ItemElement_Click(object sender, RoutedEventArgs e)
         {
             AddItemElementInputBox.Visibility = System.Windows.Visibility.Visible;
+
+            InputProductNameBox.Text = null;
+            InputProductDescriptionBox.Text = null;
+            InputProductPriceBox.Text = null;
+            InputProducQuantityBox.Text = null;
+            imgProduct.Source = null;
         }
 
         private void Button_Edit_ItemElement_Click(object sender, RoutedEventArgs e)
         {
-            InputEditCategoryIdBox.Text = editcategoryProduct;
+
+            InputEditCategoryIdBox.SelectedItem = editcategoryProduct;
             InputEditProductNameBox.Text = editproductname;
             InputEditProductDescriptionBox.Text = editproductdescription;
             InputEditProductPriceBox.Text = editproductprice;
             InputEditProductQuantityBox.Text = editproductquantity;
-            //  InputProductImageBox.bu = editproductdimage;
+            // byte[] imgEditProduct = editproductimage;
             EditItemElementInputBox.Visibility = System.Windows.Visibility.Visible;
+
 
 
 
@@ -69,18 +82,20 @@ namespace PROG8050_PROJECT.Views
                 if (this.productDataGrid.SelectedItem != null)
                 {
                     item = this.productDataGrid.SelectedItem;
-                    editcategoryid = (this.productDataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
-                    this.InputEditId.Text = editcategoryid;
+                    editpdctid = (this.productDataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
+                    this.InputEditId.Text = editpdctid;
                     editcategoryProduct = (this.productDataGrid.SelectedCells[1].Column.GetCellContent(item) as TextBlock).Text;
                     this.InputEditCategoryIdBox.Text = editcategoryProduct;
                     editproductname = (this.productDataGrid.SelectedCells[2].Column.GetCellContent(item) as TextBlock).Text;
                     this.InputEditProductNameBox.Text = editproductname;
                     editproductdescription = (this.productDataGrid.SelectedCells[3].Column.GetCellContent(item) as TextBlock).Text;
-                    this.InputEditProductDescriptionBox.Text = editcategorydescription;
+                    this.InputEditProductDescriptionBox.Text = editproductdescription;
                     editproductprice = (this.productDataGrid.SelectedCells[4].Column.GetCellContent(item) as TextBlock).Text;
                     this.InputEditProductPriceBox.Text = editproductprice;
                     editproductquantity = (this.productDataGrid.SelectedCells[5].Column.GetCellContent(item) as TextBlock).Text;
                     this.InputEditProductQuantityBox.Text = editproductquantity;
+                    //  byte[] imgEditProduct  = (byte[])productDataGrid.SelectedCells[6].Column.GetCellContent;
+                    // this.imgEditProduct.Source = editproductimage;
                 }
             }
             catch (Exception exp)
@@ -93,83 +108,137 @@ namespace PROG8050_PROJECT.Views
         {
             AddItemElementInputBox.Visibility = System.Windows.Visibility.Hidden;
         }
-
-        private void ProductSubmitButton_Click(object sender, RoutedEventArgs e)
+        private void fill_category()
         {
             SQLiteDBManager dbManager = SQLiteDBManager.Instance;
             var conn = dbManager.Connection;
-            using var cmd = new SQLiteCommand(conn);
 
-            cmd.CommandText = "Insert into Product (Category,ProductName,Description,Price,Quantity)VALUES('" + this.InputCategoryIdBox.Text.ToString()
-                + "','" + this.InputProductNameBox.Text.ToString() + "','" + this.InputProductDescriptionBox.Text.ToString()
-                + "','" + this.InputProductPriceBox.Text.ToString() + "','" + this.InputProducQuantityBox.Text.ToString()
-                + "')";
-            cmd.ExecuteNonQuery();
-            FillDataGrid();
+            try
+            {
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = @"SELECT * FROM Category order by Id";
+                cmd.ExecuteNonQuery();
+                datable = new DataTable();
+                sAdapter = new SQLiteDataAdapter(cmd);
+                sAdapter.Fill(datable);
+                foreach (DataRow dr in datable.Rows)
+                {
+                    InputCategoryIdBox.Items.Add(dr["Name"].ToString());
+                    InputEditCategoryIdBox.Items.Add(dr["Name"].ToString());
 
-            conn.Close();
-            AddItemElementInputBox.Visibility = System.Windows.Visibility.Hidden;
-            MessageBox.Show($"{InputProductNameBox.Text} Product is succesfully inserted", "Success",
-             MessageBoxButton.OK);
 
+                }
 
-
+            }
+            catch (Exception ex)
+            {
+                // write exception info to log or anything else
+                MessageBox.Show("Error occured!");
+            }
         }
 
-        private void EditItemUpdateButton_Click(object sender, RoutedEventArgs e)
+        private void ProductSubmitButton_Click(object sender, RoutedEventArgs e)
         {
+            byte[] data = null;
+
             SQLiteDBManager dbManager = SQLiteDBManager.Instance;
             var conn = dbManager.Connection;
 
             using (var cmd = new SQLiteCommand(conn))
             {
-                conn.Open();
-                cmd.CommandText = "update Product SET ProductName = '" + this.InputEditProductNameBox.Text.ToString()
+                if (InputProductNameBox.Text != "" || InputProductDescriptionBox.Text != "")
+                {
+                    try
 
-                   + "', Description ='" + this.InputEditProductDescriptionBox.Text.ToString()
-                   + "', Price ='" + this.InputEditProductPriceBox.Text.ToString()
-                    + "', Quantity ='" + this.InputProducQuantityBox.Text.ToString()
-                  + "' where Id =" + Int32.Parse(this.InputEditId.Text.ToString());
-                cmd.ExecuteNonQuery();
-                FillDataGrid();
-                
-                EditItemElementInputBox.Visibility = System.Windows.Visibility.Hidden;
+                    {
+                        Dictionary<string, object> param = new Dictionary<string, object>();
+                        string categoryId = "";
+                        param.Add("@categoryName", InputCategoryIdBox.SelectedItem.ToString());
+                        var temp = dbManager.ExecuteReader("Select * from Category where Name=@categoryName", param);
+                        if (temp != null)
+                        {
+                            while (temp.Read())
+                            {
+                                categoryId = temp[0].ToString();
+                            }
+                        }
+                        data = File.ReadAllBytes(image);
+                        cmd.CommandText = @"Insert into Product(Name, CategoryId, Description, Price, Quantity, Image)VALUES(@name,@cid,@description,@price,@quantity,@img)";
+                        cmd.Parameters.Add(new SQLiteParameter("@name", InputProductNameBox.Text));
+                        cmd.Parameters.Add(new SQLiteParameter("@cid", categoryId));
+                        cmd.Parameters.Add(new SQLiteParameter("@description", InputProductDescriptionBox.Text));
+                        cmd.Parameters.Add(new SQLiteParameter("@price", InputProductPriceBox.Text));
+                        cmd.Parameters.Add(new SQLiteParameter("@quantity", InputProducQuantityBox.Text));
+                        cmd.Parameters.Add("@img", DbType.Binary, data.Length);
+                        cmd.Parameters["@img"].Value = data;
+                        cmd.ExecuteNonQuery();
+                        FillDataGrid();
+                        AddItemElementInputBox.Visibility = System.Windows.Visibility.Hidden;
+                        MessageBox.Show($"{InputProductNameBox.Text} Product is succesfully inserted", "Success",
+                         MessageBoxButton.OK);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
 
+                }
+                else
+                {
+                    MessageBox.Show(" Field Cannot be empty!");
+                }
             }
-            //  
-            MessageBox.Show($"{InputProductNameBox.Text} Product is succesfully Updated", "Success",
-          MessageBoxButton.OK);
+        }
+        private void Button_DeleteProductClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var Result = MessageBox.Show($"Do you want to delete {this.editproductname} ? ", "Confirmation",
+                            MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (Result == MessageBoxResult.Yes)
+                {
+                    SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+                    var conn = dbManager.Connection;
+                    var cmd = new SQLiteCommand(conn);
+                    cmd.CommandText = "delete from Product where Id = " + Int32.Parse(editpdctid);
+                    MessageBox.Show("Succesfully Deleted");
+                    cmd.ExecuteNonQuery();
+                    FillDataGrid();
 
+                }
+                else
+                {
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Select Product to delete");
+            }
         }
 
-        private void EditItemCancelButton_Click(object sender, RoutedEventArgs e)
+        private void btnSearchProduct_Click(object sender, RoutedEventArgs e)
         {
-            EditItemElementInputBox.Visibility = System.Windows.Visibility.Hidden;
 
-        }
-        private void FillDataGrid()
-        {
-   
-
-           SQLiteDBManager dbManager = SQLiteDBManager.Instance;
-            var con = dbManager.Connection;
-            try { 
-            var cmd = new SQLiteCommand(con);
-            cmd.CommandText = "SELECT * FROM Product order by id";
-            cmd.ExecuteNonQuery();
-            sAdapter = new SQLiteDataAdapter(cmd);
-            datable = new DataTable("Product");
-            sAdapter.Fill(datable);
-            productDataGrid.ItemsSource = datable.DefaultView;
-            sAdapter.Update(datable);
+            SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+            var conn = dbManager.Connection;
+            try
+            {
+                SQLiteCommand cmd = new SQLiteCommand(conn);
+                cmd.CommandText = @"select * from Product where Id Like @id OR Name Like @name OR Description Like @decs OR Price Like @price OR Quantity Like @qty  Order by Id";
+                cmd.Parameters.AddWithValue("@id", textBox_Search.Text);
+                cmd.Parameters.AddWithValue("@name", textBox_Search.Text);
+                cmd.Parameters.AddWithValue("@decs", textBox_Search.Text);
+                cmd.Parameters.AddWithValue("@price", textBox_Search.Text);
+                cmd.Parameters.AddWithValue("@qty", textBox_Search.Text);
 
 
-            this.productDataGrid.Columns[0].Header = "Id";
-            this.productDataGrid.Columns[1].Header = "Category";
-            this.productDataGrid.Columns[2].Header = "Product Name";
-            this.productDataGrid.Columns[3].Header = "Description";
-            this.productDataGrid.Columns[4].Header = "Price";
-            this.productDataGrid.Columns[5].Header = "Quantity";
+                cmd.ExecuteNonQuery();
+                sAdapter = new SQLiteDataAdapter(cmd);
+                datable = new DataTable("Category");
+                sAdapter.Fill(datable);
+                productDataGrid.ItemsSource = datable.DefaultView;
+                sAdapter.Update(datable);
             }
             catch (Exception ex)
             {
@@ -178,6 +247,118 @@ namespace PROG8050_PROJECT.Views
 
         }
 
+        private void EditItemUpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            byte[] data = null;
+            SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+            var conn = dbManager.Connection;
+
+            using (var cmd = new SQLiteCommand(conn))
+            {
+                if (InputEditProductDescriptionBox.Text != "" || InputEditProductNameBox.Text != "")
+                {
+                    try
+                    {
+                        Dictionary<string, object> param = new Dictionary<string, object>();
+                        string categoryId = "";
+                        param.Add("@categoryName", InputEditCategoryIdBox.SelectedItem.ToString());
+                        var temp = dbManager.ExecuteReader("Select * from Category where Name=@categoryName", param);
+                        if (temp != null)
+                        {
+                            while (temp.Read())
+                            {
+                                categoryId = temp[0].ToString();
+                            }
+                        }
+                        data = File.ReadAllBytes(image);
+                        cmd.CommandText = "update Product set Name=:name,CategoryId=:cid,Description=:description,Price=:price,Quantity=:quantity,Image=:img where Id =:pid";
+                        cmd.Parameters.Add("name", DbType.String).Value = InputEditProductNameBox.Text;
+                        cmd.Parameters.Add(new SQLiteParameter(":cid", categoryId));
+                        cmd.Parameters.Add(":description", DbType.String).Value = InputEditProductDescriptionBox.Text;
+                        cmd.Parameters.Add(":price", DbType.Currency).Value = InputEditProductPriceBox.Text;
+                        cmd.Parameters.Add(":quantity", DbType.Int32).Value = InputEditProductQuantityBox.Text;
+                        cmd.Parameters.Add(":img", DbType.Binary, data.Length);
+                        cmd.Parameters[":img"].Value = data;
+                        cmd.Parameters.Add(":pid", DbType.Int32).Value = InputEditId.Text;
+                        cmd.ExecuteNonQuery();
+                        FillDataGrid();
+                        EditItemElementInputBox.Visibility = System.Windows.Visibility.Hidden;
+                        MessageBox.Show($"{InputEditProductNameBox.Text} Product is succesfully Updated", "Success",
+                        MessageBoxButton.OK);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show(" Field Cannot be empty!");
+                }
+
+                //  
+
+            }
+        }
+        private void BtnLoadFromFile_Click(object sender, RoutedEventArgs e)
+        {
+
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+              "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                imgProduct.Source = new BitmapImage(new Uri(op.FileName));
+                image = op.FileName;
+            }
+
+        }
+        private void BtnEditFromFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+              "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                imgEditProduct.Source = new BitmapImage(new Uri(op.FileName));
+                image = op.FileName;
+            }
+
+        }
+        private void EditItemCancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditItemElementInputBox.Visibility = System.Windows.Visibility.Hidden;
+
+        }
+        private void FillDataGrid()
+        {
+
+            SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+            var con = dbManager.Connection;
+            try
+            {
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "SELECT Product.Id,Product.Name,Category.Name AS Category,Product.Description,Product.Price," +
+                         "Product.Quantity,Product.Image FROM Product Left outer JOIN Category ON Product.CategoryId= Category.Id";
+                cmd.ExecuteNonQuery();
+
+                sAdapter = new SQLiteDataAdapter(cmd);
+                datable = new DataTable();
+                sAdapter.Fill(datable);
+                productDataGrid.ItemsSource = datable.AsDataView();
+                sAdapter.Update(datable);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error Message : " + ex);
+            }
+        }
 
     }
 

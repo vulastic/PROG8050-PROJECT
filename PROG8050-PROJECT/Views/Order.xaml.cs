@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PROG8050_PROJECT.ViewModels;
 
 
 namespace PROG8050_PROJECT.Views
@@ -26,6 +27,7 @@ namespace PROG8050_PROJECT.Views
 	public partial class Order : Page
 	{
 		SQLiteDBManager dbManager = SQLiteDBManager.Instance;
+		
 		public static long Id { get; set; }
 		public Order()
 		{
@@ -244,6 +246,19 @@ namespace PROG8050_PROJECT.Views
 				this.tblProductDetails.Columns[2].Header = "Quantity";
 				this.tblProductDetails.Columns[3].Header = "Price";
 				this.tblProductDetails.Columns[4].Header = "Image";
+				/*SQLiteDBManager dBManager = new SQLiteDBManager();
+				List<Models.Product> products = dbManager.ExecuteReader<Models.Product>($"select * from Product where CategoryId = {categoryId}");
+				if (products.Count <= 0)
+				{
+					return;
+				}
+
+				OrderViewModel.Products.Clear();
+				tblProductDetails.ItemsSource = OrderViewModel.Products;
+
+				products.ForEach(x => OrderViewModel.Products.Add(x));
+				tblProductDetails.ItemsSource = OrderViewModel.Products;
+				//LoadProducts(); */
 			}
 		}
 
@@ -291,6 +306,7 @@ namespace PROG8050_PROJECT.Views
 			quantityProductOrder.Visibility = Visibility.Collapsed;
 			ShowOrders();
 		}
+
 		private void ShowOrders()
 		{
 			tblCProductDetails.Items.Clear();

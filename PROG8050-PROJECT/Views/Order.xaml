@@ -9,9 +9,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Order">
-
     <Grid>
-        <Grid>
+        <Grid Name="OrderPage" Visibility="Visible">
             <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="auto"/>
@@ -66,7 +65,7 @@
 
         <!-- Product Details Table -->
         <DataGrid IsReadOnly="True" ScrollViewer.CanContentScroll="True" 
-                  ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                  ScrollViewer.VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Products}"
                   AutoGenerateColumns="False" 
                   Grid.Row="7" Grid.Column="1" 
                   Name="tblProductDetails" MouseDoubleClick="Row_ProductDetail_Click">
@@ -75,8 +74,14 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
-                <DataGridTextColumn Header="Image" Binding="{Binding Image}" Width="*"/>
-            </DataGrid.Columns>
+                    <DataGridTemplateColumn Header=" Image " Width="*" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Image}" MaxHeight="35"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
         </DataGrid>
 
         <!-- Order Date -->
