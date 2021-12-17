@@ -12,19 +12,29 @@
       mc:Ignorable="d" Title="CustomerPage"
 	  Style="{StaticResource PageFonts}">
 
-	<Page.DataContext>
-		<viewModels:CustomerPageViewModel/>
-	</Page.DataContext>
-
-	<!-- Loaded event -->
-	<i:Interaction.Triggers>
-		<i:EventTrigger EventName="Loaded">
-			<i:InvokeCommandAction Command="{Binding Loaded}"/>
-		</i:EventTrigger>
-	</i:Interaction.Triggers>
-
-	<Grid>
-		<Label x:Name="label" Content="CustomerPage" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"/>
+	<Grid Margin="29,0,-361,-223">
+		<Button Content="Add New" Style="{StaticResource BorderedButton}" Background="Blue" Foreground="white" HorizontalAlignment="Left" Margin="47,368,0,0" VerticalAlignment="Top" Width="151" Height="41" Click="Button_Click"/>
+		<Button Content="Update" Style="{StaticResource BorderedButton}" Background="Blue" Foreground="white" HorizontalAlignment="Left" Margin="218,368,0,0" VerticalAlignment="Top" Width="144" Height="38" Click="Button_Click_2"/>
+		<Button Content="Delete" Style="{StaticResource BorderedButton}" Background="Blue" Foreground="white" HorizontalAlignment="Left" Margin="386,367,0,0" VerticalAlignment="Top" Width="138" Height="38"/>
+		<Button Content="Search" Style="{StaticResource BorderedButton}" Background="Blue" Foreground="white" HorizontalAlignment="Left" Margin="376,29,0,0" VerticalAlignment="Top" Width="101" Height="38" Click="Button_Click_1"/>
+		<TextBox HorizontalAlignment="Left" Height="38" Margin="121,29,0,0" TextWrapping="Wrap" Text="User email or name" VerticalAlignment="Top" Width="193"/>
+		<DataGrid IsReadOnly="False" x:Name="tblCustomerDetails" Margin="84,152,680,531">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header=""/>
+				<DataGridTextColumn Header="Customer No"/>
+				<DataGridTextColumn Header="Name"/>
+				<DataGridTextColumn Header="Phone No"/>
+				<DataGridTextColumn Header="Email"/>
+				<DataGridTextColumn Header="Gender" />
+				<DataGridTextColumn Header="Last Login" Width="*"/>
+			</DataGrid.Columns>
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+		</DataGrid>
 
 	</Grid>
 </Page>

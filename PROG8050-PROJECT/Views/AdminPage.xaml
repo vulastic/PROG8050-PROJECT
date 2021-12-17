@@ -12,19 +12,26 @@
       mc:Ignorable="d" Title="AdminPage"
 	  Style="{StaticResource PageFonts}">
 
-	<Page.DataContext>
-		<viewModels:AdminPageViewModel/>
-	</Page.DataContext>
-
-	<!-- Loaded event -->
-	<i:Interaction.Triggers>
-		<i:EventTrigger EventName="Loaded">
-			<i:InvokeCommandAction Command="{Binding Loaded}"/>
-		</i:EventTrigger>
-	</i:Interaction.Triggers>
-
-	<Grid>
-		<Label x:Name="label" Content="AdminPage" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"/>
-
+	<Grid HorizontalAlignment="Right" Width="800">
+		<Button x:Name="Addnew" Content="Add New" Background="Blue" Foreground="white" Style="{StaticResource BorderedButton}" HorizontalAlignment="Left" Margin="63,181,0,0" VerticalAlignment="Top" Width="118" Height="34" Click="Button_Click"/>
+		<Button x:Name="Update" Content="Update" Background="Blue" Foreground="white" Style="{StaticResource BorderedButton}" HorizontalAlignment="Left" Margin="63,245,0,0" VerticalAlignment="Top" Width="118" Height="38" Click="Button_Click_1"/>
+		<Button x:Name="Delete" Content="Delete" Background="Blue" Foreground="white" Style="{StaticResource BorderedButton}" HorizontalAlignment="Left" Margin="63,308,0,0" VerticalAlignment="Top" Width="115" Height="38" Click="Button_Click_2"/>
+		<Button x:Name="Search" Content="Search" Background="Blue" Foreground="white" Style="{StaticResource BorderedButton}" HorizontalAlignment="Left" Margin="470,40,0,0" VerticalAlignment="Top" Width="134" Height="38" Click="Search_Click"/>
+		<TextBox x:Name="textbox1" HorizontalAlignment="Left" Height="38" Margin="282,45,0,0" TextWrapping="Wrap" Text="User email or name" VerticalAlignment="Top" Width="132"/>
+		<DataGrid FontSize="14" IsReadOnly="False" Margin="252,168,20,75" x:Name="tblUserDetails">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header=""/>
+				<DataGridTextColumn Header=" ID"/>
+				<DataGridTextColumn Header="E-mail"/>
+				<DataGridTextColumn Header="Password"/>
+				<DataGridTextColumn Header="Name"/>
+				<DataGridTextColumn Header="Gender"/>
+				<DataGridTextColumn Header="Phone Number" Width="*"/>
+			</DataGrid.Columns>
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+		</DataGrid>
 	</Grid>
 </Page>

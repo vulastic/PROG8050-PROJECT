@@ -191,7 +191,18 @@ namespace PROG8050_PROJECT.ViewModels
 
 		private void NavigateCustomerPage()
 		{
-			Ioc.Default.GetRequiredService<INavigationService>().Navigate<CustomerPageViewModel>();
+			ILoginService loginService = Ioc.Default.GetRequiredService<ILoginService>();
+			if (!loginService.IsLogin)
+			{
+				// Set Next to Promotion
+				INavigationService navigationService = Ioc.Default.GetRequiredService<INavigationService>();
+				navigationService.Next = "CustomerPage";
+
+				navigationService.Navigate<LoginPageViewModel>();
+				return;
+			}
+
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate("CustomerPage");
 		}
 
 		private void NavigateOrderPage()
@@ -212,7 +223,18 @@ namespace PROG8050_PROJECT.ViewModels
 
 		private void NavigateAdminPage()
 		{
-			Ioc.Default.GetRequiredService<INavigationService>().Navigate<AdminPageViewModel>();
+			ILoginService loginService = Ioc.Default.GetRequiredService<ILoginService>();
+			if (!loginService.IsLogin)
+			{
+				// Set Next to Promotion
+				INavigationService navigationService = Ioc.Default.GetRequiredService<INavigationService>();
+				navigationService.Next = "AdminPage";
+
+				navigationService.Navigate<LoginPageViewModel>();
+				return;
+			}
+
+			Ioc.Default.GetRequiredService<INavigationService>().Navigate("AdminPage");
 		}
 		#endregion
 	}
